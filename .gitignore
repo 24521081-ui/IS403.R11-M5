@@ -1,9 +1,26 @@
+# Môi trường ảo & Cache
 .venv/
 __pycache__/
 .pytest_cache/
 .cache/
+
+# Dữ liệu gốc M5 dung lượng lớn (>100MB)
 data/raw/*.csv
+data/*.csv
 dataset/
 data/processed/*
+
+# Kết quả huấn luyện & dự báo dung lượng lớn
 results/**
 !results/**/.gitkeep
+!results/benchmarks/
+!results/benchmarks/metrics/
+!results/benchmarks/metrics/**
+!results/figures/
+!results/figures/**
+
+# Kết quả dự báo chi tiết của các mô hình đối chứng (>100MB)
+results/benchmarks/predictions/*.csv
+!results/benchmarks/predictions/.gitkeep
+outputs/predictions/*.csv
+!outputs/predictions/.gitkeep

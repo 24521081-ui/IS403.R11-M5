@@ -1,0 +1,9 @@
+split,model,mae_mean,rmse_mean,rmsse_mean,series_count
+test,Croston,1.0898,1.3969,0.7704,30490
+test,Croston_SBA,1.0759,1.3926,0.7687,30490
+test,ES_bu,1.0659,1.4121,0.7972,30490
+test,Seasonal_Naive,1.244,1.7519,0.9972,30490
+validation,Croston,1.1026,1.3986,0.7616,30490
+validation,Croston_SBA,1.0862,1.3909,0.7589,30490
+validation,ES_bu,1.0608,1.3983,0.7775,30490
+validation,Seasonal_Naive,1.2324,1.74,0.9756,30490

@@ -6,3 +6,6 @@ matplotlib>=3.9,<4
 PyYAML>=6,<7
 joblib>=1.4,<2
 pytest>=8,<10
+
+numba>=0.58
+python-docx>=1.1.0
