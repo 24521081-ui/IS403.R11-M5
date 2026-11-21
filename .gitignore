@@ -20,7 +20,9 @@ results/**
 !results/figures/**
 
 # Kết quả dự báo chi tiết của các mô hình đối chứng (>100MB)
+results/benchmarks/predictions/**/*.csv
 results/benchmarks/predictions/*.csv
-!results/benchmarks/predictions/.gitkeep
+!results/benchmarks/predictions/**/.gitkeep
 outputs/predictions/*.csv
+outputs/predictions/**/*.csv
 !outputs/predictions/.gitkeep

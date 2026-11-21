@@ -12,9 +12,8 @@ import argparse
 from pathlib import Path
 
 # Thêm thư mục gốc dự án vào sys.path để import từ src
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
-sys.path.insert(0, str(PROJECT_DIR))
 
 from src.benchmarks.config import PREDICTIONS_DIR, STORES
 from src.benchmarks.data_loader import load_sales_dataset
@@ -52,23 +51,24 @@ def main():
     # 2. Chạy giai đoạn Test (d_1914 đến d_1941)
     test_preds, test_metrics = evaluate_split(df, split="test")
 
-    # 3. Lưu bảng dự báo chuẩn hóa
-    val_pred_file = PREDICTIONS_DIR / f"predictions_validation_{store_suffix}.csv"
-    test_pred_file = PREDICTIONS_DIR / f"predictions_test_{store_suffix}.csv"
+    # 3. Lưu bảng dự báo chuẩn hóa vào thư mục con phân tầng
+    subfolder = "all_stores" if args.all_stores else store_suffix.lower()
+    val_dir = PREDICTIONS_DIR / subfolder / "validation"
+    test_dir = PREDICTIONS_DIR / subfolder / "test"
+    val_dir.mkdir(parents=True, exist_ok=True)
+    test_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"\nĐang lưu tệp dự báo vào {PREDICTIONS_DIR}...")
+    val_pred_file = val_dir / "forecasts.csv"
+    test_pred_file = test_dir / "forecasts.csv"
+
+    print(f"\nĐang lưu tệp dự báo vào {PREDICTIONS_DIR / subfolder}...")
     val_preds.to_csv(val_pred_file, index=False)
     test_preds.to_csv(test_pred_file, index=False)
-    print(f"-> Đã lưu: {val_pred_file.name}")
-    print(f"-> Đã lưu: {test_pred_file.name}")
+    print(f"-> Đã lưu: {val_pred_file.relative_to(REPO_ROOT)}")
+    print(f"-> Đã lưu: {test_pred_file.relative_to(REPO_ROOT)}")
 
     export_es_bottom_up(val_preds, df, "validation", store_suffix)
     export_es_bottom_up(test_preds, df, "test", store_suffix)
-
-    if args.all_stores:
-        val_preds.to_csv(PREDICTIONS_DIR / "predictions_validation.csv", index=False)
-        test_preds.to_csv(PREDICTIONS_DIR / "predictions_test.csv", index=False)
-        print("-> Đã lưu bản quy chuẩn predictions_validation.csv và predictions_test.csv")
 
     # 4. Tổng hợp và xuất 4 bảng sai số
     summarize_and_export_metrics(val_metrics, test_metrics, args.all_stores, store_suffix)

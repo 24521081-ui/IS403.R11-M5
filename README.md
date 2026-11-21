@@ -18,46 +18,55 @@ IS403.R11-M5/
 │   └── raw/                             # Đặt các file dữ liệu M5 gốc (.csv) tại đây
 │
 ├── docs/                                # Báo cáo nghiên cứu khoa học & tài liệu kỹ thuật
-│   ├── research-report.docx             # Báo cáo nghiên cứu thực nghiệm hoàn chỉnh (Word)
-│   ├── research-report.md               # Báo cáo nghiên cứu thực nghiệm (Markdown)
-│   ├── model-guide.docx                 # Cẩm nang giải thích bản chất toán học & mã nguồn (Word)
-│   ├── model-guide.md                   # Cẩm nang giải thích bản chất toán học & mã nguồn (Markdown)
-│   ├── mae-guide.docx                   # Chuyên đề đối sánh & diễn giải chỉ số MAE (Word)
-│   ├── rmse-guide.docx                  # Chuyên đề đối sánh & diễn giải chỉ số RMSE (Word)
-│   ├── HUONG_DAN_DEMO_DU_BAO.md         # Quy trình demo suy luận mô hình ML
-│   ├── reference_comparison.md          # Báo cáo đối chiếu mã nguồn học thuật
-│   └── verification.md                  # Nhật ký kiểm chứng độc lập
+│   ├── reports/                         # ⭐ BÁO CÁO NGHIỆM THU CHÍNH THỨC (Word .docx)
+│   │   ├── research-report.docx         # Báo cáo nghiên cứu thực nghiệm hoàn chỉnh
+│   │   ├── model-guide.docx             # Cẩm nang bản chất toán học & mã nguồn
+│   │   ├── mae-guide.docx               # Chuyên đề đối sánh & ý nghĩa kinh doanh của MAE
+│   │   └── rmse-guide.docx              # Chuyên đề đối sánh & thiết lập Safety Stock với RMSE
+│   └── technical/                       # Tài liệu kỹ thuật, hướng dẫn & nhật ký kiểm toán
+│       ├── research-report.md           # Bản thảo Markdown báo cáo nghiên cứu
+│       ├── model-guide.md               # Bản thảo Markdown cẩm nang mô hình
+│       ├── HUONG_DAN_DEMO_DU_BAO.md     # Quy trình demo suy luận mô hình ML
+│       ├── reference_comparison.md      # Đối chiếu mã nguồn học thuật
+│       ├── CODE_AUDIT_REPORT.md         # Báo cáo kiểm toán mã nguồn độc lập
+│       └── verification.md              # Nhật ký kiểm chứng thực nghiệm
 │
 ├── results/                             # Kết quả thực nghiệm và trực quan hóa
 │   ├── benchmarks/
-│   │   ├── metrics/                     # Bảng tổng hợp sai số MAE, RMSE, RMSSE đối chứng
-│   │   └── predictions/                 # Kết quả dự báo h=28 ngày của các mô hình thống kê
-│   ├── figures/                         # Biểu đồ phân tích độ chính xác & phân phối sai số
-│   └── models/                          # Artifacts mô hình Machine Learning đã huấn luyện
+│   │   ├── metrics/                     # Bảng chỉ số sai số MAE, RMSE, RMSSE
+│   │   │   ├── all_stores/              # ⭐ Kết quả chính thức toàn bộ 10 siêu thị (30.490 chuỗi)
+│   │   │   └── ca_1/                    # Kết quả chạy thử nghiệm mẫu riêng siêu thị CA_1
+│   │   └── predictions/                 # Kết quả dự báo 28 ngày (được phân tầng gọn gàng)
+│   │       ├── all_stores/              # Tập dự báo toàn bộ 10 siêu thị (validation & test)
+│   │       └── ca_1/                    # Tập dự báo riêng siêu thị CA_1 (validation & test)
+│   ├── figures/                         # Biểu đồ phân tích độ chính xác & sai số
+│   └── models/                          # Trọng số mô hình Machine Learning đã huấn luyện
 │
 ├── scripts/                             # Các điểm thực thi chi tiết
-│   ├── run_benchmarks.py                # Thực thi thực nghiệm các mô hình thống kê đối chứng
-│   ├── test_benchmark_models.py         # Kiểm thử đơn vị các thuật toán thống kê
-│   ├── build_reports.py                 # Biên dịch tự động toàn bộ tài liệu báo cáo Word (.docx)
-│   ├── demo_saved_forecast.py           # Demo phát lại suy luận dự báo từ checkpoint
-│   ├── plot_saved_rmsse_report.py       # Xuất biểu đồ so sánh RMSSE tổng hợp
-│   └── summarize_validation.py          # Tổng hợp chỉ số validation
+│   ├── benchmarks/                      # Scripts cho các mô hình thống kê đối chứng
+│   │   ├── run_benchmarks.py            # Chạy thực nghiệm (Validation & Test)
+│   │   ├── test_benchmark_models.py     # Kiểm thử đơn vị thuật toán
+│   │   └── build_reports.py             # Biên dịch 4 tài liệu Word báo cáo
+│   └── ml/                              # Scripts cho mô hình Machine Learning (LightGBM)
+│       ├── demo_saved_forecast.py       # Demo phát lại suy luận dự báo LightGBM
+│       ├── plot_saved_rmsse_report.py   # Xuất biểu đồ so sánh RMSSE
+│       └── summarize_validation.py      # Tổng hợp chỉ số validation ML
 │
-├── src/                                 # Mã nguồn lõi được đóng gói theo module
-│   │
-│   ├── benchmarks/                      # HỢP PHẦN CÁC MÔ HÌNH THỐNG KÊ ĐỐI CHỨNG
+├── src/                                 # Toàn bộ mã nguồn lõi (Modularized 100%)
+│   ├── benchmarks/                      # HỢP PHẦN THỐNG KÊ ĐỐI CHỨNG (STATISTICAL BENCHMARKS)
 │   │   ├── config.py                    # Cấu hình tự động nhận diện dữ liệu và siêu tham số
-│   │   ├── data_loader.py               # Nạp dữ liệu tối ưu bộ nhớ cho mô hình thống kê
+│   │   ├── data_loader.py               # Nạp ma trận dữ liệu tối ưu bộ nhớ
 │   │   ├── models/                      # Thuật toán: Seasonal Naïve, ES_bu, Croston, Croston-SBA
 │   │   ├── evaluation/                  # Thước đo chuẩn M5: MAE, RMSE, RMSSE & điều phối đánh giá
 │   │   └── reports/                     # Tự động hóa biên dịch báo cáo Word (.docx)
 │   │
-│   ├── data_loader.py                   # HỢP PHẦN MACHINE LEARNING (LIGHTGBM - TWEEDIE)
-│   ├── feature_engineering.py           # Kỹ nghệ đặc trưng: Lags, Rolling windows, Calendar
-│   ├── preprocessing.py                 # Tiền xử lý ma trận bán hàng và nhãn phân loại
-│   ├── training.py                      # Huấn luyện LightGBM tối ưu hàm mất mát Tweedie
-│   ├── forecasting.py                   # Dự báo đệ quy đa bước (Recursive Multi-step Forecasting)
-│   └── reporting.py                     # Đánh giá chỉ số RMSSE và xuất báo cáo mô hình ML
+│   └── ml/                              # HỢP PHẦN HỌC MÁY (LIGHTGBM - TWEEDIE)
+│       ├── data_loader.py               # Nạp dữ liệu bảng sales, calendar, prices
+│       ├── feature_engineering.py       # Kỹ nghệ đặc trưng: Lags, Rolling windows, Calendar
+│       ├── preprocessing.py             # Tiền xử lý ma trận bán hàng và nhãn phân loại
+│       ├── training.py                  # Huấn luyện LightGBM tối ưu hàm mất mát Tweedie
+│       ├── forecasting.py               # Dự báo đệ quy đa bước (Recursive Multi-step)
+│       └── reporting.py                 # Đánh giá chỉ số RMSSE và xuất báo cáo mô hình ML
 │
 ├── run.py                               # Điểm khởi chạy pipeline Machine Learning (LightGBM)
 ├── run_benchmarks.py                    # Điểm khởi chạy pipeline Statistical Benchmarks

@@ -8,18 +8,18 @@ from pathlib import Path
 
 import yaml
 
-from src.data_loader import (
+from src.ml.data_loader import (
     check_files,
     list_stores,
     load_calendar,
     load_prices,
     load_store,
 )
-from src.feature_engineering import prepare_training_data
-from src.forecasting import SeasonalNaive, export_forecasts, recursive_forecast
-from src.preprocessing import history_matrix, prepare_history
-from src.reporting import evaluate_and_export
-from src.training import train_model
+from src.ml.feature_engineering import prepare_training_data
+from src.ml.forecasting import SeasonalNaive, export_forecasts, recursive_forecast
+from src.ml.preprocessing import history_matrix, prepare_history
+from src.ml.reporting import evaluate_and_export
+from src.ml.training import train_model
 
 LOGGER = logging.getLogger("m5")
 

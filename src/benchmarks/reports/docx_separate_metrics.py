@@ -14,7 +14,7 @@ from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
 
-from src.benchmarks.config import DOCS_DIR
+from src.benchmarks.config import REPORTS_DOCS_DIR
 
 
 def set_font(run, size=11, bold=False, italic=False, color=None):
@@ -198,7 +198,7 @@ def build_mae_doc():
     add_bullet(doc, " Tính toán chi phí lưu kho hoặc hụt hàng trực tiếp theo ngày: Giảm MAE từ 1.23 xuống 1.06 giúp siêu thị cắt giảm hàng nghìn sản phẩm tồn ứ mỗi ngày.", bold_prefix="Quản lý chi phí:")
     add_bullet(doc, " Đặt mốc benchmark cụ thể cho nhóm Machine Learning: Mô hình LightGBM muốn đạt yêu cầu bắt buộc phải có MAE < 1.0608.", bold_prefix="Thước đo chuẩn:")
 
-    out_file = DOCS_DIR / "mae-guide.docx"
+    out_file = REPORTS_DOCS_DIR / "mae-guide.docx"
     try:
         doc.save(out_file)
         print(f"-> Đã lưu: {out_file}")
@@ -296,7 +296,7 @@ def build_rmse_doc():
         "Mô hình có RMSE thấp như Croston-SBA giúp siêu thị giảm bớt vốn lưu kho đọng mà vẫn đảm bảo 95% không bị đứt hàng.",
     )
 
-    out_file = DOCS_DIR / "rmse-guide.docx"
+    out_file = REPORTS_DOCS_DIR / "rmse-guide.docx"
     try:
         doc.save(out_file)
         print(f"-> Đã lưu: {out_file}")

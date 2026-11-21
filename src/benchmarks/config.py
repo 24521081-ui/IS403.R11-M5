@@ -36,9 +36,11 @@ RESULTS_DIR = REPO_ROOT / "results" / "benchmarks"
 METRICS_DIR = RESULTS_DIR / "metrics"
 PREDICTIONS_DIR = RESULTS_DIR / "predictions"
 DOCS_DIR = REPO_ROOT / "docs"
+REPORTS_DOCS_DIR = DOCS_DIR / "reports"
+TECH_DOCS_DIR = DOCS_DIR / "technical"
 
 # Đảm bảo các thư mục luôn tồn tại
-for directory in [METRICS_DIR, PREDICTIONS_DIR, DOCS_DIR]:
+for directory in [METRICS_DIR, PREDICTIONS_DIR, DOCS_DIR, REPORTS_DOCS_DIR, TECH_DOCS_DIR]:
     directory.mkdir(parents=True, exist_ok=True)
 
 # Mốc phân chia tập dữ liệu theo quy chuẩn M5

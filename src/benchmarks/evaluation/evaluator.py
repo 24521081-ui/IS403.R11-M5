@@ -139,7 +139,10 @@ def export_es_bottom_up(predictions: pd.DataFrame, df: pd.DataFrame, split: str,
         aggregated["level"] = level
         tables.append(aggregated)
 
-    output = PREDICTIONS_DIR / f"predictions_es_bu_aggregated_{split}_{store_suffix}.csv"
+    subfolder = "all_stores" if store_suffix == "all_10_stores" else store_suffix.lower()
+    target_dir = PREDICTIONS_DIR / subfolder / split
+    target_dir.mkdir(parents=True, exist_ok=True)
+    output = target_dir / "es_bu_aggregated.csv"
     output_columns = [
         "model", "split", "origin_day", "level", "state_id", "store_id",
         "cat_id", "dept_id", "item_id", "target_day", "horizon", "y_pred",
@@ -151,12 +154,14 @@ def export_es_bottom_up(predictions: pd.DataFrame, df: pd.DataFrame, split: str,
 
 
 def summarize_and_export_metrics(val_metrics: pd.DataFrame, test_metrics: pd.DataFrame, is_all_stores: bool, store_suffix: str):
-    """Tổng hợp và xuất 4 bảng sai số vào outputs/metrics."""
-    metrics_suffix = "" if is_all_stores else f"_{store_suffix}"
+    """Tổng hợp và xuất 4 bảng sai số vào results/benchmarks/metrics/all_stores hoặc ca_1."""
+    subfolder = "all_stores" if is_all_stores else store_suffix.lower()
+    target_dir = METRICS_DIR / subfolder
+    target_dir.mkdir(parents=True, exist_ok=True)
     all_metrics = pd.concat([val_metrics, test_metrics], ignore_index=True)
 
     print("\n" + "=" * 70)
-    print("TỔNG HỢP VÀ XUẤT CÁC BẢNG KẾT QUẢ ĐÁNH GIÁ")
+    print(f"TỔNG HỢP VÀ XUẤT CÁC BẢNG KẾT QUẢ ĐÁNH GIÁ ({subfolder})")
     print("=" * 70)
 
     groupings = [
@@ -177,7 +182,7 @@ def summarize_and_export_metrics(val_metrics: pd.DataFrame, test_metrics: pd.Dat
             )
             .round(4)
         )
-        out_path = METRICS_DIR / f"summary_metrics_{key}{metrics_suffix}.csv"
+        out_path = target_dir / f"summary_{key}.csv"
         summary.to_csv(out_path, index=False)
 
         if key == "overall":
@@ -187,5 +192,5 @@ def summarize_and_export_metrics(val_metrics: pd.DataFrame, test_metrics: pd.Dat
             print(f"\n--- {label} (Validation) ---")
             print(summary[summary["split"] == "validation"].to_string(index=False))
 
-    print(f"\n[THÀNH CÔNG] Đã xuất toàn bộ bảng sai số vào {METRICS_DIR}.")
+    print(f"\n[THÀNH CÔNG] Đã xuất toàn bộ bảng sai số vào {target_dir}.")
 

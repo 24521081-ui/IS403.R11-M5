@@ -12,9 +12,9 @@ from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import OxmlElement, parse_xml
 from docx.oxml.ns import nsdecls, qn
 
-from src.benchmarks.config import DOCS_DIR
+from src.benchmarks.config import REPORTS_DOCS_DIR
 
-OUTPUT_DOCX = DOCS_DIR / "model-guide.docx"
+OUTPUT_DOCX = REPORTS_DOCS_DIR / "model-guide.docx"
 
 
 def set_cell_background(cell, hex_color):

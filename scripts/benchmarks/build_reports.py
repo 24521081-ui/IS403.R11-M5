@@ -7,7 +7,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
 
 from src.benchmarks.reports.docx_report import build_docx_report

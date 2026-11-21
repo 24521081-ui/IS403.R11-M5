@@ -28,13 +28,13 @@ def main():
     args = parser.parse_args()
 
     if args.test:
-        from scripts.test_benchmark_models import run_unit_tests
+        from scripts.benchmarks.test_benchmark_models import run_unit_tests
         run_unit_tests()
     elif args.build_reports:
-        from scripts.build_reports import main as build_reports_main
+        from scripts.benchmarks.build_reports import main as build_reports_main
         build_reports_main()
     elif args.store or args.all_stores:
-        from scripts.run_benchmarks import main as run_benchmarks_main
+        from scripts.benchmarks.run_benchmarks import main as run_benchmarks_main
         run_benchmarks_main()
 
 

@@ -20,16 +20,16 @@ import pandas as pd
 
 # File nằm trong scripts/, nên đi lên hai cấp để tìm thư mục project.
 # Thêm project vào đường dẫn import để gọi các chức năng trong src/.
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from src.data_loader import load_calendar, load_store
-from src.reporting import evaluate_forecast
-from src.preprocessing import history_matrix
-from src.forecasting import SeasonalNaive, recursive_forecast
-from src.forecasting import export_forecasts
-from src.reporting import save_json
+from src.ml.data_loader import load_calendar, load_store
+from src.ml.reporting import evaluate_forecast
+from src.ml.preprocessing import history_matrix
+from src.ml.forecasting import SeasonalNaive, recursive_forecast
+from src.ml.forecasting import export_forecasts
+from src.ml.reporting import save_json
 # visualization đã cấu hình backend lưu hình không cần mở cửa sổ đồ họa.
-from src.reporting import plt
+from src.ml.reporting import plt
 
 
 def main(argv=None):
