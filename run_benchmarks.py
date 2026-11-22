@@ -1,6 +1,6 @@
 """
 Điểm khởi chạy tập trung cho Hợp phần Mô hình Đối chứng Thống kê (Statistical Benchmarks).
-Cung cấp giao diện dòng lệnh linh hoạt để chạy kiểm thử, thực nghiệm hoặc xuất báo cáo.
+Cung cấp giao diện dòng lệnh linh hoạt để chạy kiểm thử hoặc thực nghiệm dự báo.
 """
 
 import sys
@@ -21,7 +21,6 @@ def main():
     )
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--test", action="store_true", help="Chạy kiểm thử đơn vị các mô hình thống kê")
-    group.add_argument("--build_reports", action="store_true", help="Biên dịch 4 tài liệu Word báo cáo nghiên cứu")
     group.add_argument("--store", choices=STORES, help="Chạy thực nghiệm trên 1 cửa hàng chỉ định (VD: CA_1)")
     group.add_argument("--all_stores", action="store_true", help="Chạy thực nghiệm trên toàn bộ 10 cửa hàng")
 
@@ -30,9 +29,6 @@ def main():
     if args.test:
         from scripts.benchmarks.test_benchmark_models import run_unit_tests
         run_unit_tests()
-    elif args.build_reports:
-        from scripts.benchmarks.build_reports import main as build_reports_main
-        build_reports_main()
     elif args.store or args.all_stores:
         from scripts.benchmarks.run_benchmarks import main as run_benchmarks_main
         run_benchmarks_main()

@@ -18,25 +18,23 @@ IS403.R11-M5/
 │   └── raw/                             # Đặt các file dữ liệu M5 gốc (.csv) tại đây
 │
 ├── docs/                                # Báo cáo nghiên cứu khoa học & tài liệu kỹ thuật
-│   ├── reports/                         # ⭐ BÁO CÁO NGHIỆM THU CHÍNH THỨC (Word .docx)
+│   ├── reports/                         # Báo cáo thực nghiệm (Word .docx)
 │   │   ├── research-report.docx         # Báo cáo nghiên cứu thực nghiệm hoàn chỉnh
-│   │   ├── model-guide.docx             # Cẩm nang bản chất toán học & mã nguồn
+│   │   ├── model-guide.docx             # Tài liệu giải thích bản chất toán học & mã nguồn
 │   │   ├── mae-guide.docx               # Chuyên đề đối sánh & ý nghĩa kinh doanh của MAE
 │   │   └── rmse-guide.docx              # Chuyên đề đối sánh & thiết lập Safety Stock với RMSE
-│   └── technical/                       # Tài liệu kỹ thuật, hướng dẫn & nhật ký kiểm toán
-│       ├── research-report.md           # Bản thảo Markdown báo cáo nghiên cứu
-│       ├── model-guide.md               # Bản thảo Markdown cẩm nang mô hình
+│   └── technical/                       # Tài liệu kỹ thuật & quy trình
+│       ├── research-report.md           # Báo cáo nghiên cứu dạng Markdown
+│       ├── model-guide.md               # Tài liệu kỹ thuật mô hình dạng Markdown
 │       ├── HUONG_DAN_DEMO_DU_BAO.md     # Quy trình demo suy luận mô hình ML
-│       ├── reference_comparison.md      # Đối chiếu mã nguồn học thuật
-│       ├── CODE_AUDIT_REPORT.md         # Báo cáo kiểm toán mã nguồn độc lập
-│       └── verification.md              # Nhật ký kiểm chứng thực nghiệm
+│       └── reference_comparison.md      # Đối chiếu mã nguồn học thuật
 │
 ├── results/                             # Kết quả thực nghiệm và trực quan hóa
 │   ├── benchmarks/
 │   │   ├── metrics/                     # Bảng chỉ số sai số MAE, RMSE, RMSSE
-│   │   │   ├── all_stores/              # ⭐ Kết quả chính thức toàn bộ 10 siêu thị (30.490 chuỗi)
+│   │   │   ├── all_stores/              # Kết quả chính thức toàn bộ 10 siêu thị (30.490 chuỗi)
 │   │   │   └── ca_1/                    # Kết quả chạy thử nghiệm mẫu riêng siêu thị CA_1
-│   │   └── predictions/                 # Kết quả dự báo 28 ngày (được phân tầng gọn gàng)
+│   │   └── predictions/                 # Kết quả dự báo 28 ngày
 │   │       ├── all_stores/              # Tập dự báo toàn bộ 10 siêu thị (validation & test)
 │   │       └── ca_1/                    # Tập dự báo riêng siêu thị CA_1 (validation & test)
 │   ├── figures/                         # Biểu đồ phân tích độ chính xác & sai số
@@ -46,21 +44,20 @@ IS403.R11-M5/
 │   ├── benchmarks/                      # Scripts cho các mô hình thống kê đối chứng
 │   │   ├── run_benchmarks.py            # Chạy thực nghiệm (Validation & Test)
 │   │   ├── test_benchmark_models.py     # Kiểm thử đơn vị thuật toán
-│   │   └── build_reports.py             # Biên dịch 4 tài liệu Word báo cáo
+│   │   └── plot_time_series_comparison.py # Vẽ biểu đồ chuỗi thời gian đối chứng
 │   └── ml/                              # Scripts cho mô hình Machine Learning (LightGBM)
 │       ├── demo_saved_forecast.py       # Demo phát lại suy luận dự báo LightGBM
 │       ├── plot_saved_rmsse_report.py   # Xuất biểu đồ so sánh RMSSE
 │       └── summarize_validation.py      # Tổng hợp chỉ số validation ML
 │
-├── src/                                 # Toàn bộ mã nguồn lõi (Modularized 100%)
-│   ├── benchmarks/                      # HỢP PHẦN THỐNG KÊ ĐỐI CHỨNG (STATISTICAL BENCHMARKS)
+├── src/                                 # Toàn bộ mã nguồn lõi
+│   ├── benchmarks/                      # Hợp phần mô hình thống kê đối chứng
 │   │   ├── config.py                    # Cấu hình tự động nhận diện dữ liệu và siêu tham số
 │   │   ├── data_loader.py               # Nạp ma trận dữ liệu tối ưu bộ nhớ
 │   │   ├── models/                      # Thuật toán: Seasonal Naïve, ES_bu, Croston, Croston-SBA
-│   │   ├── evaluation/                  # Thước đo chuẩn M5: MAE, RMSE, RMSSE & điều phối đánh giá
-│   │   └── reports/                     # Tự động hóa biên dịch báo cáo Word (.docx)
+│   │   └── evaluation/                  # Thước đo chuẩn M5: MAE, RMSE, RMSSE & điều phối đánh giá
 │   │
-│   └── ml/                              # HỢP PHẦN HỌC MÁY (LIGHTGBM - TWEEDIE)
+│   └── ml/                              # Hợp phần mô hình học máy (LightGBM - Tweedie)
 │       ├── data_loader.py               # Nạp dữ liệu bảng sales, calendar, prices
 │       ├── feature_engineering.py       # Kỹ nghệ đặc trưng: Lags, Rolling windows, Calendar
 │       ├── preprocessing.py             # Tiền xử lý ma trận bán hàng và nhãn phân loại
@@ -86,9 +83,9 @@ IS403.R11-M5/
 
 ### B. Nhóm mô hình Thống kê Đối chứng (Statistical Benchmarks)
 - **Seasonal Naïve (SN):** Chu kỳ tuần 7 ngày bán lẻ ($m = 7$), đóng vai trò là thước đo cơ sở chuẩn mực tính thang đo RMSSE của cuộc thi M5.
-- **Exponential Smoothing kết hợp Bottom-Up ($ES_{bu}$):** San bằng mũ Holt-Winters mức và mùa vụ ($lpha = 0.2, \gamma = 0.15$), dự báo tại cấp SKU và tổng hợp lên toàn bộ các cấp phân cấp.
+- **Exponential Smoothing kết hợp Bottom-Up ($ES_{bu}$):** San bằng mũ Holt-Winters mức và mùa vụ ($\alpha = 0.2, \gamma = 0.15$), dự báo tại cấp SKU và tổng hợp lên toàn bộ các cấp phân cấp.
 - **Croston cổ điển (Croston, 1972):** Tách biệt quy mô nhu cầu và khoảng cách giữa các lần bán hàng, tối ưu cho nhu cầu gián đoạn.
-- **Croston-SBA (Syntetos & Boylan, 2005):** Hiệu chỉnh độ chệch dương bằng hệ số $(1 - lpha/2)$, tăng tốc tính toán hàng chục ngàn chuỗi thời gian bằng **Numba JIT (`@jit(nopython=True)`)**.
+- **Croston-SBA (Syntetos & Boylan, 2005):** Hiệu chỉnh độ chệch dương bằng hệ số $(1 - \alpha/2)$, tăng tốc tính toán hàng chục ngàn chuỗi thời gian bằng **Numba JIT (`@njit(fastmath=True)`)**.
 
 ---
 
@@ -112,7 +109,7 @@ pip install -r requirements.txt
 
 ### 4.1. Hợp phần Mô hình Thống kê Đối chứng (Statistical Benchmarks)
 
-Điểm khởi chạy chính: `run_benchmarks.py` (hoặc qua `scripts/run_benchmarks.py`):
+Điểm khởi chạy chính: `run_benchmarks.py` (hoặc qua `scripts/benchmarks/run_benchmarks.py`):
 
 ```powershell
 # 1. Kiểm thử đơn vị tính đúng đắn của thuật toán (trên chuỗi nhân tạo và mẫu M5)
@@ -123,9 +120,6 @@ python run_benchmarks.py --store CA_1
 
 # 3. Chạy thực nghiệm toàn diện trên toàn bộ 10 siêu thị M5
 python run_benchmarks.py --all_stores
-
-# 4. Biên dịch tự động toàn bộ 4 tài liệu Word báo cáo nghiên cứu và cẩm nang mô hình
-python run_benchmarks.py --build_reports
 ```
 
 ### 4.2. Hợp phần Mô hình Học máy (LightGBM–Tweedie)
@@ -144,10 +138,10 @@ python run.py
 
 ```powershell
 # Phát lại suy luận dự báo từ checkpoint mô hình đã lưu
-python scripts/demo_saved_forecast.py
+python scripts/ml/demo_saved_forecast.py
 
 # Xuất biểu đồ so sánh trực quan chỉ số RMSSE
-python scripts/plot_saved_rmsse_report.py
+python scripts/ml/plot_saved_rmsse_report.py
 ```
 
 ---
@@ -155,8 +149,8 @@ python scripts/plot_saved_rmsse_report.py
 ## 5. Kết quả thực nghiệm và Báo cáo
 
 Toàn bộ các tài liệu nghiên cứu học thuật và báo cáo đối sánh được xuất tự động tại thư mục [`docs/`](docs/):
-- **Báo cáo nghiên cứu hoàn chỉnh:** [`docs/research-report.docx`](docs/research-report.docx) / [`docs/research-report.md`](docs/research-report.md).
-- **Cẩm nang bản chất thuật toán & mã nguồn:** [`docs/model-guide.docx`](docs/model-guide.docx) / [`docs/model-guide.md`](docs/model-guide.md).
-- **Chuyên đề phân tích chỉ số:** [`docs/mae-guide.docx`](docs/mae-guide.docx) và [`docs/rmse-guide.docx`](docs/rmse-guide.docx).
+- **Báo cáo nghiên cứu hoàn chỉnh:** [`docs/reports/research-report.docx`](docs/reports/research-report.docx) / [`docs/technical/research-report.md`](docs/technical/research-report.md).
+- **Tài liệu kỹ thuật mô hình:** [`docs/reports/model-guide.docx`](docs/reports/model-guide.docx) / [`docs/technical/model-guide.md`](docs/technical/model-guide.md).
+- **Chuyên đề phân tích chỉ số:** [`docs/reports/mae-guide.docx`](docs/reports/mae-guide.docx) và [`docs/reports/rmse-guide.docx`](docs/reports/rmse-guide.docx).
 
 Các bảng tổng hợp sai số định lượng (Overall, Store, Category, Demand Profile) được lưu trữ tại [`results/benchmarks/metrics/`](results/benchmarks/metrics/).

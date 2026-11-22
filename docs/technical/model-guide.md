@@ -1,105 +1,123 @@
-# TÀI LIỆU GIẢI THÍCH BẢN CHẤT TOÁN HỌC & QUY TRÌNH MÃ NGUỒN CÁC MÔ HÌNH THỐNG KÊ ĐỐI CHỨNG
+# TÀI LIỆU KỸ THUẬT VÀ QUY TRÌNH MÃ NGUỒN CÁC MÔ HÌNH THỐNG KÊ ĐỐI CHỨNG
 ## Đề tài: Dự báo Bán lẻ Phân cấp Walmart M5 (Statistical Benchmarks)
 
 ---
 
-# PHẦN 1: QUY TRÌNH THỰC HIỆN TỪ A ĐẾN Z (GIẢI THÍCH BẰNG NGÔN NGỮ ĐỜI THƯỜNG)
+## 1. TỔNG QUAN KIẾN TRÚC VÀ QUY TRÌNH THỰC NGHIỆM
 
-Hãy hình dung toàn bộ quy trình xử lý của hợp phần mô hình thống kê giống như **một dây chuyền nấu ăn trong nhà hàng**, gồm đúng **5 bước đơn giản**:
+Hợp phần mô hình thống kê đối chứng (Statistical Benchmarks) được xây dựng nhằm thiết lập các mốc so sánh định lượng vững chắc cho toàn bộ đề tài nghiên cứu. Quy trình thực nghiệm bao gồm 5 giai đoạn có cấu trúc:
 
-### Bước 1: Chuẩn bị nguyên liệu (`src/data/loader.py`)
-- **Làm gì?** Mở file dữ liệu khổng lồ của Walmart (`sales_train_evaluation.csv`), lọc đúng cột cần thiết của 30.490 sản phẩm trong gần 2.000 ngày.
-- **Tách làm 2 đề thi:**
-  - *Đề thi thử (Validation):* Lấy lịch sử từ ngày 1 đến 1885 để ôn, rồi đoán 28 ngày tiếp theo (1886–1913).
-  - *Đề thi thật (Test):* Lấy lịch sử từ ngày 1 đến 1913 để ôn, rồi đoán 28 ngày cuối cùng (1914–1941).
-- **Công dụng:** Giúp máy tính không bị ngốn RAM vô ích và đảm bảo mô hình **không gian lận** (không nhìn trước tương lai).
+1. **Chuẩn bị ma trận dữ liệu (`src/benchmarks/data_loader.py`):**
+   - Đọc dữ liệu bán hàng lịch sử từ `sales_train_evaluation.csv` cho 30.490 chuỗi thời gian ở cấp sản phẩm–cửa hàng (Level 12).
+   - Tách ma trận huấn luyện và kiểm thử theo hai mốc thời gian đã thống nhất:
+     + *Validation:* Huấn luyện trên $d\_1$ đến $d\_1885$, dự báo 28 ngày ($d\_1886$ đến $d\_1913$).
+     + *Test:* Huấn luyện trên $d\_1$ đến $d\_1913$, dự báo 28 ngày ngoài mẫu ($d\_1914$ đến $d\_1941$).
+   - Tối ưu hóa cấu trúc dữ liệu dưới dạng ma trận mảng liền khối (`np.ascontiguousarray`) để hạn chế chiếm dụng bộ nhớ và hỗ trợ tính toán song song.
 
-### Bước 2: Thử nghiệm trước trên vài món đồ (`scripts/test_models.py`)
-- **Làm gì?** Trước khi chạy cho 30.000 sản phẩm, ta chạy thử trên 4 chuỗi giả lập và 10 sản phẩm thật.
-- **Công dụng:** Kiểm tra xem công thức toán học có bị lỗi `NaN`, bị số âm, hay bị lệch ngày cuối tuần không. Nếu 10 món chạy đúng và hợp lý thì mới dám bấm nút chạy đại trà.
+2. **Kiểm thử đơn vị thuật toán (`scripts/benchmarks/test_benchmark_models.py`):**
+   - Kiểm tra tính đúng đắn toán học trên 4 chuỗi nhân tạo (chuỗi gián đoạn, chuỗi mùa vụ tuần, chuỗi toàn số 0, chuỗi chỉ có 1 giao dịch bán) và 10 chuỗi thực tế đại diện từ dữ liệu M5.
+   - Bảo đảm kết quả không chứa giá trị `NaN`, không mang giá trị âm, và giữ đúng pha chu kỳ tuần 7 ngày.
 
-### Bước 3: Cho 4 "đầu bếp" cùng dự báo (`src/models/`)
-- **Làm gì?** Đưa lịch sử bán hàng vào 4 mô hình dự báo cùng lúc:
-  1. `seasonal_naive.py`: Bê nguyên tuần trước sang tuần này (làm mốc sàn).
-  2. `croston.py` (Croston & Croston–SBA): Chuyên trị hàng bán chậm nhiều số 0.
-  3. `exponential_smoothing.py` (`ES_bu`): Nhìn lịch sử gần + nhịp cuối tuần, rồi cộng dồn từ dưới lên.
-- **Công dụng:** Tìm ra dự báo 28 ngày tới cho từng sản phẩm. Nhờ gắn chip tăng tốc **Numba JIT**, 30.490 sản phẩm chạy xong chỉ trong **3–4 giây**.
+3. **Thực nghiệm dự báo đa mô hình (`src/benchmarks/models/`):**
+   - Thực thi 4 mô hình đối chứng thống kê độc lập:
+     + `seasonal_naive.py`: Mô hình lặp lại chu kỳ tuần gần nhất làm mốc cơ sở tính toán thang đo RMSSE.
+     + `exponential_smoothing.py` ($ES_{bu}$): San bằng mũ kết hợp thành phần mức và mùa vụ cộng tuần, tổng hợp từ dưới lên (Bottom-Up).
+     + `croston.py`: Mô hình Croston cổ điển (1972) và mô hình hiệu chỉnh Croston–SBA (Syntetos & Boylan, 2005) chuyên trị nhu cầu gián đoạn.
+   - Tối ưu hóa toàn bộ các vòng lặp đệ quy bằng **Numba JIT (`@njit(fastmath=True)`)**, cho phép xử lý toàn bộ 30.490 chuỗi trong chưa đầy 4 giây trên CPU thông thường.
 
-### Bước 4: Chấm điểm xem ai đoán chuẩn nhất (`src/evaluation/`)
-- **Làm gì?** So sánh 28 ngày dự báo với số bán thật trong lịch sử bằng 3 thước đo: **MAE**, **RMSE** và **RMSSE** (trong đó RMSSE < 1,0 nghĩa là giỏi hơn đoán mò).
-- **Công dụng:** Biết được mô hình nào thắng ở nhóm nào (ví dụ: `ES_bu` giỏi ở Đồ ăn, `Croston–SBA` giỏi ở Đồ chơi/Hàng bán chậm).
+4. **Đánh giá sai số đa tầng (`src/benchmarks/evaluation/`):**
+   - Đo lường sai số dự báo bằng 3 thước đo chuẩn mực: **MAE** (sai số tuyệt đối trung bình), **RMSE** (căn bậc hai sai số bình phương trung bình), và **RMSSE** (sai số chuẩn hóa cuộc thi M5).
+   - Phân tích chi tiết hiệu năng theo 3 ngành hàng chính (FOODS, HOBBIES, HOUSEHOLD) và theo 4 nhóm mức độ gián đoạn (tỷ lệ ngày bán bằng 0: $<30\%$, $30-50\%$, $50-70\%$, $\ge 70\%$).
 
-### Bước 5: Đóng gói kết quả bàn giao cho nhóm (`outputs/` & `docs/`)
-- **Làm gì?**
-  - Lưu file dự báo chuẩn 8 cột vào `outputs/predictions/` để các bạn làm Machine Learning (LightGBM, Random Forest) lấy về so sánh.
-  - Lưu 4 bảng tổng hợp sai số vào `outputs/metrics/` để vẽ biểu đồ và làm slide.
-  - Tự động xuất báo cáo Word vào `docs/`.
-- **Công dụng:** Tạo ra **thước đo chuẩn (Benchmark)**. Nhờ đó cả nhóm biết mô hình Học máy phức tạp có thực sự đáng công làm hay không.
+5. **Đóng gói kết quả bàn giao (`results/benchmarks/`):**
+   - Bảng dự báo 28 ngày chuẩn hóa 8 cột (`model, split, origin_day, item_id, store_id, target_day, horizon, y_pred`).
+   - Bảng tổng hợp dự báo phân cấp Bottom-Up 12 cấp M5 (`es_bu_aggregated.csv`).
+   - 4 bảng tổng hợp sai số định lượng dạng CSV (Overall, Category, Intermittency, Store).
 
 ---
 
-# PHẦN 2: CẤU TRÚC THƯ MỤC & GIẢI THÍCH TỪNG FILE CODE
-
-Cấu trúc dự án được chia gọn theo chuẩn phần mềm Python (tên thư mục hoàn toàn bằng tiếng Anh, không dùng gạch dưới `_`):
+## 2. CẤU TRÚC THƯ MỤC VÀ VAI TRÒ TỪNG MODULE
 
 ```
-Đồ án/
-├── README.md                  # Hướng dẫn tổng quan & cách chạy lệnh
-├── docs/                      # Toàn bộ tài liệu báo cáo (.md & .docx)
-├── outputs/
-│   ├── predictions/           # File dự báo 28 ngày chuẩn 8 cột (.csv)
-│   └── metrics/               # 4 bảng tổng hợp sai số (.csv)
-├── scripts/                   # Nơi chứa các lệnh chạy trực tiếp
-│   ├── test_models.py         # Chạy kiểm thử nhanh trên vài chuỗi mẫu
-│   ├── run_benchmark.py       # Chạy thực nghiệm chính (1 hoặc 10 siêu thị)
-│   └── build_docs.py          # Chạy xuất ra file Word (.docx)
-└── src/                       # Thư viện mã nguồn lõi
-    ├── config.py              # Cấu hình tập trung (đường dẫn, tham số, mốc ngày)
-    ├── data/
-    │   └── loader.py          # Đọc CSV và cắt tập Train/Validation/Test
-    ├── models/
-    │   ├── croston.py         # Thuật toán Croston & Croston-SBA
-    │   ├── exponential_smoothing.py # Thuật toán ES_bu & hàm cộng dồn Bottom-Up
-    │   └── seasonal_naive.py  # Thuật toán Seasonal Naive (chu kỳ 7 ngày)
-    ├── evaluation/
-    │   ├── metrics.py         # Tính MAE, RMSE, RMSSE & phân 4 nhóm gián đoạn
-    │   └── evaluator.py       # Chạy 4 mô hình, format bảng 8 cột, gom bảng sai số
-    └── reports/
-        ├── docx_report.py     # Tạo file docs/research-report.docx
-        └── docx_guide.py      # Tạo file docs/model-guide.docx
+IS403.R11-M5/
+├── configs/
+│   └── benchmarks.yaml              # Cấu hình siêu tham số (alpha, gamma, mốc ngày)
+├── scripts/
+│   └── benchmarks/
+│       ├── test_benchmark_models.py # Kịch bản kiểm thử đơn vị thuật toán
+│       ├── run_benchmarks.py        # Điểm khởi chạy thực nghiệm (1 hoặc 10 siêu thị)
+│       ├── plot_time_series_comparison.py # Vẽ biểu đồ chuỗi thời gian đối chứng
+│       └── build_reports.py         # Biên dịch báo cáo tổng hợp
+├── src/
+│   └── benchmarks/
+│       ├── config.py                # Cấu hình đường dẫn và hằng số hệ thống
+│       ├── data_loader.py           # Nạp dữ liệu và tách ma trận theo dòng thời gian
+│       ├── models/
+│       │   ├── seasonal_naive.py    # Thuật toán Seasonal Naïve (chu kỳ m = 7)
+│       │   ├── exponential_smoothing.py # Thuật toán ES_bu và cơ chế Bottom-Up
+│       │   └── croston.py           # Thuật toán Croston và Croston–SBA
+│       ├── evaluation/
+│       │   ├── metrics.py           # Tính toán các chỉ số MAE, RMSE, RMSSE
+│       │   └── evaluator.py         # Điều phối thực nghiệm và xuất bảng kết quả
+│       └── reports/
+│           ├── docx_report.py       # Xuất báo cáo nghiên cứu thực nghiệm
+│           ├── docx_guide.py        # Xuất tài liệu kỹ thuật mô hình
+│           └── docx_separate_metrics.py # Xuất chuyên đề MAE và RMSE
+└── results/
+    └── benchmarks/
+        ├── predictions/             # Tệp dự báo 28 ngày phân tầng theo siêu thị
+        └── metrics/                 # 4 bảng tổng hợp chỉ số sai số định lượng
 ```
 
-### Chi tiết vai trò từng file code:
-1. **`src/config.py`**: Chứa toàn bộ đường dẫn thư mục, mốc chia ngày (1885, 1913, 1941), hệ số $\alpha = 0,1$ cho Croston, $\alpha = 0,2, \gamma = 0,15$ cho ES. Muốn chỉnh thông số chỉ cần sửa đúng 1 file này.
-2. **`src/data/loader.py`**: Đọc file gốc `sales_train_evaluation.csv` một cách tiết kiệm RAM, lọc theo cửa hàng (nếu cần) và cắt ra ma trận số để đưa vào mô hình.
-3. **`src/models/croston.py`**: Chứa công thức Croston (1972) và Croston–SBA (2005). Dùng `@njit` của Numba để biên dịch sang tốc độ ngôn ngữ C. Có thêm bản `seasonal` nếu muốn gắn hệ số cuối tuần.
-4. **`src/models/exponential_smoothing.py`**: Chứa thuật toán Holt-Winters mùa vụ cộng tính (chu kỳ 7 ngày) và hàm `aggregate_bottom_up()` để cộng dồn dự báo từ cấp từng món đồ lên 11 cấp cao hơn (cửa hàng, bang, toàn quốc).
-5. **`src/models/seasonal_naive.py`**: Lấy lại đúng 7 ngày gần nhất để lặp lại cho 4 tuần tiếp theo.
-6. **`src/evaluation/metrics.py`**: Tính chuẩn xác 3 chỉ số `MAE`, `RMSE`, `RMSSE` theo đúng định nghĩa cuộc thi Walmart M5, kèm hàm đo tỷ lệ số 0 để chia sản phẩm thành 4 nhóm gián đoạn.
-7. **`src/evaluation/evaluator.py`**: Đóng vai trò "quản đốc phân xưởng" — gọi cả 4 mô hình chạy tuần tự, bấm giờ, gom bảng dự báo đúng 8 cột chuẩn của nhóm và xuất 4 bảng sai số vào `outputs/metrics/`.
-8. **`scripts/test_models.py`**, **`scripts/run_benchmark.py`**, **`scripts/build_docs.py`**: 3 nút bấm để chạy kiểm thử, chạy thực nghiệm toàn bộ, và xuất file Word.
+---
+
+## 3. CƠ SỞ LÝ THUYẾT VÀ BẢN CHẤT TOÁN HỌC CÁC MÔ HÌNH
+
+### 3.1. Đặc trưng dữ liệu bán lẻ Walmart M5
+- **Tỷ lệ số 0 cao (68,37%):** Đa số các mặt hàng thuộc nhóm HOBBIES và HOUSEHOLD có nhu cầu ngắt quãng, xuất hiện nhiều ngày liên tiếp không có giao dịch bán.
+- **Hiệu ứng mùa vụ tuần:** Khối lượng mua sắm vào các ngày cuối tuần (thứ Bảy và Chủ Nhật) thường cao hơn trung bình ngày thường khoảng 31%, đòi hỏi mô hình phải phản ánh đúng chu kỳ 7 ngày.
+
+### 3.2. Bản chất các mô hình đối chứng
+1. **Seasonal Naïve (Mốc cơ sở chuẩn mực):**
+   - Giả định lượng bán tương lai lặp lại chính xác giá trị của chu kỳ 7 ngày gần nhất:
+     $$\hat{y}_{T+h} = y_{T+h - 7 \cdot \lceil h/7 \rceil}$$
+   - Đóng vai trò là mẫu số đo lường mức độ biến động ngẫu nhiên trong thang đo RMSSE.
+
+2. **Exponential Smoothing kết hợp Bottom-Up ($ES_{bu}$):**
+   - Phân rã chuỗi thời gian thành thành phần mức cơ sở ($L_t$) và thành phần mùa vụ cộng ($S_t$):
+     $$L_t = \alpha (y_t - S_{t-7}) + (1 - \alpha) L_{t-1}$$
+     $$S_t = \gamma (y_t - L_t) + (1 - \gamma) S_{t-7}$$
+     $$\hat{y}_{T+h} = \max\left(0, L_T + S_{T + ((h - 1) \pmod 7) + 1}\right)$$
+   - Sau khi dự báo tại cấp SKU (Level 12), tổng hợp lên các cấp cao hơn theo công thức:
+     $$\hat{y}_{K, T+h} = \sum_{i \in \text{Nhóm } K} \hat{y}_{i, T+h}$$
+   - Đạt sai số MAE thấp nhất (1,0608 trên tập Validation), đặc biệt tối ưu ở ngành Thực phẩm (FOODS).
+
+3. **Croston cổ điển (Croston, 1972):**
+   - Tách rời quy mô lượng bán khi phát sinh ($z_t$) và khoảng cách giữa các lần bán ($p_t$):
+     $$\hat{y}_{T+h}^{\text{Croston}} = \frac{z_T}{p_T}$$
+   - Thích hợp cho nhu cầu gián đoạn nhưng mắc độ chệch dương cố hữu do bất đẳng thức Jensen: $E[1/p] > 1/E[p]$.
+
+4. **Hiệu chỉnh Syntetos–Boylan (Croston–SBA, 2005):**
+   - Bổ sung hệ số điều chỉnh $(1 - \alpha/2)$ nhằm triệt tiêu phần chệch dương:
+     $$\hat{y}_{T+h}^{\text{SBA}} = \left(1 - \frac{\alpha}{2}\right) \frac{z_T}{p_T}$$
+   - Với $\alpha = 0,1$, dự báo giảm 5% so với Croston cổ điển, giúp doanh nghiệp tránh hiện tượng tích trữ tồn kho ảo và đạt chỉ số RMSSE tốt nhất trong nhóm thống kê (0,7589).
 
 ---
 
-# PHẦN 3: BẢN CHẤT 4 MÔ HÌNH & Ý NGHĨA CÁC CHỈ SỐ
+## 4. BẢNG TỔNG HỢP SAI SỐ VÀ NGƯỠNG ĐỐI CHỨNG (BENCHMARK)
 
-### 1. Hai cái bẫy của dữ liệu bán lẻ Walmart:
-- **68,37% số ngày bằng 0:** Nhiều món đồ chơi, đồ gia dụng cả tuần không ai mua, đùng cái có người mua 2-3 cái.
-- **Hiệu ứng cuối tuần:** Thứ Bảy, Chủ Nhật lượng mua cao hơn ngày thường tới **31%**.
+Bảng kết quả thực nghiệm trên toàn bộ 30.490 chuỗi thời gian:
 
-### 2. Bản chất từng mô hình:
-- **Seasonal Naïve:** "Tuần trước bán sao, tuần này bê nguyên sang." (Đơn giản nhất, dễ sai khi tuần trước ngẫu nhiên bằng 0 hoặc có người mua sỉ).
-- **ES_bu:** "Nhìn cả lịch sử nhưng ưu tiên ngày gần đây + học nhịp cuối tuần. Dự báo từng món ở đáy rồi cộng dồn lên tổng hệ thống." $\to$ **Thắng tuyệt đối ở ngành Thực phẩm (FOODS).**
-- **Croston (1972):** Tách chuỗi nhiều số 0 thành 2 câu hỏi: *Mỗi lần mua mấy cái ($z$)?* và *Bao nhiêu ngày mới có 1 người mua ($p$)?* $\to$ Dự báo trung bình = $z / p$.
-- **Croston–SBA (2005):** Khắc phục lỗi toán học "lạc quan quá mức" của Croston bằng cách nhân thêm $(1 - \frac{\alpha}{2}) = 0,95$ $\to$ **Giảm tồn kho ảo, đạt RMSSE tốt nhất toàn diện (0,7589).**
+| Mô hình | Giai đoạn | MAE TB | RMSE TB | RMSSE TB | Ghi chú vai trò |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **Seasonal Naïve** | Validation | 1,2324 | 1,7400 | 0,9756 | Mốc cơ sở chuẩn mực của cuộc thi M5 |
+| **Croston (1972)** | Validation | 1,1026 | 1,3986 | 0.7616 | Mô hình gốc cho nhu cầu gián đoạn |
+| **Croston–SBA (2005)** | **Validation** | **1,0862** | **1,3909** | **0,7589** | ⭐ **RMSSE tốt nhất nhóm thống kê** |
+| **ES_bu** | **Validation** | **1,0608** | **1,3983** | **0,7775** | ⭐ **MAE tốt nhất nhóm thống kê** |
+| **Seasonal Naïve** | Test | 1,2440 | 1,7519 | 0,9972 | Kiểm định ngoài mẫu độc lập |
+| **Croston–SBA (2005)** | **Test** | **1,0759** | **1,3926** | **0,7687** | ⭐ **RMSSE tốt nhất trên tập Test** |
+| **ES_bu** | **Test** | **1,0659** | **1,4121** | **0,7972** | ⭐ **MAE tốt nhất trên tập Test** |
 
----
-
-# PHẦN 4: KỊCH BẢN 2 PHÚT BÁO CÁO TIẾN ĐỘ
-
-> *"Chào các bạn/thầy cô, mình xin báo cáo tiến độ phần việc mô hình thống kê đối chứng (ES_bu, Croston–SBA):*
-> 1. **Tiến độ:** Đã hoàn thành **100%** (từ tìm hiểu, cài đặt code, kiểm thử chuỗi mẫu đến chạy toàn bộ 30.490 chuỗi của 10 siêu thị trên cả tập Validation và Test).
-> 2. **Tổ chức code:** Đã cấu trúc lại gọn gàng theo chuẩn module Python (`src/`, `scripts/`, `outputs/`, `docs/`) và tối ưu hóa Numba JIT nên chạy hết 30.000 chuỗi chỉ mất chưa tới **4 giây**.
-> 3. **Kết quả bàn giao:** Đã xuất file dự báo chuẩn 8 cột (`predictions_validation.csv`, `predictions_test.csv`) để nhóm đối chiếu với Machine Learning.
-> 4. **Ngưỡng Benchmark:** **Croston–SBA** đạt RMSSE **0,7589** (vượt trội ở nhóm hàng bán chậm nhiều số 0), còn **ES_bu** đạt MAE **1,0608** (mạnh nhất ở ngành Thực phẩm). Các mô hình ML của nhóm cần vượt qua 2 mốc này để chứng minh hiệu quả."*
-
+> **Ngưỡng Benchmark kiểm chứng cho các mô hình Học máy:**
+> - Ngưỡng đối chứng MAE: **1,0608** (xác lập bởi $ES_{bu}$).
+> - Ngưỡng đối chứng RMSSE: **0,7589** (xác lập bởi Croston–SBA).
