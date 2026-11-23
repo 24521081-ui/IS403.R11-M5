@@ -1,0 +1,3 @@
+cau_hinh,ky,origin,ngay_bat_dau,ngay_ket_thuc,so_cua_hang,so_chuoi,so_dong,so_cap,WRMSSE,tong_thuc_te,tong_du_bao,chenh_lech,ty_le_du_thieu_pct,trang_thai,bang_12_cap,dai_dien,ten_bao_cao
+C7,validation,1885,d_1886,d_1913,10,30490,853720,12,0.5825613324334019,1183626.0,1177464.313423784,-6161.686576216016,-0.5205771566538786,Đã chấm đủ,wrmsse_12_cap/validation_C7.csv,True,Bản cuối
+C7,test,1913,d_1914,d_1941,10,30490,853720,12,0.6524813195696659,1231764.0,1177561.7727795362,-54202.2272204638,-4.400374359086956,Đã chấm đủ,wrmsse_12_cap/test_C7.csv,True,Bản cuối

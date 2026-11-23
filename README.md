@@ -1,3 +1,25 @@
+# Chấm WRMSSE cho nhóm M5
+
+Ae ơi, repo này có bộ chấm chung để mình so sánh 6 mô hình trên cùng dữ liệu và cùng cách tính điểm.
+
+Trước giờ mình dùng RMSSE trung bình không trọng số để so các cấu hình ở cấp sản phẩm × cửa hàng, với mỗi cặp được tính ngang nhau. Giờ mình dùng **WRMSSE trên 12 cấp** làm điểm chính để bám sát cách chấm của bài báo M5. Kết quả RMSSE cũ vẫn dùng để đối chiếu quá trình thử cấu hình nha.
+
+**Ae bắt đầu ở đây:**
+
+1. Giữ lại file dự báo validation của các cấu hình đã thử để chấm lại và chốt cấu hình cho mô hình của mình.
+2. Chuẩn bị file dự báo test của cấu hình đã chốt và ba file dữ liệu M5.
+3. Mở [hướng dẫn bàn giao WRMSSE](docs/WRMSSE_BAN_GIAO.md) để xem định dạng file, lệnh chấm test và các file cần gửi tui.
+
+Có đủ dự báo đã lưu thì mình chỉ tính lại điểm, không cần train lại. Ai thiếu dự báo của cấu hình nào thì báo tui tên cấu hình và kỳ đang thiếu nha.
+## Báo cáo LightGBM Two-Part
+
+- [Xếp hạng WRMSSE validation C0–C7](reports/xep_hang_wrmsse_validation.csv) · [Kết quả validation/test](reports/ket_qua_wrmsse_validation_test.csv).
+- [Mô tả và liên kết sáu biểu đồ](reports/mo_ta_bieu_do.md) · [12 cấp Test C7](reports/wrmsse_12_cap/test_C7.csv).
+
+Bản cuối được đề xuất là C7 với λ = 0,75, căn cứ WRMSSE validation. Lệnh chung `scripts/score_model_wrmsse.py` hiện chấm test; validation C0–C7 dùng script riêng `scripts/score_wrmsse_configurations.py` với dự báo Two-Part đã lưu tại máy. Chưa có lệnh chung chấm validation từ CSV tùy ý của thành viên.
+
+---
+
 # Đánh giá thực nghiệm các mô hình dự báo lượng bán sản phẩm trong bán lẻ (Walmart M5)
 
 Đề tài: **Đánh giá thực nghiệm các mô hình dự báo lượng bán sản phẩm trong bán lẻ: Hỗ trợ lập kế hoạch nhu cầu và bổ sung hàng hóa.**  

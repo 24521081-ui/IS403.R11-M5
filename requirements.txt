@@ -8,3 +8,5 @@ joblib>=1.4,<2
 pytest>=8,<10
 
 numba>=0.58
+scipy>=1.11,<2
+openpyxl>=3.1,<4

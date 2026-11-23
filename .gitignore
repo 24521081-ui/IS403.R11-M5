@@ -27,3 +27,18 @@ outputs/predictions/*.csv
 outputs/predictions/**/*.csv
 !outputs/predictions/.gitkeep
 !results/*.csv
+
+# Đầu vào và bằng chứng cục bộ WRMSSE
+venv/
+.env
+.env.*
+!.env.example
+.local_evidence/
+*.py[cod]
+*.log
+*.tmp
+*.joblib
+*.pkl
+data/raw/*.zip
+data/raw/*.parquet
+data/raw/*.xlsx
