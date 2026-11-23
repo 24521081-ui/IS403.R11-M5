@@ -1,0 +1,3 @@
+﻿"split","model","series_count","mae_mean","rmse_mean","rmsse_mean"
+"test","Seasonal_Naive","30490","1.2439900000000002","1.7519000000000002","0.99725"
+"validation","Seasonal_Naive","30490","1.23236","1.7400399999999998","0.97559"
