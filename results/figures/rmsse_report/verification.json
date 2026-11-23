@@ -1,0 +1,279 @@
+{
+  "source": "results\\aggregated\\validation_full_10_stores_20261111T151420617263Z",
+  "input_sha256": {
+    "results\\aggregated\\validation_full_10_stores_20261111T151420617263Z\\metrics_overall.csv": "4f1ce5e23f05efe5c8bdd31c07459be242f837ad3f360d35eeb195e57f7cdc1c",
+    "results\\aggregated\\validation_full_10_stores_20261111T151420617263Z\\metrics_by_store.csv": "74fd5d4d82cff5f57a50cc2558105df5a5bbb404806d0ff2c8092ee112501e46",
+    "results\\aggregated\\validation_full_10_stores_20261111T151420617263Z\\metrics_per_series.csv": "8efa2670434d961b9543066ee87645afdd3d00811ace1b51eb48c18a8fa96fc0",
+    "results\\aggregated\\validation_full_10_stores_20261111T151420617263Z\\summary_crosscheck.csv": "2000b3f8ba4f2b1ba16673509ee2c4018e5ba4b45086704363c99d6706ce541f",
+    "results\\aggregated\\validation_full_10_stores_20261111T151420617263Z\\integrity_check.json": "02aacf69fa1d1e4858ab8d227f4388ed3cbcb3f8e4f2ada2468fb5b7539720f6"
+  },
+  "changed_inputs": [],
+  "series_crosscheck_passed": true,
+  "forecast_schemas": [
+    {
+      "path": "results\\validation\\validation_full_CA_1_20261106T152044652294Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_CA_1_20261106T152044652294Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_CA_2_20261106T152128571471Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_CA_2_20261106T152128571471Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_CA_3_20261106T152215498574Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_CA_3_20261106T152215498574Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_CA_4_20261106T152304815096Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_CA_4_20261106T152304815096Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_TX_1_20261106T152349831355Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_TX_1_20261106T152349831355Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_TX_2_20261106T152435185415Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_TX_2_20261106T152435185415Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_TX_3_20261106T152523230095Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_TX_3_20261106T152523230095Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_WI_1_20261106T152616359231Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_WI_1_20261106T152616359231Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_WI_2_20261106T152702387404Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_WI_2_20261106T152702387404Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_WI_3_20261106T152749597725Z\\lightgbm_tweedie.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    },
+    {
+      "path": "results\\validation\\validation_full_WI_3_20261106T152749597725Z\\seasonal_naive.csv",
+      "columns": [
+        "model",
+        "split",
+        "origin_day",
+        "item_id",
+        "store_id",
+        "target_day",
+        "horizon",
+        "y_pred"
+      ]
+    }
+  ],
+  "retrained": false,
+  "final_test_run": false,
+  "raw_data_read": false,
+  "horizon_status": "not_generated_missing_per_day_actuals",
+  "overall_reduction_percent": 23.290749796901032
+}

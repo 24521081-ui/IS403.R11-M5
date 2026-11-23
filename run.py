@@ -6,6 +6,7 @@ import logging
 from datetime import datetime, timezone
 from pathlib import Path
 
+import numpy as np
 import yaml
 
 from src.ml.data_loader import (
@@ -98,15 +99,13 @@ def run_store(config, args, data_dir, output_root, store):
     history = prepare_history(wide, calendar, origin, prices)
     matrix = history_matrix(wide, origin)
     last_prices = None
+    last_price_changes = None
 
     if config["use_prices"]:
         # Giữ giá đã biết tại origin cố định cho toàn bộ 28 ngày dự báo.
-        last_prices = (
-            history.loc[history.day == origin]
-            .set_index("item_id")
-            .loc[items, "sell_price"]
-            .to_numpy()
-        )
+        origin_snapshot = history.loc[history.day == origin].set_index("item_id")
+        last_prices = origin_snapshot.loc[items, "sell_price"].to_numpy(dtype=np.float32)
+        last_price_changes = origin_snapshot.loc[items, "price_change"].to_numpy(dtype=np.float32)
 
     del wide, prices
     gc.collect()
@@ -147,6 +146,7 @@ def run_store(config, args, data_dir, output_root, store):
         "split": split,
         "horizon": config["horizon"],
         "last_prices": last_prices,
+        "last_price_changes": last_price_changes,
     }
     prediction = recursive_forecast(bundle["model"], **common)
     baseline = recursive_forecast(

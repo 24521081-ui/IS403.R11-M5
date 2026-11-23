@@ -50,7 +50,13 @@ def add_history_features(frame):
 
 
 def next_day_features(
-    history, items, calendar_row, state, categories, last_prices=None
+    history,
+    items,
+    calendar_row,
+    state,
+    categories,
+    last_prices=None,
+    last_price_changes=None,
 ):
     """Tạo cùng công thức từ ma trận lịch sử tạm thời, không nhận y tương lai."""
     history = np.asarray(history)
@@ -72,6 +78,8 @@ def next_day_features(
         )
     if last_prices is not None:
         frame["sell_price"] = np.asarray(last_prices, dtype=np.float32)
+    if last_price_changes is not None:
+        frame["price_change"] = np.asarray(last_price_changes, dtype=np.float32)
     return frame
 
 
@@ -93,7 +101,9 @@ def prepare_training_data(history):
 
     # 28 ngày đầu chưa đủ lịch sử cho lag_28; không phải xóa các ngày bán bằng 0.
     frame = frame.dropna(subset=HISTORY_FEATURES)
-    features = BASE_FEATURES + (["sell_price"] if "sell_price" in frame else [])
+    features = BASE_FEATURES + (
+        ["sell_price", "price_change"] if "sell_price" in frame else []
+    )
 
     if frame.empty or frame.sales.sum() <= 0:
         raise ValueError("Không đủ Train hoặc toàn bộ lượng bán Train bằng 0.")
@@ -102,7 +112,11 @@ def prepare_training_data(history):
     X = frame[features]
     y = frame.sales
     numeric = X.select_dtypes(include="number")
-    required = [name for name in numeric.columns if name != "sell_price"]
+    required = [
+        name
+        for name in numeric.columns
+        if name not in ["sell_price", "price_change"]
+    ]
 
     if (
         not np.isfinite(numeric[required].to_numpy()).all()

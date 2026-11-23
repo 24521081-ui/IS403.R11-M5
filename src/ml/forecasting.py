@@ -35,6 +35,7 @@ def recursive_forecast(
     split="validation",
     horizon=28,
     last_prices=None,
+    last_price_changes=None,
     model_name="lightgbm_tweedie",
 ):
     """Giữ mô hình cố định, thêm dự báo vào lịch sử trước bước tiếp theo."""
@@ -61,8 +62,23 @@ def recursive_forecast(
         if day not in calendar.index:
             raise ValueError(f"Lịch thiếu {day}.")
         # 5.2. Tạo đặc trưng cho ngày kế tiếp bằng công thức của giai đoạn 3.
+        current_price_changes = (
+            last_price_changes
+            if step <= 7
+            else (
+                np.zeros_like(last_price_changes)
+                if last_price_changes is not None
+                else None
+            )
+        )
         X = next_day_features(
-            temporary, items, calendar.loc[day], state, categories, last_prices
+            temporary,
+            items,
+            calendar.loc[day],
+            state,
+            categories,
+            last_prices,
+            current_price_changes,
         )
         # 5.3. Dự báo cho tất cả sản phẩm, kiểm tra và chặn giá trị âm.
         prediction = np.asarray(model.predict(X[features]), dtype=np.float64)

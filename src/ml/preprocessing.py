@@ -64,6 +64,15 @@ def prepare_history(wide, calendar, origin, prices=None):
         LOGGER.info(
             "Tỷ lệ thiếu giá sau ffill: %.2f%%", frame.sell_price.isna().mean() * 100
         )
+        # Biến động giá so với 7 ngày trước (tuần trước vì giá M5 thay đổi theo tuần)
+        lag_price = frame.groupby(
+            ["store_id", "item_id"], observed=True
+        ).sell_price.shift(7)
+        frame["price_change"] = np.where(
+            (lag_price > 0) & frame.sell_price.notna(),
+            (frame["sell_price"] - lag_price) / lag_price,
+            0.0,
+        ).astype("float32")
     keep = [
         "item_id",
         "store_id",
@@ -75,7 +84,7 @@ def prepare_history(wide, calendar, origin, prices=None):
         "snap",
     ]
     if prices is not None:
-        keep.append("sell_price")
+        keep.extend(["sell_price", "price_change"])
     frame = frame[keep].copy()
     for column in ["item_id", "store_id"]:
         frame[column] = frame[column].astype("category")

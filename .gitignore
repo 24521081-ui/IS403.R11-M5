@@ -26,3 +26,4 @@ results/benchmarks/predictions/*.csv
 outputs/predictions/*.csv
 outputs/predictions/**/*.csv
 !outputs/predictions/.gitkeep
+!results/*.csv
