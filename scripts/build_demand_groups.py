@@ -93,15 +93,8 @@ def build_groups_for_origin(
             demand_group[i] = "frequent" if adi_val <= adi_threshold else "intermittent"
 
     out = wide[META_COLS].copy().reset_index(drop=True)
-    out["first_positive_day"] = first_positive_day
-    out["active_days"] = active_days
-    out["positive_days"] = positive_days
-    out["zero_rate"] = zero_rate
     out["ADI"] = adi
-    out["CV2"] = cv2
     out["demand_group"] = demand_group
-    out["cold_start"] = cold_start
-    out["insufficient_history"] = insufficient_history
 
     if expected_rows is not None:
         assert len(out) == expected_rows, f"Kỳ vọng {expected_rows} chuỗi, nhận {len(out)}"
@@ -133,10 +126,7 @@ def summarize_groups(
                 "series_share_pct": 100.0 * len(sub) / total_series,
                 "revenue_28d": rev,
                 "revenue_share_pct": 100.0 * rev / total_rev if total_rev > 0 else 0.0,
-                "cold_start_count": int(sub["cold_start"].sum()),
-                "insufficient_history_count": int(sub["insufficient_history"].sum()),
                 "median_ADI": float(sub["ADI"].median()) if sub["ADI"].notna().any() else np.nan,
-                "median_zero_rate": float(sub["zero_rate"].median()),
             }
         )
     return pd.DataFrame(rows)

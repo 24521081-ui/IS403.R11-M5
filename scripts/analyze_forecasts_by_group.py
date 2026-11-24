@@ -85,7 +85,7 @@ def evaluate_by_group(
     if ref_model in model_tables:
         ref_df = model_tables[ref_model][KEY + ["RMSSE"]].rename(columns={"RMSSE": "RMSSE_ref"})
 
-    group_meta = groups_df[KEY + ["demand_group", "ADI", "CV2", "zero_rate", "cold_start", "insufficient_history"]]
+    group_meta = groups_df[KEY + ["demand_group", "ADI"]]
     rows = []
 
     for model_name, df in model_tables.items():
