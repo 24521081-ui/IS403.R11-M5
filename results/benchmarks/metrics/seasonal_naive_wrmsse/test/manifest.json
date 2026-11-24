@@ -1,0 +1,37 @@
+{
+  "status": "complete",
+  "model": "Seasonal_Naive",
+  "split": "test",
+  "origin": 1913,
+  "forecast_days": [
+    1914,
+    1941
+  ],
+  "revenue_days": [
+    1886,
+    1913
+  ],
+  "n_stores": 10,
+  "n_series": 30490,
+  "n_forecast_rows": 853720,
+  "n_hierarchy_levels": 12,
+  "WRMSSE": 0.8697007023310631,
+  "scorer_source": "24521081-ui/IS403.R11-M5, branch main",
+  "scorer_source_commit": "185f46caa969738f6647fb4aed1a6157cc02368e",
+  "inputs_sha256": {
+    "results\\benchmarks\\predictions\\ca_1\\test\\forecasts.csv": "0dfe35ead9316ec0294e693077eb993cf83958cf04e4313d215c185d570fcf7e",
+    "results\\benchmarks\\predictions\\ca_2\\test\\forecasts.csv": "c4c2f386f66360542aa9013ffeebae0b098e31d8241dcae9f598102225f5ddee",
+    "results\\benchmarks\\predictions\\ca_3\\test\\forecasts.csv": "2fb083761b413fc69d87e83882699e09bea6bc318bb499ed4ffc474bec3a18b7",
+    "results\\benchmarks\\predictions\\ca_4\\test\\forecasts.csv": "39554ce186bec84a16b18ff5704132cb7ea303fab15e14439127edb14a3ea506",
+    "results\\benchmarks\\predictions\\tx_1\\test\\forecasts.csv": "e5e28957a13e647afc001aca1d1590dc9fc5dccc7c732886e9a888ec1244cc24",
+    "results\\benchmarks\\predictions\\tx_2\\test\\forecasts.csv": "e9266fcb568e38d255591e12042ac77c7c079400198c960072db5f290235624a",
+    "results\\benchmarks\\predictions\\tx_3\\test\\forecasts.csv": "f82361e02c3ef30529c59bb7e19c50c464f30f08e14f4490262ee97140d2d87d",
+    "results\\benchmarks\\predictions\\wi_1\\test\\forecasts.csv": "2a723cce1d8162867fced4026c63d4ea51d2f24402fdf43bc5cff4750f657945",
+    "results\\benchmarks\\predictions\\wi_2\\test\\forecasts.csv": "260c81937f688b0aefe0e3f8f9ca49f79e877cc030ff2c70bcf35f270c4b53b2",
+    "results\\benchmarks\\predictions\\wi_3\\test\\forecasts.csv": "dd4271d1424c62d871d239630a33ff5b8982ac7fc703c2380b57d3734876aade",
+    "data\\raw\\sales_train_evaluation.csv": "4b4a47c44c38380d2a9168216fea8c9ff2f31b1ddb772f8a0995952a038b8aa0",
+    "data\\raw\\calendar.csv": "d12b5914ef03e66649adf5dd9e996e6602251c22b7a6af8f1f7e3aa12f8860f5",
+    "data\\raw\\sell_prices.csv": "9da3ad1f8b8ccacdbdc70612191dd375ec24a4ac6625c24b75b3bc60b0bed2ef"
+  },
+  "no_training_or_inference": true
+}
