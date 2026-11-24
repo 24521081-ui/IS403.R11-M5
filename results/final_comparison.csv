@@ -1,5 +1,6 @@
 model,split,mae_mean,rmse_mean,rmsse_mean,wrmsse,series_count,source
-ES_bu,test,1.0659,1.4121,0.7972,0.770677,30490,benchmarks
+LightGBM_Tweedie_20261124,test,1.0657,1.3555,0.759,0.623456,30490,score_model_wrmsse
+ES_bu,test,1.0659,1.4121,0.7972,0.770677,30490,score_model_wrmsse
 Seasonal_Naive,test,1.244,1.7519,0.9972,0.869701,30490,benchmarks
-Croston,test,1.0898,1.3969,0.7704,1.05659,30490,benchmarks
-Croston_SBA,test,1.0759,1.3926,0.7687,1.091778,30490,benchmarks
+Croston,test,1.0898,1.3969,0.7704,1.05659,30490,score_model_wrmsse
+Croston_SBA,test,1.0759,1.3926,0.7687,1.091778,30490,score_model_wrmsse

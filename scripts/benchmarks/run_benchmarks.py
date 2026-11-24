@@ -73,6 +73,18 @@ def main():
     # 4. Tổng hợp và xuất 4 bảng sai số
     summarize_and_export_metrics(val_metrics, test_metrics, args.all_stores, store_suffix)
 
+    # 5. Khi chạy đủ 10 cửa hàng, tính thêm WRMSSE 12 cấp (Validation & Test) và tách CSV từng mô hình
+    if args.all_stores:
+        from scripts.benchmarks.score_benchmarks_wrmsse import (
+            export_split_by_model,
+            score_benchmarks_wrmsse,
+        )
+
+        export_split_by_model(test_pred_file, test_dir / "by_model")
+        wrmsse_summary, _ = score_benchmarks_wrmsse()
+        print("\n--- BẢNG WRMSSE 12 CẤP (VALIDATION & TEST) ---")
+        print(wrmsse_summary.to_string(index=False))
+
 
 if __name__ == "__main__":
     main()

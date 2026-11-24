@@ -57,3 +57,25 @@ def test_shared_reader_rejects_same_file_selected_twice(tmp_path):
     forecast_frame().to_csv(path,index=False)
     with pytest.raises(ValueError,match="nhiều lần"):
         load_forecasts([str(path),str(path)])
+
+
+def test_export_split_by_model_separates_benchmark_models(tmp_path):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts" / "benchmarks"))
+    from score_benchmarks_wrmsse import export_split_by_model
+
+    combined = pd.concat(
+        [
+            forecast_frame().assign(model="ES_bu", y_pred=1.5),
+            forecast_frame().assign(model="Croston", y_pred=0.5),
+        ],
+        ignore_index=True,
+    )
+    src = tmp_path / "forecasts.csv"
+    combined.to_csv(src, index=False)
+
+    out_dir = tmp_path / "by_model"
+    exported = export_split_by_model(src, out_dir, models=["ES_bu", "Croston"])
+    assert {p.name for p in exported} == {"ES_bu.csv", "Croston.csv"}
+
+    es_loaded, _ = load_forecasts([str(out_dir / "ES_bu.csv")])
+    assert len(es_loaded) == 28 and es_loaded["y_pred"].eq(1.5).all()

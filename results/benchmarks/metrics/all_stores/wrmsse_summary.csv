@@ -1,0 +1,9 @@
+split,model,origin,start_day,end_day,n_series,n_levels,rmsse_mean,wrmsse
+validation,Croston,1885,d_1886,d_1913,30490,12,0.7616,1.132473
+validation,Croston_SBA,1885,d_1886,d_1913,30490,12,0.7589,1.118804
+validation,ES_bu,1885,d_1886,d_1913,30490,12,0.7775,0.741415
+validation,Seasonal_Naive,1885,d_1886,d_1913,30490,12,0.9756,0.922781
+test,Croston,1913,d_1914,d_1941,30490,12,0.7704,1.05659
+test,Croston_SBA,1913,d_1914,d_1941,30490,12,0.7687,1.091778
+test,ES_bu,1913,d_1914,d_1941,30490,12,0.7972,0.770677
+test,Seasonal_Naive,1913,d_1914,d_1941,30490,12,0.9972,0.869701
