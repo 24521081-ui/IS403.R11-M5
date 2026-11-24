@@ -4,8 +4,15 @@ venv/
 
 # Python cache
 __pycache__/
-.pytest_cache/
-.cache/
+*.pyc
+
+# Jupyter Notebook cache
+.ipynb_checkpoints/
+
+# Dữ liệu lớn
+data/raw/
+data/processed/
+data/features/
 
 # Model đã huấn luyện
 *.joblib
