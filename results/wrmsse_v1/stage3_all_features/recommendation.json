@@ -1,0 +1,41 @@
+{
+  "recommended": "FE-04",
+  "official_selection": "FE-04",
+  "official_selection_updated": false,
+  "event_eligibility": "FE-10 đủ điều kiện được cân nhắc trên cửa sổ này",
+  "seasonal_naive_wrmsse": 0.9227813345358948,
+  "candidates": {
+    "FE-09": {
+      "feature_set": "rf_v4 + prices + snap + behavior",
+      "logical": 29,
+      "encoded": 3096,
+      "validation_wrmsse": 0.6321382730566694,
+      "delta_wrmsse_vs_FE04": 0.008207419080922373,
+      "delta_wrmsse_pct_vs_FE04": 1.3154372842157036,
+      "fit_seconds": 446.49469359999785,
+      "predict_seconds": 2.9717189999937546,
+      "peak_worker_rss_mib": 919.76171875,
+      "n_jobs": 8,
+      "eligible_for_selection": true,
+      "selection_status": "eligible_for_consideration",
+      "artifact_path": "results/wrmsse_v1/stage3_all_features/FE-09_20261124T102016236931Z"
+    },
+    "FE-10": {
+      "feature_set": "rf_v4 + prices + snap + behavior + events",
+      "logical": 33,
+      "encoded": 3118,
+      "validation_wrmsse": 0.6360743504018326,
+      "delta_wrmsse_vs_FE04": 0.012143496426085587,
+      "delta_wrmsse_pct_vs_FE04": 1.9462888152919522,
+      "fit_seconds": 389.4565320000038,
+      "predict_seconds": 2.913271400000667,
+      "peak_worker_rss_mib": 923.640625,
+      "n_jobs": 8,
+      "eligible_for_selection": true,
+      "selection_status": "eligible_for_consideration",
+      "artifact_path": "results/wrmsse_v1/stage3_all_features/FE-10_20261124T102016828681Z"
+    }
+  },
+  "test_accessed": false,
+  "final_retrain": false
+}

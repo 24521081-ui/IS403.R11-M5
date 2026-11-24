@@ -1,0 +1,83 @@
+{
+  "status": "complete",
+  "selection": {
+    "name": "FE-03",
+    "purpose": "tuning",
+    "status": "success",
+    "split": "validation",
+    "origin": 1885,
+    "metric": "wrmsse",
+    "wrmsse": 0.6547769629664902,
+    "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+    "experiment_id": "m5_rf_wrmsse_v1",
+    "params": {
+      "n_estimators": 150,
+      "max_depth": 20,
+      "max_features": 0.5,
+      "max_samples": 0.5,
+      "min_samples_leaf": 5,
+      "bootstrap": true,
+      "random_state": 42,
+      "n_jobs": 8
+    },
+    "version": "rf_v1",
+    "groups": [
+      "prices"
+    ],
+    "train_rows": 600000,
+    "validation_rows": 853720,
+    "n_features": 3088,
+    "fit_seconds": 260.335539300002,
+    "predict_seconds": 2.766400900000008,
+    "evaluation_seconds": 0.08334849999664584,
+    "prediction_sha256": "0625860d18a7a7d6aa2c689eb24424393fe29939df1d26394a12bfdfe0f717d0",
+    "peak_rss_mib": 782.07421875,
+    "selection_eligible": true,
+    "group": "features",
+    "requested_groups": [
+      "prices"
+    ],
+    "reuse": false,
+    "reuse_key": "549bcc29c93eaba987dcb43577770200993ba0def1c46106738931ea58867e36",
+    "artifact_dir": "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-03/attempt_001",
+    "monitor_peak_rss_mib": 760.140625,
+    "min_available_mib": 5060.8984375,
+    "n_raw_features": 21,
+    "dataset_hash": "9a4735380b0c9e0159e6f3b7bbe6a1f370d88fcb77d340256625b692fa7180c8",
+    "feature_hash": "6b3dcb91f02f332a8614c2d8824cb065a4f8c52cac83697e1760b39b2b0316d9",
+    "improvement_vs_naive_percent": 29.043107130487765,
+    "smoke_excluded": true,
+    "test_accessed": false,
+    "final_retrain_performed": false,
+    "selection_basis": "Minimum WRMSSE over all eligible successful NEW tuning candidates; SNAP/events exploratory excluded"
+  },
+  "successful": 30,
+  "reused": 4,
+  "failed": 0,
+  "source_unchanged": true,
+  "legacy_unchanged": true,
+  "raw_unchanged": true,
+  "test_actual_accessed": false,
+  "final_retrain": false,
+  "ablation_hyperparameters": {
+    "n_estimators": 100,
+    "max_depth": 15,
+    "max_features": 0.5,
+    "max_samples": 0.6,
+    "min_samples_leaf": 20,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 4
+  },
+  "base_feature": "rf_v1",
+  "feature_tuning_hyperparameters": {
+    "n_estimators": 150,
+    "max_depth": 20,
+    "max_features": 0.5,
+    "max_samples": 0.5,
+    "min_samples_leaf": 5,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 8
+  }
+}

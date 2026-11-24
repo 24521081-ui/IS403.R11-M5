@@ -1,0 +1,36 @@
+{
+  "status": "ready_to_resume",
+  "authorized_change": "Stop in-progress fits and resume Stage 3 with n_jobs=8",
+  "run": "results/wrmsse_v1/stage3_20261124T082126Z",
+  "checkpoints_preserved": [
+    "ABL_rf_v1",
+    "ABL_rf_v2",
+    "ABL_rf_v3",
+    "ABL_rf_v4",
+    "RF-01",
+    "RF-02",
+    "RF-03",
+    "RF-04",
+    "RF-05",
+    "RF-06",
+    "RF-07",
+    "RF-08",
+    "RF-09",
+    "RF-10",
+    "RF-11",
+    "RF-12",
+    "RF-13",
+    "RF-14"
+  ],
+  "interrupted_attempts_preserved": [
+    "results/wrmsse_v1/stage3_20261124T082126Z/advanced/RF-15/attempt_001"
+  ],
+  "stopped_stage3_pids": [
+    3360,
+    5500,
+    7440,
+    35820
+  ],
+  "new_fit_n_jobs": 8,
+  "timestamp_utc": "2026-11-24T09:14:06.007683+00:00"
+}

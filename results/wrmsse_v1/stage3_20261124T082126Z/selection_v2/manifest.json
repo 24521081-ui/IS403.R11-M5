@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "selection_version": 2,
+  "input_sha256": {
+    "results/wrmsse_v1/stage3_20261124T082126Z/manifest_completed.json": "58cec8d4679d82c0a3b4df6508dbf2dd99041fece29269c642455faaaeaab4ce",
+    "results/wrmsse_v1/stage3_20261124T082126Z/selected_model.json": "4ddf81d9c86f6b21b6333a58dc2ca04b9e3e1e7d5e27283b8a9ff3630c23b289",
+    "preparation/stage3_snap_audit.json": "2ee1d24ecfd0929110a5c2c8f01e337a5ca50c4626cf82847afe71ef3bcc3850",
+    "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-04/attempt_001/manifest.json": "3fd314106701a5f577cc90209f005d3f835b860621c8216d0d02ca292821b6e4",
+    "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-04/attempt_001/model.joblib": "a1061c8cf5cadfb90622f89e32ddc1299554d84c5a5c9c795056211d0c497c1b",
+    "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-04/attempt_001/validation_predictions.npy": "5a8c9ae1220e161a51e5612d23dab24c24ab78702fd5bc3cf735904f4a34472c",
+    "preparation/publish_stage3_selection_v2.py": "ae54849f28a02a3567f8ce5fa8ec1c86738af8b6287461329371a76115c13d3a"
+  },
+  "files": {
+    "baseline_comparison.csv": "8df700deae6a66f2880cb55ab2cea706f81d192f9f6a612c0756fd086d6e5d33",
+    "baseline_comparison.png": "adc4c8cafa77bc00b0cb5fa39ee81edb4f939e6681f3d4dadfa070de11c57c5a",
+    "candidate_eligibility.csv": "511da18065e4bf8eed6becc29b9c713b27f01b5a1a8facbfe3cd9276aa7f8e2a",
+    "selected_model.json": "f8a186696cacb518993c1e9899b16b982b76557c77dd6708d092bb129f0882b6",
+    "selected_model_v1.json": "4ddf81d9c86f6b21b6333a58dc2ca04b9e3e1e7d5e27283b8a9ff3630c23b289",
+    "selected_wrmsse_by_level.csv": "98d8a0be6f586beb8d88198b0c330eac410956304dde954d9ebe2bc85a6dce3d"
+  }
+}

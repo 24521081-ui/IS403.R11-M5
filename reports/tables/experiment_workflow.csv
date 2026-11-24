@@ -1,0 +1,7 @@
+thứ_tự,bước,kết_quả
+1,Tuning ban đầu,RF-04
+2,Ablation đặc trưng,RF-v1
+3,Tuning nâng cao,RF-15
+4,Tối ưu đặc trưng,FE-04
+5,Fit cuối trên mẫu,609.185 dòng
+6,Test sau khóa dự báo,WRMSSE M5 · 12 cấp

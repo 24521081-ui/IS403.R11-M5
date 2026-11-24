@@ -1,0 +1,3 @@
+model,daily_total_pearson,direction_matches,day_to_day_comparisons
+random_forest,0.9193489300560974,21,27
+seasonal_naive,0.888021884782705,21,27

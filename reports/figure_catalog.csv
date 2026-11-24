@@ -1,0 +1,25 @@
+﻿file,nội_dung,nguồn_dữ_liệu,cấp_phân_tích,vị_trí_đề_xuất,dpi
+01_train_validation_test.png,Phân chia Train–Validation–Test,reports/tables/split_timeline.csv,Ngày M5,Thiết kế nghiên cứu,230
+02_quy_trinh_rf.png,Trình tự và kết quả các vòng thực nghiệm,reports/tables/experiment_workflow.csv,Vòng thực nghiệm,Thiết kế nghiên cứu,230
+03_rf_01_05.png,Tuning ban đầu · RF-01–RF-05,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+04_rf_v1_v4.png,Ablation · RF-v1–RF-v4,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+05_rf_06_22.png,Tuning nâng cao · RF-06–RF-22,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+06_fe_01_10.png,So sánh FE-01–FE-10,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+07_fe04_va_all_features.png,FE-04 và các cấu hình All Features,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+08_wrmsse_va_chi_phi_fit.png,"WRMSSE và thời gian fit ghi nhận, có lượt dùng lại",reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+09_wrmsse_test.png,WRMSSE Test,reports/tables/model_comparison.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/test_wrmsse.png,Hệ phân cấp M5,Đánh giá mô hình,230
+10_validation_va_test.png,WRMSSE Validation và Test,reports/tables/validation_test.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/validation_vs_test_wrmsse.png,Cửa sổ đánh giá,Đánh giá mô hình,230
+11_wrmsse_12_cap.png,WRMSSE theo 12 cấp,reports/tables/wrmsse_12_levels.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/test_wrmsse_by_level.png,Cấp M5,Đánh giá mô hình,230
+12_chi_so_sai_so_test.png,"MAE, RMSE, WAPE và Bias",reports/tables/model_comparison.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/test_business_metrics.png,item–store–day,Đánh giá mô hình,230
+13_feature_importance.png,Importance của 15 đặc trưng logic,reports/tables/feature_importance.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/final_feature_importance.png,Đặc trưng logic,Đánh giá mô hình,230
+14_doanh_so_hang_ngay.png,Tổng lượng bán trong 28 ngày Test,reports/tables/daily_sales.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/test_daily_sales.png,Ngày toàn hệ thống,Toàn hệ thống,230
+15_doanh_so_theo_bang.png,Lượng bán và dự báo theo bang,reports/tables/state_analysis.csv,state_id,Bang và cửa hàng,230
+16_doanh_so_theo_cua_hang.png,Lượng bán và dự báo theo cửa hàng,reports/tables/store_analysis.csv,store_id,Bang và cửa hàng,230
+17_bias_cua_hang.png,Forecast Bias theo cửa hàng,reports/tables/store_analysis.csv,item–store–day theo cửa hàng,Bang và cửa hàng,230
+18_heatmap_wape.png,Heatmap WAPE Random Forest,reports/tables/store_department.csv,item–store–day theo cửa hàng × bộ phận,"Bang, cửa hàng và bộ phận",230
+19_nganh_hang.png,Lượng bán và WAPE theo ngành hàng,reports/tables/category_analysis.csv,item–store–day theo ngành hàng,Ngành hàng và bộ phận,230
+20_tuan_va_thu.png,So sánh WAPE theo tuần và theo thứ,reports/tables/weekly_analysis.csv | reports/tables/weekday_analysis.csv,item–store–day theo tuần hoặc thứ,"Tuần, thứ và SNAP",230
+21_top_du_bao_under.png,Top 20 chuỗi dự báo thiếu,reports/tables/top_underforecast.csv,"Sản phẩm × cửa hàng, tổng 28 ngày",Sản phẩm,230
+22_top_du_bao_over.png,Top 20 chuỗi dự báo thừa,reports/tables/top_overforecast.csv,"Sản phẩm × cửa hàng, tổng 28 ngày",Sản phẩm,230
+23_chuoi_dai_dien.png,Actual và dự báo của các chuỗi đại diện,reports/tables/representative_series.csv | reports/tables/representative_daily.csv,Sản phẩm × cửa hàng × ngày,Sản phẩm,230
+24_snap.png,"WAPE theo trạng thái SNAP, toàn hệ thống và theo bang",reports/tables/snap_analysis.csv | reports/tables/snap_by_state.csv,item–store–day theo trạng thái SNAP,"Tuần, thứ và SNAP",230

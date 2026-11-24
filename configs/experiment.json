@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "experiment_id": "m5_rf_wrmsse_v1",
+  "stage": "preparation",
+  "horizon": 28,
+  "selection_metric": "wrmsse",
+  "metric_direction": "minimize",
+  "aggregation_levels": 12,
+  "train": [
+    1,
+    1885
+  ],
+  "validation": [
+    1886,
+    1913
+  ],
+  "test": [
+    1914,
+    1941
+  ],
+  "folds": {
+    "validation": {
+      "origin": 1885,
+      "history": [
+        1,
+        1885
+      ],
+      "weights": [
+        1858,
+        1885
+      ]
+    },
+    "test": {
+      "origin": 1913,
+      "history": [
+        1,
+        1913
+      ],
+      "weights": [
+        1886,
+        1913
+      ]
+    }
+  },
+  "sales_source": "data/raw/sales_train_validation.csv",
+  "test_actual_source": "data/raw/sales_test_validation.csv",
+  "outputs": "results/wrmsse_v1",
+  "reuse_legacy_artifacts": false,
+  "allow_tuning": false,
+  "allow_training": false,
+  "allow_test_evaluation": false,
+  "test_refit_history": [
+    1,
+    1913
+  ],
+  "feature_history_cutoff": "min(target_day - 28, fold_origin)",
+  "zero_scale_policy": "raise_if_positive_weight; zero_weight_contribution_zero; never_epsilon_or_renormalize"
+}

@@ -1,0 +1,14 @@
+{
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "n_jobs": 8,
+  "files": {
+    "model.joblib": "7ffc51f70997eba83e4f623c380ca9b3e59bae2d33092bee31b2ceab33f3856a",
+    "request.json": "368e4aeb07f72d4892b41fdd11e058314f7ebea744bee4423824a960d0429848",
+    "resources.jsonl": "69b56dd885106a87b0ca6d54c511f9244054efbc83efa3a402231f1b10a05281",
+    "result.json": "35e8dfe86e8e6e97e25e237a449ab931f1ff11f1bd881aea1b72a10e5e8ff839",
+    "validation_predictions.npy": "54d3f330c5210e08a9a60cda6c57d811f7f7778d18f176d74a7e9cd63535160c",
+    "worker.log": "242a5b3df8ada61fe98242da36192d880fc8c834b65c9bd5df171ed2df6cb1ce",
+    "wrmsse_by_level.csv": "e92e1bf03b9bbd358eabd47bc16b059e0d43ef8ce030bf62dca382d579e7c242",
+    "wrmsse_by_series.parquet": "481073a3444d9378237c3a2670f3faa0299a054d9e68653779cc61760ddc9541"
+  }
+}

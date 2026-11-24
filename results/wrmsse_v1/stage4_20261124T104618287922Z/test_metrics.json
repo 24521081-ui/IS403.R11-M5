@@ -1,0 +1,57 @@
+{
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "primary_metric": "WRMSSE",
+  "origin": 1913,
+  "test_days": [
+    1914,
+    1941
+  ],
+  "scale_history": [
+    1,
+    1913
+  ],
+  "revenue_weight_days": [
+    1886,
+    1913
+  ],
+  "revenue_weight_basis": "historical units × sell_price",
+  "test_dates": [
+    "2016-04-25",
+    "2016-05-22"
+  ],
+  "bottom_series": 30490,
+  "observations": 853720,
+  "levels": 12,
+  "hierarchical_series": 42840,
+  "models": {
+    "random_forest": {
+      "wrmsse": 0.7039124143420078,
+      "mae": 1.0849865068809923,
+      "rmse": 2.2327220682261415,
+      "wape_percent": 75.19903818056386,
+      "forecast_bias_percent": -4.3278797774763405,
+      "actual_sales": 1231764.0,
+      "forecast_sales": 1178454.7349377663,
+      "sales_difference": -53309.265062233666,
+      "overforecast_percent": 0.0,
+      "underforecast_percent": 4.3278797774763405
+    },
+    "seasonal_naive": {
+      "wrmsse": 0.8697007023310609,
+      "mae": 1.2439722625685237,
+      "rmse": 2.6768948977123297,
+      "wape_percent": 86.2181391890005,
+      "forecast_bias_percent": -7.359201925044083,
+      "actual_sales": 1231764.0,
+      "forecast_sales": 1141116.0,
+      "sales_difference": -90648.0,
+      "overforecast_percent": 0.0,
+      "underforecast_percent": 7.359201925044083
+    }
+  },
+  "wrmsse_reduction": 0.1657882879890531,
+  "absolute_wrmsse_difference": 0.1657882879890531,
+  "improvement_percent": 19.06268300631359,
+  "zero_actual_sales_policy": "WAPE, Bias and excess/shortfall percentages are null if sum(actual) = 0",
+  "test_actual_sha256": "964f8ff2c36ff8763fc1bfeb4753f081abf70923d0209e78bc4dd470d49e438a"
+}

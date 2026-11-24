@@ -1,0 +1,4 @@
+window,first_day,last_day,days
+Train,1,1885,1885
+Validation,1886,1913,28
+Test,1914,1941,28

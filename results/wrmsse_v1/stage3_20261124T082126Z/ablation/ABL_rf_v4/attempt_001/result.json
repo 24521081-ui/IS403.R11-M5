@@ -1,0 +1,32 @@
+{
+  "name": "ABL_rf_v4",
+  "purpose": "tuning",
+  "status": "success",
+  "split": "validation",
+  "origin": 1885,
+  "metric": "wrmsse",
+  "wrmsse": 0.6850522342498686,
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "experiment_id": "m5_rf_wrmsse_v1",
+  "params": {
+    "n_estimators": 100,
+    "max_depth": 15,
+    "max_features": 0.5,
+    "max_samples": 0.6,
+    "min_samples_leaf": 20,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 4
+  },
+  "version": "rf_v4",
+  "groups": [],
+  "train_rows": 600000,
+  "validation_rows": 853720,
+  "n_features": 3085,
+  "fit_seconds": 245.48499769999762,
+  "predict_seconds": 2.706602099999145,
+  "evaluation_seconds": 0.08395780000137165,
+  "prediction_sha256": "47a4dedeee50aa03b7d6a048ea49708e0787587789b98a5f5f30fa2d9f4f234d",
+  "peak_rss_mib": 567.390625,
+  "selection_eligible": true
+}

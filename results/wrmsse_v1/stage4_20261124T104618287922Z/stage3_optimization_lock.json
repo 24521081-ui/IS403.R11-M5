@@ -1,0 +1,36 @@
+{
+  "status": "closed",
+  "initial_tuning": "RF-04",
+  "base_features": "RF-v1",
+  "advanced_tuning": "RF-15",
+  "selected_features": "FE-04",
+  "selected_model_sha256": "f8a186696cacb518993c1e9899b16b982b76557c77dd6708d092bb129f0882b6",
+  "wrmsse_validation": 0.623930853975747,
+  "seasonal_naive_wrmsse_validation": 0.9227813345358948,
+  "experiments": 36,
+  "successful_fits": 32,
+  "reused": 4,
+  "events": {
+    "status": "verified_for_this_window",
+    "applies_to": [
+      "FE-05",
+      "FE-10"
+    ],
+    "same_origin": 1885,
+    "requests": {
+      "FE-05": "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-05/attempt_001/request.json",
+      "FE-10": "results/wrmsse_v1/stage3_all_features/FE-10_20261124T102016828681Z/request.json"
+    },
+    "events_days_in_validation": 0,
+    "audit_sha256": "698eddccb9568f8f8b116afc79204c1d2a1920184ec25664166faa03da341ec2",
+    "event_block_sha256": {
+      "events/extra_train.npz": "edb744f3fdf00f953ac5d0dc7163595d23d9b7b6916d04e719c19ddeb2e7ece2",
+      "events/extra_validation.npz": "2303ebbc40a0c4f0eef42fda2be265eb7adc211b7dd1f3f76880d9f83b6f10e7"
+    }
+  },
+  "files": {
+    "stage3_fe01_fe10.csv": "f75a62d37284b35eea61c6b72809b4315dc99b00077f67a3cc10af22a1e7fdeb",
+    "stage3_fe01_fe10.parquet": "0e972b88112cb32d2f93c352b6a980f0e0ae64d88a15fb30318b767b05b2ff0b",
+    "stage3_fe01_fe10.png": "c81fe294fe134b4da31c47e99d7a1cd1bade9d4ad94051d2ea31f7ba09258e44"
+  }
+}

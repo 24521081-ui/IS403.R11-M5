@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-24T10:46:48.186582+00:00",
+  "test_gate": "closed",
+  "params": {
+    "n_estimators": 150,
+    "max_depth": 20,
+    "max_features": 0.5,
+    "max_samples": 0.5,
+    "min_samples_leaf": 5,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 8
+  }
+}

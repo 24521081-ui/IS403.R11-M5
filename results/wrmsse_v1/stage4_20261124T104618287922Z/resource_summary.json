@@ -1,0 +1,43 @@
+{
+  "fit_seconds": 224.92189979999966,
+  "predict_seconds": 2.3441765000025043,
+  "seasonal_naive_predict_seconds": 0.0017752999992808327,
+  "train_rows": 609185,
+  "logical_features": 15,
+  "encoded_features": 3082,
+  "n_jobs": 8,
+  "seasonal_naive_last_history_days": [
+    1907,
+    1913
+  ],
+  "versions": {
+    "python": "3.12.10",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.5",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1",
+    "joblib": "1.6.0",
+    "pyarrow": "26.0.1",
+    "psutil": "7.2.2"
+  },
+  "returncode": 0,
+  "stop_reason": null,
+  "sample_count": 271,
+  "worker_elapsed_seconds": 276.45268059999944,
+  "peak_worker_rss_mib": 1483.71875,
+  "peak_tree_rss_mib": 1487.84765625,
+  "minimum_available_mib": 3752.4453125,
+  "peak_worker_tree_cpu_percent_one_core": 809.131872117666,
+  "peak_machine_cpu_percent": 70.3,
+  "logical_cpu": 16,
+  "physical_cpu": 8,
+  "resource_limits_mib": {
+    "max_rss_mib": 6144,
+    "min_available_mib": 1536
+  },
+  "fit_and_predict_sample_interval_seconds": 1,
+  "peak_venv_launcher_rss_mib": 4.15625,
+  "worker_rss_basis": "Process tree RSS minus Windows venv launcher RSS. Child PID independently observed.",
+  "worker_process_confirmed_samples": 233,
+  "independently_sampled_worker_peak_mib": 1477.66796875
+}

@@ -1,0 +1,10 @@
+{
+  "returncode": 0,
+  "stop_reason": null,
+  "sample_count": 225,
+  "elapsed_seconds": 452.55917359999876,
+  "peak_tree_rss_mib": 817.78515625,
+  "min_available_mib": 3986.34765625,
+  "peak_machine_cpu_pct": 65.0,
+  "peak_worker_cpu_pct_one_core": 805.1461174215196
+}

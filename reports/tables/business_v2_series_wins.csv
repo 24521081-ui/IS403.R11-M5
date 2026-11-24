@@ -1,0 +1,31 @@
+dimension,group,outcome,n_series,group_series,share_pct
+all_series,Toàn bộ,Random Forest thấp hơn,18161,30490,59.5637914070187
+all_series,Toàn bộ,Tương đương,15,30490,0.04919645785503444
+all_series,Toàn bộ,Seasonal Naive thấp hơn,12314,30490,40.38701213512627
+state_id,CA,Random Forest thấp hơn,7757,12196,63.60282059691702
+state_id,CA,Tương đương,4,12196,0.032797638570022956
+state_id,CA,Seasonal Naive thấp hơn,4435,12196,36.364381764512956
+state_id,TX,Random Forest thấp hơn,4995,9147,54.608068219088224
+state_id,TX,Tương đương,5,9147,0.05466273095003826
+state_id,TX,Seasonal Naive thấp hơn,4147,9147,45.33726904996173
+state_id,WI,Random Forest thấp hơn,5409,9147,59.13414234175139
+state_id,WI,Tương đương,6,9147,0.06559527714004591
+state_id,WI,Seasonal Naive thấp hơn,3732,9147,40.80026238110856
+cat_id,FOODS,Random Forest thấp hơn,9337,14370,64.97564370215727
+cat_id,FOODS,Tương đương,13,14370,0.09046624913013222
+cat_id,FOODS,Seasonal Naive thấp hơn,5020,14370,34.9338900487126
+cat_id,HOBBIES,Random Forest thấp hơn,2853,5650,50.49557522123894
+cat_id,HOBBIES,Tương đương,2,5650,0.035398230088495575
+cat_id,HOBBIES,Seasonal Naive thấp hơn,2795,5650,49.469026548672566
+cat_id,HOUSEHOLD,Random Forest thấp hơn,5971,10470,57.029608404966574
+cat_id,HOUSEHOLD,Tương đương,0,10470,0.0
+cat_id,HOUSEHOLD,Seasonal Naive thấp hơn,4499,10470,42.970391595033426
+abc,A,Random Forest thấp hơn,8514,10715,79.4587027531498
+abc,A,Tương đương,0,10715,0.0
+abc,A,Seasonal Naive thấp hơn,2201,10715,20.54129724685021
+abc,B,Random Forest thấp hơn,5830,8914,65.4027372672201
+abc,B,Tương đương,0,8914,0.0
+abc,B,Seasonal Naive thấp hơn,3084,8914,34.597262732779896
+abc,C,Random Forest thấp hơn,3817,10861,35.14409354571402
+abc,C,Tương đương,15,10861,0.1381088297578492
+abc,C,Seasonal Naive thấp hơn,7029,10861,64.71779762452813

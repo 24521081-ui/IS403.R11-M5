@@ -1,0 +1,29 @@
+{
+  "name": "FE-10",
+  "output": "results/wrmsse_v1/stage3_all_features/FE-10_20261124T102016828681Z",
+  "params": {
+    "n_estimators": 150,
+    "max_depth": 20,
+    "max_features": 0.5,
+    "max_samples": 0.5,
+    "min_samples_leaf": 5,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 8
+  },
+  "version": "rf_v4",
+  "groups": [
+    "prices",
+    "snap",
+    "behavior",
+    "events"
+  ],
+  "dataset": "data/processed/wrmsse_v1/stage2_20261123T202104Z",
+  "features": "data/features/wrmsse_v1/stage2_20261123T202104Z",
+  "evidence": "preparation/unit_tests_summary_20261124T102003947904Z.json",
+  "evaluator_sha256": "95b7cfa09042281c103007bf461da3c7fb07ca245e98ab1b7ab68f5e0768dfe4",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "selection_eligible": false,
+  "test_accessed": false,
+  "split": "validation"
+}

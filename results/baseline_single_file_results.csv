@@ -1,3 +1,0 @@
-﻿Mô hình,RMSSE,MAE,RMSE,Độ chệch (Bias),Độ lệch chuẩn số dư (Std),Tỷ lệ lệch <= 1 cái (%),Thời gian Train (s)
-LightGBM–Tweedie (Giá + Price Change),0.72975,1.1768,2.2463,-0.2208,2.2354,66.7,52.7
-Seasonal Naive (Mốc chuẩn),0.93603,1.3303,2.8065,0.0243,2.8064,72.6,0.0

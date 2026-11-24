@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "source_unchanged": true,
+  "source_metadata_verified_files": 29454,
+  "source_sha256_verified_files": 1185,
+  "archive_changed_suffixes": {
+    ".md": 1,
+    ".json": 6,
+    ".log": 2,
+    ".py": 143,
+    ".ipynb": 34
+  },
+  "historical_model_prediction_data_files_changed": 0,
+  "new_files": [
+    "src/__init__.py",
+    "src/project_paths.py",
+    "src/wrmsse.py",
+    "src/wrmsse_config.py",
+    "src/wrmsse_data.py",
+    "src/wrmsse_features.py",
+    "src/wrmsse_pipeline.py",
+    "scripts/audit_wrmsse_contexts.py",
+    "scripts/run_preparation_checks.py",
+    "scripts/verify_isolation.py",
+    "tests/__init__.py",
+    "tests/reference_wrmsse.py",
+    "tests/test_wrmsse.py",
+    "tests/test_wrmsse_pipeline.py",
+    "configs/experiment.json",
+    "notebooks/00_wrmsse_preparation.ipynb",
+    "docs/affected_components.csv",
+    "docs/WRMSSE_PREPARATION.md"
+  ],
+  "new_results_files": 0,
+  "training_tuning_test_executed": false
+}
