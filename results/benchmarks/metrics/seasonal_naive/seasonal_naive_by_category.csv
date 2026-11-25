@@ -1,0 +1,7 @@
+﻿"split","model","cat_id","series_count","mae_mean","rmse_mean","rmsse_mean"
+"test","Seasonal_Naive","FOODS","14370","1.62761","2.2258400000000003","1.0032199999999998"
+"test","Seasonal_Naive","HOBBIES","5650","0.8688799999999999","1.3475199999999998","0.9816"
+"test","Seasonal_Naive","HOUSEHOLD","10470","0.91985","1.3196999999999999","0.99747"
+"validation","Seasonal_Naive","FOODS","14370","1.61787","2.2150000000000003","0.9779100000000001"
+"validation","Seasonal_Naive","HOBBIES","5650","0.8312100000000001","1.30726","0.9461700000000001"
+"validation","Seasonal_Naive","HOUSEHOLD","10470","0.91972","1.32166","0.98829"

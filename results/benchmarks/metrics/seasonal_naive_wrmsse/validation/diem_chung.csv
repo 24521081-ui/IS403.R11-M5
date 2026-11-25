@@ -1,0 +1,2 @@
+model,split,origin,start_day,end_day,n_stores,n_series,n_rows,n_levels,revenue_start_day,revenue_end_day,WRMSSE,scorer,scorer_source_commit
+Seasonal_Naive,validation,1885,d_1886,d_1913,10,30490,853720,12,d_1858,d_1885,0.9227813345358974,score_c7_wrmsse.score,185f46caa969738f6647fb4aed1a6157cc02368e
