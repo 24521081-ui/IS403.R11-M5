@@ -1,0 +1,26 @@
+{
+  "n_labels": 30490,
+  "label_duplicates": 0,
+  "splits": {
+    "validation": {
+      "n_series": 30490,
+      "n_merged_groups": 30490,
+      "weight_sum_bottom_level": 0.999999999999907,
+      "bottom_level_weighted_rmsse": 1.1258879980991126,
+      "level_12_weighted_rmsse": 1.125887998099223,
+      "wrmsse_12_level": 0.9227813345358974,
+      "reference_wrmsse": 0.922781334536,
+      "wrmsse_matches_reference": true
+    },
+    "test": {
+      "n_series": 30490,
+      "n_merged_groups": 30490,
+      "weight_sum_bottom_level": 0.99999999999991,
+      "bottom_level_weighted_rmsse": 1.1004018664590924,
+      "level_12_weighted_rmsse": 1.100401866459197,
+      "wrmsse_12_level": 0.8697007023310631,
+      "reference_wrmsse": 0.869700702331,
+      "wrmsse_matches_reference": true
+    }
+  }
+}
