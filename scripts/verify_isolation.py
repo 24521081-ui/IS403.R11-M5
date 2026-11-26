@@ -46,4 +46,13 @@ def verify(archive=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--archive", type=Path, help="Optional ZIP to verify separately, without restoring it")
-    verify(parser.parse_args().archive)
+    parser.add_argument("--demand-groups", action="store_true", help="Verify the post-forecast edition against the locked inputs and prior workbook")
+    args = parser.parse_args()
+    if args.demand_groups:
+        from src.wrmsse_demand_verify import verify as verify_demand
+
+        print(json.dumps(verify_demand()))
+        if args.archive:
+            print(json.dumps({"archive_objects_rehashed": verify_archive(args.archive)}))
+    else:
+        verify(args.archive)

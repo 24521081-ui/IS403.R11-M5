@@ -32,6 +32,12 @@ Các vòng lần lượt chọn **RF-04 → RF-v1 → RF-15 → FE-04**. Có 36 
 
 Trên Test, Random Forest giảm WRMSSE **19,06%** và đạt WAPE **75,20%** ở cấp item–store–day. [Báo cáo Test](docs/STAGE4_REPORT.md) · [Báo cáo kinh doanh](docs/STAGE5_BUSINESS_REPORT.md).
 
+### Hiệu quả theo tần suất bán
+
+Trên 28 ngày Test, 2.754 chuỗi Frequent đóng góp 36,28% lượng bán và 27.736 chuỗi Intermittent đóng góp 63,72%. WAPE RF / Seasonal Naive lần lượt là 50,99% / 59,67% và 88,98% / 101,33%. Riêng 3.598 chuỗi có ADI ≥ 8, Seasonal Naive đạt WAPE 150,83% so với 182,46% của RF. Phần 14 của báo cáo và notebook 09 giải thích tiêu chí phân nhóm, sai số theo cửa hàng và các ngày bán đột biến. [Báo cáo kinh doanh](docs/STAGE5_BUSINESS_REPORT.md) · [Notebook 09](notebooks/09_business_insights_and_visualization.ipynb) · [Bảng kết quả](reports/tables/demand_group_metrics.csv)
+
+Nhãn được ghép sau dự báo theo gốc d_1885 cho Validation và d_1913 cho Test. Workbook gồm 32 sheet, trong đó Forecast_Detail có 853.720 dòng kèm ADI và demand_group. Có 17 hình Business V2 và 11 hình phân tích nhu cầu. Phần 15 của notebook 09 có bộ chọn chuỗi và xuất PNG. [Excel](reports/RandomForest_Forecast_Actual.xlsx) · [Danh mục hình](reports/FIGURE_CATALOG.md) · [Manifest phân tích nhu cầu](reports/manifest_demand_groups.json)
+
 ## Xem kết quả đã công bố
 
 1. Mở [Excel dự báo và thực tế](reports/RandomForest_Forecast_Actual.xlsx). Bắt đầu từ Summary, các sheet theo nhóm và Data_Dictionary.
@@ -74,8 +80,7 @@ requirements.txt dùng requirements-lock.txt, gồm đúng các phiên bản th�
 Dùng Python của môi trường dự án với lệnh dưới đây để xác minh đầu ra và chạy unit test.
 
 ```powershell
-.venv/Scripts/python.exe -B scripts/run_stage5.py --verify
-.venv/Scripts/python.exe -B scripts/verify_isolation.py
+.venv/Scripts/python.exe -B scripts/verify_isolation.py --demand-groups
 .venv/Scripts/python.exe -B -m unittest discover -s tests -t . -p "test_wrmsse*.py"
 ```
 

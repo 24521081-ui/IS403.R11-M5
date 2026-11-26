@@ -22,6 +22,31 @@ Các nhóm hình v2 xuất PNG nền trắng, 300 DPI. Tất cả bảng nguồn
 | [SNAP theo bang và ngày](figures/business_v2_snap.png) | Ba ô cột ngang | Lượng bán bình quân và chất lượng khác thế nào theo SNAP? | [business_v2_snap](tables/business_v2_snap.csv) |
 | [Vai trò đặc trưng](figures/business_v2_importance.png) | Hai cột ngang | Đặc trưng nào được dùng nhiều tại các nút chia? | [business_v2_importance](tables/business_v2_importance.csv) · [business_v2_snap_validation](tables/business_v2_snap_validation.csv) |
 
+## Phân tích theo đặc điểm nhu cầu
+
+Năm hình dưới đây dùng nhãn tại d_1913 và kết quả Test đã khóa. Dashboard bổ sung tỷ trọng chuỗi. Hai panel dự báo thiếu và thừa bổ sung nhãn nhóm. Sáu tiêu đề chuỗi đại diện bổ sung nhãn và ADI. [Nhãn gốc](demand_groups/demand_groups_origin_1913.csv) · [Bảng cơ cấu](tables/demand_group_summary.csv)
+
+| Hình | Câu hỏi kinh doanh | Bảng nguồn |
+|---|---|---|
+| [Cơ cấu chuỗi, lượng bán và doanh thu](figures/demand_group_composition.png) | Nhóm nào đóng góp bao nhiêu lượng bán và doanh thu? | [demand_group_summary](tables/demand_group_summary.csv) |
+| [Sáu chỉ số Random Forest theo nhóm nhu cầu](figures/demand_group_metrics.png) | Frequent và Intermittent khác nhau thế nào về độ lớn, chiều sai lệch và RMSSE cấp 12? | [demand_group_metrics](tables/demand_group_metrics.csv) |
+| [WAPE theo cửa hàng và ngành hàng](figures/demand_group_region.png) | Ở đâu WAPE của chuỗi gián đoạn cao nhất? | [demand_group_store](tables/demand_group_store.csv) · [demand_group_category](tables/demand_group_category.csv) |
+| [Bốn chuỗi theo phân vị sai số](figures/demand_group_examples.png) | Sai số ở ngày đỉnh và ngày không bán khác nhau thế nào? | [demand_group_representatives](tables/demand_group_representatives.csv) · [demand_group_test](tables/demand_group_test.parquet) |
+| [Sai số dự báo theo khoảng ADI](figures/demand_group_adi.png) | Ở khoảng ADI nào Seasonal Naive vượt RF? | [demand_group_adi](tables/demand_group_adi.csv) |
+
+## Diễn biến theo thời gian của từng nhóm
+
+| Hình | Câu hỏi kinh doanh | Bảng nguồn |
+|---|---|---|
+| [Lượng bán và dự báo từng ngày](figures/demand_group_sales.png) | RF bám được nhịp bán và độ cao của đỉnh đến đâu? | [Ngày](tables/demand_group_daily.csv) · [Toàn kỳ](tables/demand_group_metrics.csv) |
+| [Sai lệch ròng từng ngày](figures/demand_group_error.png) | Dự báo thừa hoặc thiếu bao nhiêu đơn vị và kéo dài bao lâu? | [Ngày](tables/demand_group_daily.csv) |
+| [WAPE và Bias từng ngày](figures/demand_group_daily_quality.png) | Độ lớn sai số và chiều lệch thay đổi ra sao qua 28 ngày? | [Ngày](tables/demand_group_daily.csv) |
+| [Chất lượng dự báo trong bốn tuần Test](figures/demand_group_weekly.png) | Tuần nào có Bias lớn nhất và nhóm nào có RMSE cao? | [Tuần](tables/demand_group_weekly.csv) |
+| [Chất lượng dự báo theo thứ trong tuần](figures/demand_group_weekday.png) | Sai số tương đối và số đơn vị sai khác nhau thế nào vào cuối tuần? | [Thứ](tables/demand_group_weekday.csv) |
+| [Lượng bán và dự báo tích lũy](figures/demand_group_cumulative.png) | Kế hoạch 28 ngày lệch bao nhiêu đơn vị và bao nhiêu phần trăm? | [Ngày](tables/demand_group_daily.csv) · [Toàn kỳ](tables/demand_group_metrics.csv) |
+
+Phần 15 đối chiếu kết quả cho từng hình. Công cụ tra cứu trong notebook 09 xuất PNG theo lựa chọn. [Báo cáo kinh doanh](../docs/STAGE5_BUSINESS_REPORT.md) · [Notebook 09](../notebooks/09_business_insights_and_visualization.ipynb)
+
 ## Rà soát 24 hình trước nâng cấp
 
 | Hình v1 | Câu hỏi/phạm vi gốc | Quyết định và lý do |

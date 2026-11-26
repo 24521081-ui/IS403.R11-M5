@@ -4,7 +4,7 @@ Bộ báo cáo dùng kết quả RF-15 + FE-04 đã khóa. Bảng và workbook �
 
 ## Excel và số dòng
 
-[RandomForest_Forecast_Actual.xlsx](RandomForest_Forecast_Actual.xlsx) gồm 23 sheet. Bảng đếm dòng dữ liệu, cộng hai dòng tiêu đề và tên trường khi xem trong Excel.
+[RandomForest_Forecast_Actual.xlsx](RandomForest_Forecast_Actual.xlsx) gồm 32 sheet. Bảng dưới liệt kê 23 sheet gốc và số dòng dữ liệu, chưa tính hai dòng tiêu đề. Chín sheet dành cho phân tích nhóm nhu cầu được mô tả ở cuối tài liệu.
 
 | Sheet | Dòng dữ liệu |
 |---|---|
@@ -155,3 +155,11 @@ WAPE cấp item–store–day vẫn cao dù WRMSSE thấp hơn Seasonal Naive. C
 ## Trực quan hóa báo cáo v2
 
 Danh mục hiện hành có 17 nhóm hình kinh doanh mới hoặc thay thế. Bản v1 của hình và tài liệu được đối chiếu bằng SHA-256. [Danh mục và bảng nguồn](FIGURE_CATALOG.md) · [Manifest v2](manifest_business_v2.json).
+
+## Phân tích theo đặc điểm nhu cầu
+
+Phần 14 bổ sung 5 hình và sửa 3 hình trong 17 hình kinh doanh V2. Forecast_Detail có 853.720 dòng và 17 cột. Năm sheet đầu tiên trong nhóm Demand_Group_* trình bày cơ cấu, sai số, cửa hàng, ngành hàng và khoảng ADI. Sáu bảng CSV của phần 14 gồm năm bảng tương ứng và bảng chọn bốn chuỗi minh họa. [Danh mục hình](FIGURE_CATALOG.md) · [Báo cáo kinh doanh](../docs/STAGE5_BUSINESS_REPORT.md) · [Manifest và danh sách tệp](manifest_demand_groups.json)
+
+Hai gốc đều tái tạo đúng 30.490 giá trị ADI từ lịch sử. Phần 15 mở rộng hình so sánh thành sáu chỉ số RF và thêm sáu hình theo thời gian. Workbook có ba sheet thống kê ngày, tuần, thứ và một sheet chứa tám hình, tổng cộng 32 sheet. Công cụ cuối notebook tra cứu từng chuỗi và xuất một PNG theo lựa chọn. Kiểm tra lại bằng `.venv/Scripts/python.exe -B scripts/verify_isolation.py --demand-groups`. Công cụ đọc workbook trước từ lịch sử Git. [Số liệu theo ngày](tables/demand_group_daily.csv) · [Theo tuần](tables/demand_group_weekly.csv) · [Theo thứ](tables/demand_group_weekday.csv)
+
+Bản checkout Windows có một số mã nguồn lịch sử dùng CRLF và thiếu thư mục đặc trưng Stage 2 đã được Git bỏ qua. Lần chạy trình kiểm tra nguyên bản trước khi cập nhật dừng ở checksum của preparation/publish_stage4_report.py. Bản lưu đầy đủ vượt qua trình kiểm tra nguyên bản. Với bản hiện hành, dấu vân tay bao trùm từng tệp hiện có trong configs, data, preparation và results. Mô hình, các tệp Stage 4 và khóa dự báo được đối chiếu trực tiếp với SHA-256 gốc. Hai manifest Stage 5 và V2 tiếp tục lưu biên bản của từng phiên bản.

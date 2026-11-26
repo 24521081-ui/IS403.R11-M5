@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "official_before": {
+    "files": 532,
+    "sha256": "6e9363a79b17154d3b4aa8c66d7403fb01980286797d32f90033244ed95308ee"
+  },
+  "official_after": {
+    "files": 532,
+    "sha256": "6e9363a79b17154d3b4aa8c66d7403fb01980286797d32f90033244ed95308ee"
+  },
+  "fit_count": 1,
+  "validation_prediction_sha256": "6d90d28feaa7a733a003f372c54672a424e717ca61d2e851bc1ff52adadbd87d",
+  "validation_rows": 853720,
+  "future_perturbation_target_days": [
+    57,
+    1000,
+    1886,
+    1913
+  ],
+  "groups_origin": 1885,
+  "official_model": "RF-15 + FE-04",
+  "candidate_wrmsse_lower": false,
+  "peak_working_sets_mib": {
+    "evaluation_mib": 335.453125,
+    "rf_worker_mib": 565.7421875,
+    "preparation_mib": 750.12109375
+  },
+  "test_scored": false,
+  "official_gates_modified": false
+}
