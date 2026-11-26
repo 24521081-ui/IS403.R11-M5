@@ -25,7 +25,8 @@ def main():
     manifest=json.loads((source/"manifest.json").read_text(encoding="utf-8"))
     assert manifest["status"]=="complete" and manifest["validation_scored"]==8
     allscores=pd.read_csv(source/"tong_hop.csv",float_precision="round_trip")
-    report=ROOT/"reports";figures=report/"bieu_do";levelsdir=report/"wrmsse_12_cap"
+    # Keep historical C0-C7 figures separate from the selected C7_EVENTS report.
+    report=ROOT/"reports";figures=report/"archive"/source.name/"bieu_do";levelsdir=report/"wrmsse_12_cap"
     figures.mkdir(parents=True,exist_ok=True);levelsdir.mkdir(exist_ok=True)
     for split,model in zip(allscores.ky,allscores.cau_hinh):
         levels=pd.read_csv(source/f"{split}_{model}/diem_12_cap.csv",float_precision="round_trip")

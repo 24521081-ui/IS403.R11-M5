@@ -1,0 +1,16 @@
+{
+  "selected": "C7_EVENTS",
+  "rule": "Strictly lower validation WRMSSE; ties keep C7",
+  "validation": [
+    {
+      "configuration": "C7",
+      "WRMSSE": 0.5825613324334019,
+      "weighted_RMSSE_level12": 0.8278839952474195
+    },
+    {
+      "configuration": "C7_EVENTS",
+      "WRMSSE": 0.5785505730624799,
+      "weighted_RMSSE_level12": 0.8276652417356573
+    }
+  ]
+}
