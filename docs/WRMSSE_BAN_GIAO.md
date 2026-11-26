@@ -141,8 +141,8 @@ Mỗi dòng là điểm có trọng số **trong cấp đó**. Lấy trung bình
 - [Bảng điểm validation và test](../reports/ket_qua_wrmsse_validation_test.csv)
 - [Kết quả C7](../reports/ket_qua_cuoi.csv)
 - [Điểm 12 cấp test C6](../reports/wrmsse_12_cap/test_C6.csv) và [điểm 12 cấp test C7](../reports/wrmsse_12_cap/test_C7.csv)
-- [Biểu đồ lịch sử WRMSSE validation](../reports/bieu_do/lich_su_wrmsse_validation.png)
-- [Biểu đồ so sánh C6–C7 trên 12 cấp test](../reports/bieu_do/c6_c7_diem_12_cap_test.png)
+- [Biểu đồ lịch sử WRMSSE validation](../reports/archive/wrmsse_C0_C7_20261124/bieu_do/lich_su_wrmsse_validation.png)
+- [Biểu đồ so sánh C6–C7 trên 12 cấp test](../reports/archive/wrmsse_C0_C7_20261124/bieu_do/c6_c7_diem_12_cap_test.png)
 - [Cách đọc và nhận xét từng biểu đồ](../reports/mo_ta_bieu_do.md)
 
 ## 7. Kiểm tra đã làm và phần còn lại
@@ -183,12 +183,12 @@ reports/mo_ta_bieu_do.md
 reports/sai_lech_test_theo_cua_hang.csv
 reports/tep_da_luu_tru.csv
 reports/xep_hang_wrmsse_validation.csv
-reports/bieu_do/ban_cuoi_test_28_ngay.png
-reports/bieu_do/c6_c7_diem_12_cap_test.png
-reports/bieu_do/c6_c7_sai_lech_test_theo_cua_hang.png
-reports/bieu_do/c6_c7_wrmsse_validation_test.png
-reports/bieu_do/lich_su_sai_lech_validation.png
-reports/bieu_do/lich_su_wrmsse_validation.png
+reports/archive/wrmsse_C0_C7_20261124/bieu_do/ban_cuoi_test_28_ngay.png
+reports/archive/wrmsse_C0_C7_20261124/bieu_do/c6_c7_diem_12_cap_test.png
+reports/archive/wrmsse_C0_C7_20261124/bieu_do/c6_c7_sai_lech_test_theo_cua_hang.png
+reports/archive/wrmsse_C0_C7_20261124/bieu_do/c6_c7_wrmsse_validation_test.png
+reports/archive/wrmsse_C0_C7_20261124/bieu_do/lich_su_sai_lech_validation.png
+reports/archive/wrmsse_C0_C7_20261124/bieu_do/lich_su_wrmsse_validation.png
 reports/wrmsse_12_cap/validation_C0.csv
 reports/wrmsse_12_cap/validation_C1.csv
 reports/wrmsse_12_cap/validation_C2.csv

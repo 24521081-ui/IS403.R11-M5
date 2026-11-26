@@ -1,10 +1,12 @@
 # Mô tả biểu đồ theo WRMSSE 12 cấp M5
 
+> Bộ đang chốt là **C7_EVENTS**: xem [hướng dẫn và bảy hình chính](../docs/C7_EVENTS.md). Phần dưới giữ mô tả C0–C7 lịch sử; các hình cũ đã chuyển vào kho lưu trữ, các bảng và kết luận cũ được giữ để đối chiếu.
+
 Bản cuối/cấu hình đại diện đề xuất là **C7**, được xác định sau khi chấm đủ WRMSSE validation C0–C7. WRMSSE được bổ sung sau khi nhóm đã xem Test trước đó. Các mô tả RMSSE cũ được giữ nguyên tại `.local_evidence/archive_wrmsse_20261124/reports/mo_ta_bieu_do.md`; không dùng chúng để diễn giải hình hiện tại.
 
 ## 1. Lịch sử WRMSSE validation
 
-[Mở hình](bieu_do/lich_su_wrmsse_validation.png)
+[Mở hình](archive/wrmsse_C0_C7_20261124/bieu_do/lich_su_wrmsse_validation.png)
 
 ### 1. Chú thích dưới hình
 
@@ -26,7 +28,7 @@ C7 đạt 0,582561332, thấp nhất trong đủ 8 cấu hình. C6 đạt 0,6250
 
 ## 2. C6/C7 theo WRMSSE trên hai kỳ
 
-[Mở hình](bieu_do/c6_c7_wrmsse_validation_test.png)
+[Mở hình](archive/wrmsse_C0_C7_20261124/bieu_do/c6_c7_wrmsse_validation_test.png)
 
 ### 1. Chú thích dưới hình
 
@@ -48,7 +50,7 @@ Validation C6/C7: 0,625033/0,582561. Test C6/C7: 0,726174/0,652481. Kết luận
 
 ## 3. Phân tích 12 điểm cấp Test
 
-[Mở hình](bieu_do/c6_c7_diem_12_cap_test.png)
+[Mở hình](archive/wrmsse_C0_C7_20261124/bieu_do/c6_c7_diem_12_cap_test.png)
 
 ### 1. Chú thích dưới hình
 
@@ -70,7 +72,7 @@ WRMSSE chung C6/C7 là 0,726174/0,652481. Đây là trung bình 12 điểm cấp
 
 ## 4. Bản cuối trong 28 ngày Test
 
-[Mở hình](bieu_do/ban_cuoi_test_28_ngay.png)
+[Mở hình](archive/wrmsse_C0_C7_20261124/bieu_do/ban_cuoi_test_28_ngay.png)
 
 ### 1. Chú thích dưới hình
 
@@ -92,7 +94,7 @@ C7 dự báo 1177561,77 so với thực tế 1231764 đơn vị; sai lệch tổ
 
 ## 5. Sai lệch tổng lượng validation
 
-[Mở hình](bieu_do/lich_su_sai_lech_validation.png)
+[Mở hình](archive/wrmsse_C0_C7_20261124/bieu_do/lich_su_sai_lech_validation.png)
 
 ### 1. Chú thích dưới hình
 
@@ -114,7 +116,7 @@ C6 thiếu 3,47%, C7 thiếu 0,52%. Không dùng riêng sai lệch tổng để 
 
 ## 6. Sai lệch Test theo cửa hàng
 
-[Mở hình](bieu_do/c6_c7_sai_lech_test_theo_cua_hang.png)
+[Mở hình](archive/wrmsse_C0_C7_20261124/bieu_do/c6_c7_sai_lech_test_theo_cua_hang.png)
 
 ### 1. Chú thích dưới hình
 

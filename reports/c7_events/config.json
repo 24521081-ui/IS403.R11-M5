@@ -1,0 +1,104 @@
+{
+  "name": "C7_EVENTS",
+  "lambda_blend": 0.75,
+  "original_features": [
+    "item_id",
+    "day_of_week",
+    "month",
+    "event_flag",
+    "snap",
+    "lag_1",
+    "lag_7",
+    "lag_14",
+    "lag_28",
+    "rolling_mean_7",
+    "rolling_mean_28",
+    "sell_price",
+    "price_change_1w",
+    "price_ratio_4w"
+  ],
+  "event_features": {
+    "event_name_00": "Chanukah End",
+    "event_name_01": "Christmas",
+    "event_name_02": "Cinco De Mayo",
+    "event_name_03": "ColumbusDay",
+    "event_name_04": "Easter",
+    "event_name_05": "Eid al-Fitr",
+    "event_name_06": "EidAlAdha",
+    "event_name_07": "Father's day",
+    "event_name_08": "Halloween",
+    "event_name_09": "IndependenceDay",
+    "event_name_10": "LaborDay",
+    "event_name_11": "LentStart",
+    "event_name_12": "LentWeek2",
+    "event_name_13": "MartinLutherKingDay",
+    "event_name_14": "MemorialDay",
+    "event_name_15": "Mother's day",
+    "event_name_16": "NBAFinalsEnd",
+    "event_name_17": "NBAFinalsStart",
+    "event_name_18": "NewYear",
+    "event_name_19": "OrthodoxChristmas",
+    "event_name_20": "OrthodoxEaster",
+    "event_name_21": "Pesach End",
+    "event_name_22": "PresidentsDay",
+    "event_name_23": "Purim End",
+    "event_name_24": "Ramadan starts",
+    "event_name_25": "StPatricksDay",
+    "event_name_26": "SuperBowl",
+    "event_name_27": "Thanksgiving",
+    "event_name_28": "ValentinesDay",
+    "event_name_29": "VeteransDay",
+    "event_type_00": "Cultural",
+    "event_type_01": "National",
+    "event_type_02": "Religious",
+    "event_type_03": "Sporting"
+  },
+  "parameters": {
+    "classifier": {
+      "objective": "binary",
+      "learning_rate": 0.05,
+      "n_estimators": 300,
+      "num_leaves": 48,
+      "random_state": 42,
+      "n_jobs": 6,
+      "device_type": "cpu",
+      "force_col_wise": true,
+      "deterministic": true,
+      "verbosity": -1,
+      "importance_type": "gain"
+    },
+    "regressor": {
+      "objective": "regression",
+      "learning_rate": 0.05,
+      "n_estimators": 200,
+      "num_leaves": 31,
+      "random_state": 42,
+      "n_jobs": 6,
+      "device_type": "cpu",
+      "force_col_wise": true,
+      "deterministic": true,
+      "verbosity": -1,
+      "importance_type": "gain"
+    }
+  },
+  "price_policy": "previous_completed_week; frozen at forecast origin",
+  "vocabulary_end": 1857,
+  "validation_aux_origin": 1857,
+  "validation_platt_days": [
+    1858,
+    1885
+  ],
+  "validation_days": [
+    1886,
+    1913
+  ],
+  "test_aux_origin": 1885,
+  "test_platt_days": [
+    1886,
+    1913
+  ],
+  "test_days": [
+    1914,
+    1941
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "configuration": "C7_EVENTS",
+  "validation_days": [
+    1886,
+    1913
+  ],
+  "test_days": [
+    1914,
+    1941
+  ],
+  "forecast_sha256": "96409130fe0b573f0268795bc4c6b245f43fc4059b49415559ad135598912a5c",
+  "forecast_rows": 853720,
+  "forecast_pairs": 30490,
+  "source_experiment": "results/analysis/c7_events_20261126",
+  "checks": "Verified forecast keys and artifact hashes; reproduced grouped scores from saved Test details; no training during publication.",
+  "published_files": {
+    "reports/bieu_do/lich_su_cau_hinh.png": "6a349a7779a8bd9c6782aaed58ac3fb434a550cf851797aa48b5d5d33e149ecf",
+    "reports/bieu_do/rmsse_theo_nganh_hang.png": "ba0947fe7b8d8e201eb33f1e01f06952261e7480576222d8a16ccb3357294cad",
+    "reports/bieu_do/rmsse_theo_tan_suat_ban.png": "6f15109f1ea8c2e107910cab1d1a67a1f44ce4f88d3d8b3cf854ae602de37a77",
+    "reports/bieu_do/sai_lech_test_theo_cua_hang.png": "ff29373fc5e2a36ecd5843db577d2c9bc2d3098fbcef85bb661ea1bdbe323996",
+    "reports/bieu_do/so_do_two_part.png": "02ea4d10ac7c29b5b6dbd1350f8b35c590090c6a45980f1cdc4333e1dfb65cda",
+    "reports/bieu_do/so_sanh_validation.png": "08d705402b08f3569a048d6b48ba42e292df9c626e053fc32d85656f25abcc84",
+    "reports/bieu_do/thuc_te_va_du_bao_test.png": "b892c6fb21835db5e6f45cb4c19063284fe5f5e72dd551e562682bc5d6afcf92",
+    "reports/c7_events/platt_by_store.csv": "42a57ffb0fcaa51adaefc1f64e8aeee91495f2da61e2c910fa931d36dd9d1f65",
+    "reports/c7_events/scores.csv": "e6da818e185c3c69025e7f0ad529f9cae662caa08b4e5ff8ce5eea1b9fe4550f",
+    "reports/c7_events/test_daily.csv": "d4ee79c7092bb79d2db4fbe2a86eeeb42d2d19e1853d8c244641d9a56730e3ad",
+    "reports/c7_events/test_group_scores.csv": "a4eb0dfa46a60acad898ffd5243a2b5236361cafc4a4f838c930002d3f7e0077",
+    "reports/c7_events/test_levels.csv": "9c81d5570389b16d96abc3010271d003139a3d3f7dc673a29fb1001cedd68bd2",
+    "reports/c7_events/training_inventory.csv": "ccf140831cdf60740e9f43cdd7937412ca68a97dd4a5c00ca7e75bae491d7fa2",
+    "reports/c7_events/validation_C7_EVENTS_levels.csv": "12b911d6f50a00816869e06b46309d047b1da55a87b9fdff5f7c0b5d94464c84",
+    "reports/c7_events/validation_C7_levels.csv": "12f0934c253f29a4c7c60686aeee01a2c70780cad4eee4ddf39c52109ef25a18",
+    "reports/c7_events/validation_comparison.csv": "b7b369b46a0a303792681ea5699cd3a535d3fb0d7d691ad90c760b516557ad7d",
+    "configs/c7_events.json": "c49edff56f7de09dede56207d31c4706a2a181a3d048b00de8714a6c3e15d220"
+  },
+  "text_hash_newlines": "LF for CSV/JSON; raw bytes for PNG"
+}

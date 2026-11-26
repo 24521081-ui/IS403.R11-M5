@@ -1,0 +1,28 @@
+{
+  "selected": "C7_EVENTS",
+  "rows": 853720,
+  "pairs": 30490,
+  "days": [
+    1914,
+    1941
+  ],
+  "unique_keys": true,
+  "finite_nonnegative": true,
+  "WRMSSE": 0.6284865669601195,
+  "bias_pct": -4.304067131332523,
+  "sha256": "96409130fe0b573f0268795bc4c6b245f43fc4059b49415559ad135598912a5c",
+  "config_sha256": "3750df4c6e0f8f2e7651afcf9536cd4db6f4f7ac3288f256c601c278da868584",
+  "forecast_file": "results/analysis/c7_events_20261126/forecast_test_selected.csv",
+  "source_forecasts": {
+    "results/analysis/c7_events_20261126/test/CA_1/forecast.csv": "9cc3a13d74a2aeaebd82a50ad6226f178ade891dd681ca25b3d8e9efb22df76f",
+    "results/analysis/c7_events_20261126/test/CA_2/forecast.csv": "1d8aed428363feab3ba272086380354a98d39faec9dc18b987bf4b209ecc2e17",
+    "results/analysis/c7_events_20261126/test/CA_3/forecast.csv": "132e1d838c1ff4cb703f743645d2de094a1a6913451876474e52852291d5c12c",
+    "results/analysis/c7_events_20261126/test/CA_4/forecast.csv": "2bb9fb918c7e012c4feef59fee35110016cef58936cf15c7868ed86031fdc5ff",
+    "results/analysis/c7_events_20261126/test/TX_1/forecast.csv": "8b0b9d2df558f5dfdb9ee5123bbf1565311d17dd93fc5f4f5023333904d4f7de",
+    "results/analysis/c7_events_20261126/test/TX_2/forecast.csv": "c427c455ac62fc8bc644d4c2656efe4500fa4a50e499e8e0aa51e74f1a9021f1",
+    "results/analysis/c7_events_20261126/test/TX_3/forecast.csv": "83a81d05b9ec3c3ca60e46fff49b25ea5c78710a98d1f458e9ab74cbbb0fcbdf",
+    "results/analysis/c7_events_20261126/test/WI_1/forecast.csv": "0f8dd653c1925bdbc41834831cf0af21869b8b4ba3342f1ab8bb3f8333c3a4d8",
+    "results/analysis/c7_events_20261126/test/WI_2/forecast.csv": "4d805f8ea5072eadb99d1034d49e92d3d27b7cee94e3c7237f3615b4cd520890",
+    "results/analysis/c7_events_20261126/test/WI_3/forecast.csv": "dad505f8132deb8ab510e26348d1969ab23e24f025595dd85d53d3ad2b036b71"
+  }
+}

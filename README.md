@@ -14,9 +14,25 @@ Có đủ dự báo đã lưu thì mình chỉ tính lại điểm, không cần
 ## Báo cáo LightGBM Two-Part
 
 - [Xếp hạng WRMSSE validation C0–C7](reports/xep_hang_wrmsse_validation.csv) · [Kết quả validation/test](reports/ket_qua_wrmsse_validation_test.csv).
-- [Mô tả và liên kết sáu biểu đồ](reports/mo_ta_bieu_do.md) · [12 cấp Test C7](reports/wrmsse_12_cap/test_C7.csv).
+- [Mô tả bộ biểu đồ C0–C7 lịch sử](reports/mo_ta_bieu_do.md) · [12 cấp Test C7 gốc](reports/wrmsse_12_cap/test_C7.csv).
 
-Bản cuối được đề xuất là C7 với λ = 0,75, căn cứ WRMSSE validation. Lệnh chung `scripts/score_model_wrmsse.py` hiện chấm test; validation C0–C7 dùng script riêng `scripts/score_wrmsse_configurations.py` với dự báo Two-Part đã lưu tại máy. Chưa có lệnh chung chấm validation từ CSV tùy ý của thành viên.
+Trong bộ C0–C7 lịch sử, bản đại diện là C7 với λ = 0,75. Lệnh chung `scripts/score_model_wrmsse.py` hiện chấm test; validation C0–C7 dùng script riêng `scripts/score_wrmsse_configurations.py` với dự báo Two-Part đã lưu tại máy. Chưa có lệnh chung chấm validation từ CSV tùy ý của thành viên.
+
+### C7_EVENTS — bản chốt sau khi thêm sự kiện (26/11/2026)
+
+Chọn **C7_EVENTS**, λ = 0,75, vì WRMSSE Validation d_1886–d_1913 giảm từ **0,5825613324** (C7 gốc) xuống **0,5785505731**. Test d_1914–d_1941 đạt WRMSSE **0,6284865670**, dự báo thiếu **4,30%** tổng lượng. Validation không có ngày được gắn nhãn sự kiện, nên chưa đánh giá trực tiếp ngày lễ.
+
+- [Hướng dẫn C7_EVENTS, bộ 7 hình và cách tái lập](docs/C7_EVENTS.md).
+- [Bảng tổng hợp Validation/Test](reports/c7_events/scores.csv), [quyết định chọn](reports/c7_events/selection.json), [điểm Test theo nhóm](reports/c7_events/test_group_scores.csv).
+- [Cấu hình đóng băng](configs/c7_events.json): 14 đặc trưng gốc + 30 chỉ báo tên sự kiện + 4 chỉ báo loại; Classifier 300 cây/48 lá, Regressor 200 cây/31 lá. Giữ nguyên cấu hình Tweedie và mã của các mô hình khác.
+
+Xem hình ngay từ clone, hoặc dựng lại chỉ từ các bảng nhỏ đã commit, không cần dữ liệu M5/model/dự báo chi tiết:
+
+```powershell
+python scripts/plot_c7_events.py --published-report
+```
+
+File dự báo **853.720 dòng** không nằm trong Git. Người giữ artifact là chủ repo `24521081-ui`; bản đã kiểm chứng hiện ở máy thực nghiệm tại `D:\Phân tích dữ liệu kinh doanh\Code\IS403.R11-M5\results\analysis\c7_events_20261126\forecast_test_selected.csv`. Nhóm cần nhận file này riêng và kiểm tra SHA-256 trong [test_verified.json](reports/c7_events/test_verified.json) trước khi chấm chung. Cách chấm, khôi phục checkpoint và tái lập được ghi trong hướng dẫn C7_EVENTS.
 
 ---
 
