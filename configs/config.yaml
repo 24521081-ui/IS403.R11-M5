@@ -1,23 +1,28 @@
-data_dir: data/raw
-results_dir: results
-chunk_size: 500
-smoke_items: 30
-seed: 42
-use_prices: true
-price_policy: last_known
-horizon: 28
-validation_origin: 1885
-test_origin: 1913
+# --- Đường dẫn & Tài nguyên đọc dữ liệu ---
+data_dir: data/raw              # Thư mục chứa 3 file dữ liệu M5 gốc (.csv)
+results_dir: results            # Thư mục gốc lưu kết quả dự báo, mô hình, chỉ số và biểu đồ
+chunk_size: 500                 # Số dòng đọc mỗi khối (chunk) khi tải file lớn để tiết kiệm RAM
+smoke_items: 30                 # Số sản phẩm lấy mẫu khi chạy chế độ smoke test kiểm tra nhanh
+seed: 42                        # Hạt giống ngẫu nhiên cố định để tái lập kết quả lấy mẫu
+
+# --- Thiết lập bài toán & Đặc trưng giá ---
+use_prices: true                # Bật/tắt sử dụng đặc trưng giá bán (sell_price và price_change)
+price_policy: last_known        # Chính sách giá tương lai: giữ cố định giá biết cuối cùng tại origin (chống rò rỉ)
+horizon: 28                     # Số ngày cần dự báo liên tiếp (28 ngày theo chuẩn cuộc thi M5)
+validation_origin: 1885         # Ngày gốc cuối tập Train cho kỳ Validation (dự báo d_1886 -> d_1913)
+test_origin: 1913               # Ngày gốc cuối tập Train cho kỳ Test cuối (dự báo d_1914 -> d_1941)
+
+# --- Siêu tham số mô hình LightGBM–Tweedie ---
 model:
-  objective: tweedie
-  tweedie_variance_power: 1.1
-  learning_rate: 0.05
-  n_estimators: 300
-  num_leaves: 63
-  min_child_samples: 50
-  random_state: 42
-  n_jobs: 6
-  device_type: cpu
-  force_col_wise: true
-  deterministic: true
-  verbosity: -1
+  objective: tweedie            # Hàm mục tiêu Tweedie, phù hợp dữ liệu bán hàng không âm & nhiều giá trị 0
+  tweedie_variance_power: 1.1   # Tham số phương sai p (1 < p < 2); 1.1 gần Poisson, xử lý tốt chuỗi bán thưa
+  learning_rate: 0.05           # Tốc độ học (eta), kiểm soát mức đóng góp mỗi cây để tránh học quá khớp
+  n_estimators: 300             # Tổng số cây quyết định xây dựng tuần tự (số vòng boosting)
+  num_leaves: 63                # Số lá tối đa trên mỗi cây (chiến lược Leaf-wise của LightGBM)
+  min_child_samples: 50         # Số mẫu tối thiểu trong một lá, giúp ngăn cây chia quá sâu vào nhiễu
+  random_state: 42              # Hạt giống ngẫu nhiên của LightGBM để kết quả huấn luyện ổn định
+  n_jobs: 6                     # Số luồng CPU chạy song song khi huấn luyện
+  device_type: cpu              # Thiết bị thực thi (chạy trên CPU)
+  force_col_wise: true          # Bắt buộc dựng histogram theo cột, giảm bộ nhớ và tăng tốc trên dữ liệu lớn
+  deterministic: true           # Đảm bảo tính tất định (ra cùng kết quả khi chạy lại với cùng seed)
+  verbosity: -1                 # Tắt log chi tiết của LightGBM (-1 = chỉ hiện cảnh báo/lỗi nghiêm trọng)

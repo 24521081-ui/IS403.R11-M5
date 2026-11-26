@@ -11,6 +11,8 @@ import numpy as np
 import pandas as pd
 from numba import njit
 
+from src.demand_groups import categorize_intermittency, compute_zero_ratio
+
 
 @njit(fastmath=True)
 def _calc_m5_scale(history_matrix: np.ndarray) -> np.ndarray:
@@ -95,51 +97,3 @@ def compute_series_metrics(history: np.ndarray, actual: np.ndarray, pred: np.nda
         "rmse": rmse,
         "rmsse": rmsse
     })
-
-
-def compute_zero_ratio(history: np.ndarray, from_first_sale: bool = True) -> np.ndarray:
-    """
-    Tính tỷ lệ ngày có lượng bán bằng 0 trên tập lịch sử.
-    """
-    n_series, n_timesteps = history.shape
-    ratios = np.zeros(n_series, dtype=np.float64)
-    
-    for i in range(n_series):
-        if from_first_sale:
-            first_idx = -1
-            for t in range(n_timesteps):
-                if history[i, t] > 0:
-                    first_idx = t
-                    break
-            if first_idx == -1:
-                ratios[i] = 1.0
-                continue
-            sub_len = n_timesteps - first_idx
-            zero_cnt = np.sum(history[i, first_idx:] == 0)
-            ratios[i] = zero_cnt / max(1, sub_len)
-        else:
-            zero_cnt = np.sum(history[i, :] == 0)
-            ratios[i] = zero_cnt / n_timesteps
-            
-    return ratios
-
-
-def categorize_intermittency(zero_ratios: np.ndarray) -> np.ndarray:
-    """
-    Phân loại mức độ gián đoạn thành 4 nhóm theo tỷ lệ số ngày bằng 0:
-    - Thường xuyên (Smooth/Regular): < 30%
-    - Trung bình (Mild): 30% - 50%
-    - Gián đoạn (Moderate): 50% - 70%
-    - Rất gián đoạn (Severe/Lumpy): >= 70%
-    """
-    categories = np.empty(len(zero_ratios), dtype=object)
-    for i, r in enumerate(zero_ratios):
-        if r < 0.30:
-            categories[i] = "1. Thường xuyên (<30% 0)"
-        elif r < 0.50:
-            categories[i] = "2. Trung bình (30-50% 0)"
-        elif r < 0.70:
-            categories[i] = "3. Gián đoạn (50-70% 0)"
-        else:
-            categories[i] = "4. Rất gián đoạn (>=70% 0)"
-    return categories

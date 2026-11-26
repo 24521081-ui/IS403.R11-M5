@@ -1,156 +1,65 @@
-# Đánh giá thực nghiệm các mô hình dự báo lượng bán sản phẩm trong bán lẻ (Walmart M5)
+# Dự báo doanh số bán lẻ Walmart M5
 
-Đề tài: **Đánh giá thực nghiệm các mô hình dự báo lượng bán sản phẩm trong bán lẻ: Hỗ trợ lập kế hoạch nhu cầu và bổ sung hàng hóa.**  
-Bộ dữ liệu chuẩn: **Walmart M5 Forecasting Accuracy Dataset** (30.490 chuỗi thời gian phân cấp, 10 siêu thị, 3 bang).  
-Phạm vi nghiên cứu: Đối sánh toàn diện giữa **Hệ thống Học máy tăng cường độ dốc (LightGBM với hàm mục tiêu Tweedie)** và **Hệ thống Mô hình thống kê chuẩn mực & Nhu cầu gián đoạn (Statistical Benchmarks & Intermittent Demand)**.
+Đồ án so sánh LightGBM–Tweedie với Seasonal Naive, Exponential Smoothing Bottom-Up, Croston và Croston–SBA trên dữ liệu Walmart M5 gồm 30.490 chuỗi sản phẩm × cửa hàng.
 
----
+## Cài đặt
 
-## 1. Kiến trúc hệ thống và Cấu trúc thư mục dự án
-
-```
-IS403.R11-M5/
-├── configs/                             # Cấu hình tham số mô hình
-│   ├── config.yaml                      # Cấu hình pipeline LightGBM–Tweedie
-│   └── benchmarks.yaml                  # Cấu hình các mô hình thống kê đối chứng
-│
-├── data/                                # Thư mục dữ liệu (được .gitignore bảo vệ)
-│   └── raw/                             # Đặt các file dữ liệu M5 gốc (.csv) tại đây
-│
-├── docs/                                # Báo cáo nghiên cứu khoa học & tài liệu kỹ thuật
-│   ├── reports/                         # Báo cáo thực nghiệm (Word .docx)
-│   │   ├── research-report.docx         # Báo cáo nghiên cứu thực nghiệm hoàn chỉnh
-│   │   ├── model-guide.docx             # Tài liệu giải thích bản chất toán học & mã nguồn
-│   │   ├── mae-guide.docx               # Chuyên đề đối sánh & ý nghĩa kinh doanh của MAE
-│   │   └── rmse-guide.docx              # Chuyên đề đối sánh & thiết lập Safety Stock với RMSE
-│   └── technical/                       # Tài liệu kỹ thuật & quy trình
-│       ├── research-report.md           # Báo cáo nghiên cứu dạng Markdown
-│       ├── model-guide.md               # Tài liệu kỹ thuật mô hình dạng Markdown
-│       ├── HUONG_DAN_DEMO_DU_BAO.md     # Quy trình demo suy luận mô hình ML
-│       └── reference_comparison.md      # Đối chiếu mã nguồn học thuật
-│
-├── results/                             # Kết quả thực nghiệm và trực quan hóa
-│   ├── benchmarks/
-│   │   ├── metrics/                     # Bảng chỉ số sai số MAE, RMSE, RMSSE
-│   │   │   ├── all_stores/              # Kết quả chính thức toàn bộ 10 siêu thị (30.490 chuỗi)
-│   │   │   └── ca_1/                    # Kết quả chạy thử nghiệm mẫu riêng siêu thị CA_1
-│   │   └── predictions/                 # Kết quả dự báo 28 ngày
-│   │       ├── all_stores/              # Tập dự báo toàn bộ 10 siêu thị (validation & test)
-│   │       └── ca_1/                    # Tập dự báo riêng siêu thị CA_1 (validation & test)
-│   ├── figures/                         # Biểu đồ phân tích độ chính xác & sai số
-│   └── models/                          # Trọng số mô hình Machine Learning đã huấn luyện
-│
-├── scripts/                             # Các điểm thực thi chi tiết
-│   ├── benchmarks/                      # Scripts cho các mô hình thống kê đối chứng
-│   │   ├── run_benchmarks.py            # Chạy thực nghiệm (Validation & Test)
-│   │   ├── test_benchmark_models.py     # Kiểm thử đơn vị thuật toán
-│   │   └── plot_time_series_comparison.py # Vẽ biểu đồ chuỗi thời gian đối chứng
-│   └── ml/                              # Scripts cho mô hình Machine Learning (LightGBM)
-│       ├── demo_saved_forecast.py       # Demo phát lại suy luận dự báo LightGBM
-│       ├── plot_saved_rmsse_report.py   # Xuất biểu đồ so sánh RMSSE
-│       └── summarize_validation.py      # Tổng hợp chỉ số validation ML
-│
-├── src/                                 # Toàn bộ mã nguồn lõi
-│   ├── benchmarks/                      # Hợp phần mô hình thống kê đối chứng
-│   │   ├── config.py                    # Cấu hình tự động nhận diện dữ liệu và siêu tham số
-│   │   ├── data_loader.py               # Nạp ma trận dữ liệu tối ưu bộ nhớ
-│   │   ├── models/                      # Thuật toán: Seasonal Naïve, ES_bu, Croston, Croston-SBA
-│   │   └── evaluation/                  # Thước đo chuẩn M5: MAE, RMSE, RMSSE & điều phối đánh giá
-│   │
-│   └── ml/                              # Hợp phần mô hình học máy (LightGBM - Tweedie)
-│       ├── data_loader.py               # Nạp dữ liệu bảng sales, calendar, prices
-│       ├── feature_engineering.py       # Kỹ nghệ đặc trưng: Lags, Rolling windows, Calendar
-│       ├── preprocessing.py             # Tiền xử lý ma trận bán hàng và nhãn phân loại
-│       ├── training.py                  # Huấn luyện LightGBM tối ưu hàm mất mát Tweedie
-│       ├── forecasting.py               # Dự báo đệ quy đa bước (Recursive Multi-step)
-│       └── reporting.py                 # Đánh giá chỉ số RMSSE và xuất báo cáo mô hình ML
-│
-├── run.py                               # Điểm khởi chạy pipeline Machine Learning (LightGBM)
-├── run_benchmarks.py                    # Điểm khởi chạy pipeline Statistical Benchmarks
-├── requirements.txt                     # Danh mục thư viện phụ thuộc của toàn bộ dự án
-├── .gitignore                           # Quy tắc loại trừ tệp nhị phân và dữ liệu lớn
-└── README.md                            # Tài liệu tổng quan dự án
-```
-
----
-
-## 2. Các phương pháp dự báo được triển khai
-
-### A. Nhóm mô hình Học máy (Machine Learning)
-- **LightGBM với hàm mục tiêu Tweedie:** Mô hình hóa phân phối Poisson hỗn hợp Gamma phù hợp với dữ liệu có tỷ lệ số 0 cao.
-- **Kỹ nghệ đặc trưng:** Độ trễ (lags 28, 29,...), giá trị trung bình cuộn (rolling mean 7, 28,...), độ biến động giá, sự kiện lịch (ngày lễ, SNAP food stamps).
-- **Chiến lược suy luận:** Dự báo đệ quy (Recursive Forecasting) từng bước qua 28 ngày.
-
-### B. Nhóm mô hình Thống kê Đối chứng (Statistical Benchmarks)
-- **Seasonal Naïve (SN):** Chu kỳ tuần 7 ngày bán lẻ ($m = 7$), đóng vai trò là thước đo cơ sở chuẩn mực tính thang đo RMSSE của cuộc thi M5.
-- **Exponential Smoothing kết hợp Bottom-Up ($ES_{bu}$):** San bằng mũ Holt-Winters mức và mùa vụ ($\alpha = 0.2, \gamma = 0.15$), dự báo tại cấp SKU và tổng hợp lên toàn bộ các cấp phân cấp.
-- **Croston cổ điển (Croston, 1972):** Tách biệt quy mô nhu cầu và khoảng cách giữa các lần bán hàng, tối ưu cho nhu cầu gián đoạn.
-- **Croston-SBA (Syntetos & Boylan, 2005):** Hiệu chỉnh độ chệch dương bằng hệ số $(1 - \alpha/2)$, tăng tốc tính toán hàng chục ngàn chuỗi thời gian bằng **Numba JIT (`@njit(fastmath=True)`)**.
-
----
-
-## 3. Cài đặt môi trường
-
-Sử dụng **Python 3.11 (64-bit)**. Khuyến nghị thiết lập môi trường ảo:
+Dùng Python 3.11. Đặt `calendar.csv`, `sell_prices.csv` và `sales_train_evaluation.csv` trong `data/raw/`. Chạy các lệnh từ thư mục gốc của repo.
 
 ```powershell
-# Tạo và kích hoạt môi trường ảo
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-
-# Nâng cấp pip và cài đặt thư viện phụ thuộc
-pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
----
+## Chạy đồ án
 
-## 4. Hướng dẫn vận hành
+**LightGBM–Tweedie cho CA_1**
 
-### 4.1. Hợp phần Mô hình Thống kê Đối chứng (Statistical Benchmarks)
-
-Điểm khởi chạy chính: `run_benchmarks.py` (hoặc qua `scripts/benchmarks/run_benchmarks.py`):
+Để chọn cấu hình trước khi đối chiếu với Seasonal Naive, chạy `python -m scripts.ml.compare_tweedie_configs`. Bốn lượt cùng dùng `sell_price` và `price_change`. Mỗi lượt thử chỉ thay đổi một trong ba tham số `tweedie_variance_power`, `num_leaves` và `n_estimators` so với cấu hình gốc. Script cập nhật [biểu đồ chọn cấu hình](results/figures/final_CA_1_report/tweedie_config_selection.png) và xuất `results/tweedie_config_selection.csv`.
 
 ```powershell
-# 1. Kiểm thử đơn vị tính đúng đắn của thuật toán (trên chuỗi nhân tạo và mẫu M5)
+python run_baseline_single_file.py
+```
+
+Lệnh train với dữ liệu đến `d_1885`, dự báo `d_1886`–`d_1913` và so sánh LightGBM–Tweedie với Seasonal Naive.
+
+- [Biểu đồ chung](results/figures/final_CA_1_report/model_comparison_all_metrics.png) hiển thị MAE, RMSE, RMSSE và WRMSSE. Bảng điểm được xuất vào `results/baseline_single_file_results.csv`.
+- Bảng điểm theo nhóm được xuất vào `results/baseline_group_metrics.csv`. Các biểu đồ `intermittency_*.png` và `category_*.png` trong [thư mục biểu đồ CA_1](results/figures/final_CA_1_report/) trình bày bốn mức gián đoạn và ba ngành hàng M5, kèm tổng lượng bán thực tế và dự báo theo ngày.
+- Tệp `results/predictions/baseline_CA_1_validation.csv` lưu doanh số thực tế, dự báo của hai mô hình và nhãn cho từng sản phẩm–ngày. Nhãn gián đoạn tính từ lịch sử train, còn ngành hàng lấy từ `cat_id`.
+
+WRMSSE dùng doanh thu 28 ngày cuối train làm trọng số ở mỗi cấp. Điểm trong biểu đồ được tính trên phạm vi CA_1 hoặc nhóm đang hiển thị. [Hướng dẫn chấm chính thức của M5](https://github.com/Mcompetitions/M5-methods/blob/master/M5-Competitors-Guide.pdf)
+
+**LightGBM–Tweedie trên 10 cửa hàng**
+
+```powershell
+python scripts/ml/run_pipeline.py --mode validation --all-stores
+python scripts/ml/run_pipeline.py --mode test --all-stores --confirm-final-test
+```
+
+Pipeline đọc `configs/config.yaml` và xuất dự báo theo từng sản phẩm, mô hình đã train và bảng sai số. Kỳ test train đến `d_1913` và dự báo `d_1914`–`d_1941`.
+
+**Mô hình thống kê đối chứng**
+
+```powershell
 python run_benchmarks.py --test
-
-# 2. Chạy thực nghiệm trên 1 cửa hàng thử nghiệm (ví dụ CA_1)
 python run_benchmarks.py --store CA_1
-
-# 3. Chạy thực nghiệm toàn diện trên toàn bộ 10 siêu thị M5
 python run_benchmarks.py --all_stores
 ```
 
-### 4.2. Hợp phần Mô hình Học máy (LightGBM–Tweedie)
+Bảng tổng hợp của benchmark nằm trong `results/benchmarks/metrics/`. Tham số nằm trong `src/benchmarks/config.py`.
 
-Điểm khởi chạy chính: `run.py`:
-
-```powershell
-# Chạy demo kiểm chứng trên dữ liệu giả lập
-python run.py --demo
-
-# Chạy quy trình huấn luyện và dự báo đầy đủ theo cấu hình configs/config.yaml
-python run.py
-```
-
-### 4.3. Demo và đối chiếu kết quả
+**Chấm WRMSSE trên 12 cấp**
 
 ```powershell
-# Phát lại suy luận dự báo từ checkpoint mô hình đã lưu
-python scripts/ml/demo_saved_forecast.py
-
-# Xuất biểu đồ so sánh trực quan chỉ số RMSSE
-python scripts/ml/plot_saved_rmsse_report.py
+python scripts/score_model_wrmsse.py --model LightGBM_Tweedie --forecast 'results/test/test_full_*/lightgbm_tweedie.csv'
 ```
 
----
+Lệnh nhận dự báo của đủ 10 cửa hàng với các cột `item_id`, `store_id`, `target_day` và `y_pred`. Mỗi khóa sản phẩm–cửa hàng–ngày xuất hiện đúng một lần. Kết quả mặc định nằm trong `results/wrmsse/runs/<model>/`.
 
-## 5. Kết quả thực nghiệm và Báo cáo
+## Báo cáo và kết quả
 
-Toàn bộ các tài liệu nghiên cứu học thuật và báo cáo đối sánh được xuất tự động tại thư mục [`docs/`](docs/):
-- **Báo cáo nghiên cứu hoàn chỉnh:** [`docs/reports/research-report.docx`](docs/reports/research-report.docx) / [`docs/technical/research-report.md`](docs/technical/research-report.md).
-- **Tài liệu kỹ thuật mô hình:** [`docs/reports/model-guide.docx`](docs/reports/model-guide.docx) / [`docs/technical/model-guide.md`](docs/technical/model-guide.md).
-- **Chuyên đề phân tích chỉ số:** [`docs/reports/mae-guide.docx`](docs/reports/mae-guide.docx) và [`docs/reports/rmse-guide.docx`](docs/reports/rmse-guide.docx).
+- Báo cáo và bản thảo được lưu cục bộ trong `docs/`.
+- [Biểu đồ thực nghiệm CA_1](results/figures/final_CA_1_report/) và [bảng tổng hợp mô hình đối chứng](results/benchmarks/metrics/all_stores/).
 
-Các bảng tổng hợp sai số định lượng (Overall, Store, Category, Demand Profile) được lưu trữ tại [`results/benchmarks/metrics/`](results/benchmarks/metrics/).
+Mã nguồn mô hình nằm trong `src/`. Dự báo chi tiết, checkpoint và kết quả của từng lần chạy được Git bỏ qua. Thư mục lưu trữ cục bộ bên cạnh repo giữ các lượt chạy trước đây theo đường dẫn gốc tính từ thư mục dự án.

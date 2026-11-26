@@ -1,8 +1,7 @@
-"""M5 Forecasting - LightGBM Tweedie Baseline (Single-File Complete Pipeline)
+"""Dự báo M5 cho CA_1 bằng LightGBM–Tweedie và Seasonal Naive.
 
 Tất cả các bước từ Đọc dữ liệu (kèm sell_prices) -> Tiền xử lý & Giá -> Tạo đặc trưng (Lags, Rolling, Price, Price Change)
--> Huấn luyện LightGBM -> Dự báo đệ quy 28 ngày -> Đánh giá chỉ số (RMSSE, MAE, RMSE, Số dư)
-được gom trọn gói trong 1 file duy nhất.
+-> Huấn luyện LightGBM -> Dự báo 28 ngày -> Chấm điểm chung và theo nhóm sản phẩm.
 
 Chạy:
     python run_baseline_single_file.py
@@ -13,9 +12,16 @@ import logging
 from pathlib import Path
 from time import perf_counter
 
+import matplotlib
 import numpy as np
 import pandas as pd
 from lightgbm import LGBMRegressor
+
+from scripts.score_c7_wrmsse import LEVELS, rmsse_scale
+from src.demand_groups import categorize_intermittency, compute_zero_ratio
+
+matplotlib.use("Agg")
+from matplotlib import pyplot as plt
 
 # ==============================================================================
 # CẤU HÌNH BASELINE CHÍNH THỨC CỦA NHÓM (CÓ BẬT GIÁ BÁN & BIẾN ĐỘNG GIÁ)
@@ -25,6 +31,10 @@ ORIGIN_DAY = 1885  # Ngày kết thúc tập Train
 HORIZON = 28  # Số ngày cần dự báo (d_1886 -> d_1913)
 DATA_DIR = Path(__file__).resolve().parent / "data" / "raw"
 OUTPUT_DIR = Path(__file__).resolve().parent / "results"
+CHART_METRICS = ["MAE", "RMSE", "RMSSE", "WRMSSE"]
+MODEL_NAMES = ("LightGBM–Tweedie (Giá + Price Change)", "Seasonal Naive (Mốc chuẩn)")
+MODEL_LABELS = ("LightGBM–Tweedie", "Seasonal Naive")
+MODEL_COLORS = ("#1f77b4", "#ff7f0e")
 
 MODEL_PARAMS = {
     "objective": "tweedie",
@@ -97,9 +107,11 @@ def load_data(data_dir, store_id, origin_day):
         "item_id": "string",
         "store_id": "string",
         "state_id": "string",
+        "cat_id": "string",
+        "dept_id": "string",
         **{d: "float32" for d in days},
     }
-    cols = ["id", "item_id", "store_id", "state_id"] + days
+    cols = ["id", "item_id", "store_id", "state_id", "cat_id", "dept_id"] + days
 
     parts_sales = []
     for chunk in pd.read_csv(
@@ -292,6 +304,65 @@ def recursive_predict(
 # ==============================================================================
 # BƯỚC 6: ĐÁNH GIÁ VÀ XUẤT KẾT QUẢ
 # ==============================================================================
+def training_revenue(wide, calendar, prices):
+    days = [f"d_{day}" for day in range(ORIGIN_DAY - 27, ORIGIN_DAY + 1)]
+    weeks = calendar.set_index("d").loc[days, "wm_yr_wk"]
+    keys = ["store_id", "item_id"]
+    revenue = np.zeros(len(wide), dtype=np.float64)
+    for day, week in weeks.items():
+        week_prices = prices.loc[prices["wm_yr_wk"] == week, keys + ["sell_price"]]
+        price = wide[keys].merge(week_prices, how="left", on=keys, validate="one_to_one")
+        price = price["sell_price"].to_numpy(dtype=np.float64)
+        units = wide[day].to_numpy(dtype=np.float64)
+        if not np.isfinite(price[units > 0]).all():
+            raise ValueError(f"Thiếu giá để tính doanh thu tại {day}.")
+        revenue += units * np.nan_to_num(price)
+    return revenue
+
+
+def scoped_wrmsse(metadata, revenue, history, actual, predictions):
+    """Áp dụng 12 cấp M5 trên phạm vi đang chấm và chuẩn hóa trọng số trong phạm vi."""
+    if revenue.sum() == 0:
+        return np.full(len(predictions), np.nan)
+
+    varying = set(metadata.columns[metadata.nunique() > 1])
+    # Các cấp có cùng cách gộp dùng chung phép tính, nhưng vẫn có trọng số 1/12 mỗi cấp.
+    scores_by_keys = {}
+    level_scores = []
+    for level in LEVELS:
+        keys = tuple(sorted(set(level) & varying))
+        if keys not in scores_by_keys:
+            if keys:
+                index = pd.MultiIndex.from_frame(metadata[list(keys)])
+                codes, series = pd.factorize(index)
+                n_series = len(series)
+            else:
+                codes = np.zeros(len(metadata), dtype=int)
+                n_series = 1
+
+            def aggregate(values):
+                totals = np.zeros((n_series, values.shape[1]), dtype=np.float64)
+                np.add.at(totals, codes, values)
+                return totals
+
+            weights = np.bincount(codes, weights=revenue, minlength=n_series)
+            weighted = weights > 0
+            scale, valid = rmsse_scale(aggregate(history))
+            if not valid[weighted].all():
+                raise ValueError(f"Không có thang RMSSE cho chuỗi có doanh thu ở cấp {level}.")
+            observed = aggregate(actual)[weighted]
+            level_weights = weights[weighted] / weights.sum()
+            scores_by_keys[keys] = [
+                np.dot(level_weights, np.sqrt(
+                    np.square(observed - aggregate(pred)[weighted]).mean(axis=1)
+                    / scale[weighted]
+                ))
+                for pred in predictions
+            ]
+        level_scores.append(scores_by_keys[keys])
+    return np.mean(level_scores, axis=0)
+
+
 def evaluate(actual_matrix, train_history, pred_matrix, model_name):
     actual = actual_matrix.astype(float)
     pred = pred_matrix.astype(float)
@@ -307,19 +378,9 @@ def evaluate(actual_matrix, train_history, pred_matrix, model_name):
     # RMSSE theo M5
     mse_per_item = np.square(actual - pred).mean(axis=1)
 
-    scales = []
-    for row in train_history:
-        pos = np.flatnonzero(row > 0)
-        if len(pos) and len(row) - pos[0] >= 2:
-            denom = np.square(np.diff(row[pos[0] :])).mean()
-            scales.append(denom if denom > 0 else np.nan)
-        else:
-            scales.append(np.nan)
-    scales = np.array(scales)
-
-    valid = np.isfinite(scales)
+    scales, valid = rmsse_scale(train_history)
     item_rmsse = np.sqrt(mse_per_item[valid] / scales[valid])
-    mean_rmsse = float(item_rmsse.mean())
+    mean_rmsse = float(item_rmsse.mean()) if valid.any() else np.nan
 
     return {
         "Mô hình": model_name,
@@ -332,13 +393,98 @@ def evaluate(actual_matrix, train_history, pred_matrix, model_name):
     }
 
 
+def evaluate_scope(products, revenue, history, actual, predictions):
+    weighted = scoped_wrmsse(products, revenue, history, actual, predictions)
+    rows = []
+    for name, prediction, wrmsse in zip(MODEL_NAMES, predictions, weighted):
+        row = evaluate(actual, history, prediction, name)
+        row["WRMSSE"] = round(float(wrmsse), 5)
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def plot_comparison(scores, path, title, daily_totals=None):
+    height = 5 if daily_totals is None else 8
+    fig, axes = plt.subplots(1 if daily_totals is None else 2, 1, figsize=(9.5, height))
+    ax = axes if daily_totals is None else axes[0]
+    x = np.arange(len(CHART_METRICS))
+    for index, (label, color) in enumerate(zip(MODEL_LABELS, MODEL_COLORS)):
+        values = scores.iloc[index][CHART_METRICS].to_numpy(dtype=float)
+        bars = ax.bar(
+            x + (index - 0.5) * 0.34, np.nan_to_num(values), 0.34,
+            label=label, color=color,
+        )
+        labels = [f"{value:.3f}" if np.isfinite(value) else "N/A" for value in values]
+        ax.bar_label(bars, labels=labels, padding=4)
+    ax.set_title(title)
+    ax.set_xticks(x, CHART_METRICS)
+    ax.set_ylabel("Giá trị sai số")
+    ax.margins(y=0.22)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+    ax.legend()
+    if daily_totals is not None:
+        daily = axes[1]
+        days = np.arange(1, len(daily_totals[0]) + 1)
+        for values, label, color in zip(
+            daily_totals, ("Thực tế", *MODEL_LABELS), ("#353535", *MODEL_COLORS)
+        ):
+            daily.plot(days, values, label=label, color=color, linewidth=1.8)
+        daily.set(
+            title="Tổng lượng bán theo ngày của nhóm",
+            xlabel=f"Ngày dự báo (1 = d_{ORIGIN_DAY + 1})",
+            ylabel="Số lượng bán",
+        )
+        daily.set_xticks([1, 7, 14, 21, 28])
+        daily.grid(alpha=0.3)
+        daily.legend()
+    fig.tight_layout()
+    fig.savefig(path, dpi=170, bbox_inches="tight")
+    plt.close(fig)
+
+
+def export_group_results(products, revenue, history, actual, predictions, day_cols, figure_dir):
+    output = OUTPUT_DIR / "predictions"
+    output.mkdir(parents=True, exist_ok=True)
+    horizons = len(day_cols)
+    forecasts = products.loc[products.index.repeat(horizons)].reset_index(drop=True)
+    forecasts["target_day"] = np.tile(day_cols, len(products))
+    forecasts["y_true"] = actual.ravel()
+    forecasts["y_pred_lightgbm_tweedie"] = predictions[0].ravel()
+    forecasts["y_pred_seasonal_naive"] = predictions[1].ravel()
+    forecasts.to_csv(output / f"baseline_{STORE_ID}_validation.csv", index=False, encoding="utf-8-sig")
+
+    group_scores = []
+    for column, prefix in (("intermittency_group", "intermittency"), ("cat_id", "category")):
+        for label in sorted(products[column].unique()):
+            selected = products[column].eq(label).to_numpy(dtype=bool)
+            group_actual = actual[selected]
+            group_predictions = tuple(pred[selected] for pred in predictions)
+            size = int(selected.sum())
+            scores = evaluate_scope(
+                products.loc[selected], revenue[selected], history[selected],
+                group_actual, group_predictions,
+            )
+            scores.insert(0, "group_type", column)
+            scores.insert(1, "group", label)
+            scores.insert(2, "n_items", size)
+            group_scores.append(scores)
+            slug = label.split(".", maxsplit=1)[0] if prefix == "intermittency" else label.lower()
+            plot_comparison(
+                scores, figure_dir / f"{prefix}_{slug}.png", f"{STORE_ID} · {label} · {size:,} sản phẩm",
+                tuple(matrix.sum(axis=0, dtype=np.float64) for matrix in (group_actual, *group_predictions)),
+            )
+    pd.concat(group_scores, ignore_index=True).to_csv(
+        OUTPUT_DIR / "baseline_group_metrics.csv", index=False, encoding="utf-8-sig",
+    )
+
+
 # ==============================================================================
 # HÀM CHÍNH (MAIN)
 # ==============================================================================
 def main():
     print("=" * 80)
     print(
-        "CHẠY HUẤN LUYỆN VÀ ĐÁNH GIÁ LIGHTGBM TWEEDIE (TRỌN GÓI 1 FILE - CÓ GIÁ BÁN)"
+        "SO SÁNH LIGHTGBM–TWEEDIE VÀ SEASONAL NAIVE"
     )
     print(f"Cửa hàng: {STORE_ID} | Horizon: {HORIZON} ngày (d_1886 -> d_1913)")
     print("=" * 80)
@@ -352,12 +498,16 @@ def main():
     train_history = wide[[f"d_{d}" for d in range(1, ORIGIN_DAY + 1)]].to_numpy(
         dtype=np.float32
     )
+    products = wide[["item_id", "store_id", "state_id", "cat_id", "dept_id"]].copy()
+    products["zero_ratio_train"] = compute_zero_ratio(train_history)
+    products["intermittency_group"] = categorize_intermittency(products["zero_ratio_train"].to_numpy())
+    revenue = training_revenue(wide, calendar, prices)
 
     # 2 & 3. Xây dựng đặc trưng kèm sell_price và price_change
     X, y, categories, origin_rows = build_features(
         wide, calendar, prices, ORIGIN_DAY
     )
-    del prices
+    del prices, wide
     gc.collect()
 
     # 4. Huấn luyện
@@ -392,21 +542,9 @@ def main():
     )
     actual_matrix = actual_df[day_cols].to_numpy(dtype=np.float32)
 
-    # Đánh giá chỉ số
-    res_lgb = evaluate(
-        actual_matrix,
-        train_history,
-        lgb_pred,
-        "LightGBM–Tweedie (Giá + Price Change)",
-    )
-    res_lgb["Thời gian Train (s)"] = round(train_time, 1)
-
-    res_naive = evaluate(
-        actual_matrix, train_history, naive_pred, "Seasonal Naive (Mốc chuẩn)"
-    )
-    res_naive["Thời gian Train (s)"] = 0.0
-
-    results_df = pd.DataFrame([res_lgb, res_naive])
+    predictions = (lgb_pred, naive_pred)
+    results_df = evaluate_scope(products, revenue, train_history, actual_matrix, predictions)
+    results_df["Thời gian Train (s)"] = [round(train_time, 1), 0.0]
 
     print("\n" + "=" * 80)
     print("BẢNG KẾT QUẢ ĐÁNH GIÁ CHUNG CUỘC")
@@ -416,6 +554,15 @@ def main():
 
     # Lưu kết quả
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    figure_dir = OUTPUT_DIR / "figures" / f"final_{STORE_ID}_report"
+    figure_dir.mkdir(parents=True, exist_ok=True)
+    plot_comparison(
+        results_df, figure_dir / "model_comparison_all_metrics.png",
+        f"So sánh MAE, RMSE, RMSSE và WRMSSE tại {STORE_ID}",
+    )
+    export_group_results(
+        products, revenue, train_history, actual_matrix, predictions, day_cols, figure_dir,
+    )
     out_file = OUTPUT_DIR / "baseline_single_file_results.csv"
     results_df.to_csv(out_file, index=False, encoding="utf-8-sig")
     print(f"\nĐã lưu kết quả tại: {out_file}\n")

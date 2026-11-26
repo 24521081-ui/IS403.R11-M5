@@ -3,6 +3,10 @@
 __pycache__/
 .pytest_cache/
 .cache/
+.local_evidence/
+
+# Tài liệu đồ án lưu cục bộ
+/docs/
 
 # Dữ liệu gốc M5 dung lượng lớn (>100MB)
 data/raw/*.csv
@@ -17,7 +21,14 @@ results/**
 !results/benchmarks/metrics/
 !results/benchmarks/metrics/**
 !results/figures/
-!results/figures/**
+!results/figures/final_CA_1_report/
+!results/figures/final_CA_1_report/intermittency_*.png
+!results/figures/final_CA_1_report/category_*.png
+!results/figures/final_CA_1_report/tweedie_config_selection.png
+!results/wrmsse/
+!results/wrmsse/*/
+!results/wrmsse/*/diem_*.csv
+/results/wrmsse/runs/
 
 # Kết quả dự báo chi tiết của các mô hình đối chứng (>100MB)
 results/benchmarks/predictions/**/*.csv
