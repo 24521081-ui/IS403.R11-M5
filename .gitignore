@@ -15,29 +15,19 @@ data/raw/*.xlsx
 data/*.csv
 dataset/
 data/processed/
-data/processed/*
 data/features/
-data/features/*
+pipelines/*/data/
 
-# Kết quả huấn luyện & dự báo dung lượng lớn (nhánh main)
-results/**
-!results/**/.gitkeep
-!results/benchmarks/
-!results/benchmarks/metrics/
-!results/benchmarks/metrics/**
-!results/figures/
-!results/figures/**
-!results/wrmsse_v1/
-!results/wrmsse_v1/**
-
-# Kết quả dự báo chi tiết của các mô hình đối chứng (>100MB)
-results/benchmarks/predictions/**/*.csv
-results/benchmarks/predictions/*.csv
-!results/benchmarks/predictions/**/.gitkeep
+# Kết quả huấn luyện & dự báo dung lượng lớn
+pipelines/lightgbm_tweedie/results/metrics/
+pipelines/lightgbm_tweedie/results/models/
+pipelines/lightgbm_tweedie/results/test/
+pipelines/lightgbm_tweedie/results/validation/
+pipelines/benchmarks/results/benchmarks/predictions/**/*.csv
+pipelines/benchmarks/results/benchmarks/predictions/*.csv
+!pipelines/benchmarks/results/benchmarks/predictions/**/.gitkeep
 outputs/predictions/*.csv
 outputs/predictions/**/*.csv
-!outputs/predictions/.gitkeep
-!results/*.csv
 
 # Model đã huấn luyện, file tạm & cấu hình cá nhân
 *.joblib
