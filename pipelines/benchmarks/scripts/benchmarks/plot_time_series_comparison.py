@@ -17,7 +17,9 @@ import pandas as pd
 
 # Thiết lập đường dẫn dự án
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DATA_DIR = REPO_ROOT / "data" / "raw"
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+from src.benchmarks.config import DATA_DIR  # noqa: E402
 PRED_DIR = REPO_ROOT / "results" / "benchmarks" / "predictions" / "ca_1" / "validation"
 FIGURES_DIR = REPO_ROOT / "results" / "figures"
 FIGURES_DIR.mkdir(parents=True, exist_ok=True)

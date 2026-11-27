@@ -12,6 +12,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 CANDIDATE_DATA_DIRS = [
     REPO_ROOT / "data" / "raw",
     REPO_ROOT / "data",
+    REPO_ROOT.parents[1] / "data" / "raw",
+    REPO_ROOT.parents[1] / "data",
     REPO_ROOT.parent / "data",
     REPO_ROOT.parent / "Đồ án" / "data",
     REPO_ROOT.parent / "m5-forecasting-accuracy",

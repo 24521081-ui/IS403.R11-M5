@@ -476,7 +476,9 @@ Thư mục này chứa bộ biểu đồ phân tích thực nghiệm cho các m�
 
 def main() -> None:
     setup_style()
-    evidence_dir = REPO_ROOT / ".local_evidence" / "wrmsse_6_models"
+    local_evidence = REPO_ROOT / ".local_evidence" / "wrmsse_6_models"
+    shared_evidence = REPO_ROOT.parents[1] / ".local_evidence" / "wrmsse_6_models"
+    evidence_dir = local_evidence if local_evidence.exists() else shared_evidence
     wide = pd.read_csv(DATA_DIR / "sales_train_evaluation.csv")
     calendar = pd.read_csv(DATA_DIR / "calendar.csv")
     wrmsse_summary = pd.read_csv(METRICS_DIR / "all_stores" / "wrmsse_summary.csv")
