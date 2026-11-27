@@ -37,7 +37,7 @@ def test_summary_table_matches_published_sources():
     # Exact published Test WRMSSE checks
     np.testing.assert_allclose(s.loc["LightGBM Tweedie", "wrmsse_test"], 0.6234560168189278, atol=1e-12)
     np.testing.assert_allclose(s.loc["LightGBM Two-Part", "wrmsse_test"], 0.6284865669601195, atol=1e-12)
-    np.testing.assert_allclose(s.loc["Random Forest (RF-15+FE-04)", "wrmsse_test"], 0.7039124143420078, atol=1e-12)
+    np.testing.assert_allclose(s.loc["Random Forest", "wrmsse_test"], 0.7039124143420078, atol=1e-12)
     np.testing.assert_allclose(s.loc["ES_bu", "wrmsse_test"], 0.770677, atol=1e-6)
     np.testing.assert_allclose(s.loc["Seasonal Naive", "wrmsse_test"], 0.8697007023310609, atol=1e-6)
 
@@ -52,7 +52,7 @@ def test_daily_and_store_totals_reconcile_to_summary():
     for m in [
         "LightGBM Tweedie",
         "LightGBM Two-Part",
-        "Random Forest (RF-15+FE-04)",
+        "Random Forest",
         "ES_bu",
         "Seasonal Naive",
         "Croston-SBA",

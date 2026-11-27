@@ -29,7 +29,7 @@ plt.rcParams.update({
 MODEL_COLORS = {
     "LightGBM Tweedie": "#0F766E",
     "LightGBM Two-Part": "#1D4ED8",
-    "Random Forest (RF-15+FE-04)": "#D97706",
+    "Random Forest": "#D97706",
     "ES_bu": "#7C3AED",
     "Seasonal Naive": "#64748B",
     "Croston": "#DC2626",
@@ -161,7 +161,7 @@ def load_all_metrics():
             "bias_pct": float(c7e_tst.bias_pct),
         },
         {
-            "model": "Random Forest (RF-15+FE-04)",
+            "model": "Random Forest",
             "group": "ML",
             "wrmsse_val": rf_val,
             "val_note": "published",
@@ -252,7 +252,7 @@ def load_all_metrics():
     lvl_series = {
         "LightGBM Tweedie": tw_levels.set_index("level")["weighted_RMSSE"],
         "LightGBM Two-Part": tp_levels.set_index("level")["weighted_RMSSE"],
-        "Random Forest (RF-15+FE-04)": rf_levels[rf_levels.model == "random_forest"].set_index("level")["wrmsse_within_level"],
+        "Random Forest": rf_levels[rf_levels.model == "random_forest"].set_index("level")["wrmsse_within_level"],
         "ES_bu": bm_levels[(bm_levels.model == "ES_bu") & (bm_levels.split == "test")].set_index("level")["weighted_RMSSE"],
         "Seasonal Naive": rf_levels[rf_levels.model == "seasonal_naive"].set_index("level")["wrmsse_within_level"],
         "Croston-SBA": bm_levels[(bm_levels.model == "Croston_SBA") & (bm_levels.split == "test")].set_index("level")["weighted_RMSSE"],
@@ -273,7 +273,7 @@ def load_all_metrics():
         "date": rf_daily["date"],
         "weekday": rf_daily["weekday"],
         "actual": rf_daily["actual_sales"],
-        "Random Forest (RF-15+FE-04)": rf_daily["random_forest_forecast"],
+        "Random Forest": rf_daily["random_forest_forecast"],
         "Seasonal Naive": rf_daily["seasonal_naive_forecast"],
     })
     daily_df = daily_df.merge(tp_daily[["target_day", "predicted"]].rename(columns={"predicted": "LightGBM Two-Part"}), on="target_day")
@@ -285,7 +285,7 @@ def load_all_metrics():
     # Store bias (%)
     store_rows = []
     for _, r in rf_store.iterrows():
-        store_rows.append({"store_id": r["store_id"], "model": "Random Forest (RF-15+FE-04)", "actual": r["actual_sales"], "forecast": r["random_forest_forecast"], "bias_pct": r["rf_bias_pct"]})
+        store_rows.append({"store_id": r["store_id"], "model": "Random Forest", "actual": r["actual_sales"], "forecast": r["random_forest_forecast"], "bias_pct": r["rf_bias_pct"]})
         store_rows.append({"store_id": r["store_id"], "model": "Seasonal Naive", "actual": r["actual_sales"], "forecast": r["seasonal_naive_forecast"], "bias_pct": r["sn_bias_pct"]})
     for _, r in tp_store.iterrows():
         store_rows.append({"store_id": r["store_id"], "model": "LightGBM Two-Part", "actual": r["actual"], "forecast": r["predicted"], "bias_pct": r["bias_pct"]})
@@ -317,7 +317,7 @@ def load_all_metrics():
     )
     rf_bias_cat = rf_cat.set_index("cat_id")
     for m_key, m_label, bias_col in [
-        ("random_forest", "Random Forest (RF-15+FE-04)", "rf_bias_pct"),
+        ("random_forest", "Random Forest", "rf_bias_pct"),
         ("seasonal_naive", "Seasonal Naive", "sn_bias_pct"),
     ]:
         sub = rf_l12[rf_l12.model == m_key]
@@ -411,7 +411,7 @@ def plot_chart_2(levels_df: pd.DataFrame):
     markers = {
         "LightGBM Tweedie": "o",
         "LightGBM Two-Part": "s",
-        "Random Forest (RF-15+FE-04)": "^",
+        "Random Forest": "^",
         "ES_bu": "D",
         "Seasonal Naive": "X",
         "Croston-SBA": "v",
@@ -427,7 +427,7 @@ def plot_chart_2(levels_df: pd.DataFrame):
     for col, dy1, dy12 in [
         ("LightGBM Tweedie", -0.015, 0.006),
         ("LightGBM Two-Part", 0.012, -0.018),
-        ("Random Forest (RF-15+FE-04)", 0.0, -0.003),
+        ("Random Forest", 0.0, -0.003),
         ("ES_bu", 0.0, 0.032),
         ("Seasonal Naive", 0.0, 0.0),
         ("Croston-SBA", 0.0, 0.020),
@@ -436,8 +436,8 @@ def plot_chart_2(levels_df: pd.DataFrame):
         v12 = levels_df[col].iloc[-1]
         ax.text(1 - 0.12, v1 + dy1, f"{v1:.3f}", ha="right", va="center",
                 fontsize=8, fontweight="bold", color=MODEL_COLORS[col])
-        lbl12 = f"{v12:.3f}" if col not in ("Random Forest (RF-15+FE-04)", "Croston-SBA") else (
-            f"RF {v12:.3f}" if col == "Random Forest (RF-15+FE-04)" else f"SBA {v12:.3f}"
+        lbl12 = f"{v12:.3f}" if col not in ("Random Forest", "Croston-SBA") else (
+            f"RF {v12:.3f}" if col == "Random Forest" else f"SBA {v12:.3f}"
         )
         ax.text(12 + 0.12, v12 + dy12, lbl12, ha="left", va="center",
                 fontsize=8.2, fontweight="bold", color=MODEL_COLORS[col])
@@ -573,7 +573,7 @@ def plot_chart_5(summary: pd.DataFrame):
     short_names = {
         "LightGBM Tweedie": "LightGBM Tweedie",
         "LightGBM Two-Part": "C7_EVENTS",
-        "Random Forest (RF-15+FE-04)": "Random Forest",
+        "Random Forest": "Random Forest",
         "ES_bu": "ES_bu",
         "Seasonal Naive": "Seasonal Naive",
         "Croston": "Croston",
@@ -582,7 +582,7 @@ def plot_chart_5(summary: pd.DataFrame):
     label_xy = {
         "LightGBM Tweedie": (0.41, 0.875),
         "LightGBM Two-Part": (0.44, 0.785),
-        "Random Forest (RF-15+FE-04)": (0.56, 0.905),
+        "Random Forest": (0.56, 0.905),
         "ES_bu": (0.72, 0.925),
         "Seasonal Naive": (0.78, 1.105),
         "Croston": (1.10, 0.905),
@@ -658,7 +658,7 @@ def plot_chart_6(daily_df: pd.DataFrame):
     for col, ls in [
         ("LightGBM Tweedie", "-"),
         ("LightGBM Two-Part", "-"),
-        ("Random Forest (RF-15+FE-04)", "-"),
+        ("Random Forest", "-"),
         ("ES_bu", "--"),
         ("Seasonal Naive", ":"),
         ("Croston-SBA", "-."),
@@ -688,7 +688,7 @@ def plot_chart_7(store_df: pd.DataFrame):
     models = [
         "LightGBM Tweedie",
         "LightGBM Two-Part",
-        "Random Forest (RF-15+FE-04)",
+        "Random Forest",
         "ES_bu",
         "Seasonal Naive",
         "Croston-SBA",
@@ -741,7 +741,7 @@ def plot_chart_8(cat_df: pd.DataFrame):
     models = [
         "LightGBM Tweedie",
         "LightGBM Two-Part",
-        "Random Forest (RF-15+FE-04)",
+        "Random Forest",
         "ES_bu",
         "Seasonal Naive",
         "Croston-SBA",
