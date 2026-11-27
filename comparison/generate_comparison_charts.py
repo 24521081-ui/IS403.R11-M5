@@ -28,7 +28,7 @@ plt.rcParams.update({
 
 MODEL_COLORS = {
     "LightGBM Tweedie": "#0F766E",
-    "LightGBM Two-Part (C7_EVENTS)": "#1D4ED8",
+    "LightGBM Two-Part": "#1D4ED8",
     "Random Forest (RF-15+FE-04)": "#D97706",
     "ES_bu": "#7C3AED",
     "Seasonal Naive": "#64748B",
@@ -144,7 +144,7 @@ def load_all_metrics():
             "bias_pct": tw_bias,
         },
         {
-            "model": "LightGBM Two-Part (C7_EVENTS)",
+            "model": "LightGBM Two-Part",
             "group": "ML",
             "wrmsse_val": float(c7e_val.WRMSSE),
             "val_note": "published",
@@ -251,7 +251,7 @@ def load_all_metrics():
     # 12-level table
     lvl_series = {
         "LightGBM Tweedie": tw_levels.set_index("level")["weighted_RMSSE"],
-        "LightGBM Two-Part (C7_EVENTS)": tp_levels.set_index("level")["weighted_RMSSE"],
+        "LightGBM Two-Part": tp_levels.set_index("level")["weighted_RMSSE"],
         "Random Forest (RF-15+FE-04)": rf_levels[rf_levels.model == "random_forest"].set_index("level")["wrmsse_within_level"],
         "ES_bu": bm_levels[(bm_levels.model == "ES_bu") & (bm_levels.split == "test")].set_index("level")["weighted_RMSSE"],
         "Seasonal Naive": rf_levels[rf_levels.model == "seasonal_naive"].set_index("level")["wrmsse_within_level"],
@@ -276,7 +276,7 @@ def load_all_metrics():
         "Random Forest (RF-15+FE-04)": rf_daily["random_forest_forecast"],
         "Seasonal Naive": rf_daily["seasonal_naive_forecast"],
     })
-    daily_df = daily_df.merge(tp_daily[["target_day", "predicted"]].rename(columns={"predicted": "LightGBM Two-Part (C7_EVENTS)"}), on="target_day")
+    daily_df = daily_df.merge(tp_daily[["target_day", "predicted"]].rename(columns={"predicted": "LightGBM Two-Part"}), on="target_day")
     for label, folder in local_map.items():
         ft = pd.read_csv(ROOT / ".local_evidence/wrmsse_6_models" / folder / "forecast_test.csv", usecols=["target_day", "y_pred"])
         d_sum = ft.groupby("target_day", as_index=False)["y_pred"].sum().rename(columns={"y_pred": label})
@@ -288,7 +288,7 @@ def load_all_metrics():
         store_rows.append({"store_id": r["store_id"], "model": "Random Forest (RF-15+FE-04)", "actual": r["actual_sales"], "forecast": r["random_forest_forecast"], "bias_pct": r["rf_bias_pct"]})
         store_rows.append({"store_id": r["store_id"], "model": "Seasonal Naive", "actual": r["actual_sales"], "forecast": r["seasonal_naive_forecast"], "bias_pct": r["sn_bias_pct"]})
     for _, r in tp_store.iterrows():
-        store_rows.append({"store_id": r["store_id"], "model": "LightGBM Two-Part (C7_EVENTS)", "actual": r["actual"], "forecast": r["predicted"], "bias_pct": r["bias_pct"]})
+        store_rows.append({"store_id": r["store_id"], "model": "LightGBM Two-Part", "actual": r["actual"], "forecast": r["predicted"], "bias_pct": r["bias_pct"]})
     for label, folder in local_map.items():
         rms = pd.read_csv(ROOT / ".local_evidence/wrmsse_6_models" / folder / "rmsse_theo_cap_san_pham.csv")
         st_agg = rms.groupby("store_id", as_index=False)[["actual_units", "predicted_units"]].sum()
@@ -307,7 +307,7 @@ def load_all_metrics():
     for _, r in tp_groups[tp_groups.dimension == "cat_id"].iterrows():
         cat_rows.append({
             "cat_id": r["group"],
-            "model": "LightGBM Two-Part (C7_EVENTS)",
+            "model": "LightGBM Two-Part",
             "weighted_RMSSE": r["revenue_weighted_RMSSE"],
             "bias_pct": r["bias_pct"],
         })
@@ -410,7 +410,7 @@ def plot_chart_2(levels_df: pd.DataFrame):
     x = np.arange(1, 13)
     markers = {
         "LightGBM Tweedie": "o",
-        "LightGBM Two-Part (C7_EVENTS)": "s",
+        "LightGBM Two-Part": "s",
         "Random Forest (RF-15+FE-04)": "^",
         "ES_bu": "D",
         "Seasonal Naive": "X",
@@ -426,7 +426,7 @@ def plot_chart_2(levels_df: pd.DataFrame):
 
     for col, dy1, dy12 in [
         ("LightGBM Tweedie", -0.015, 0.006),
-        ("LightGBM Two-Part (C7_EVENTS)", 0.012, -0.018),
+        ("LightGBM Two-Part", 0.012, -0.018),
         ("Random Forest (RF-15+FE-04)", 0.0, -0.003),
         ("ES_bu", 0.0, 0.032),
         ("Seasonal Naive", 0.0, 0.0),
@@ -473,7 +473,7 @@ def plot_chart_3(summary: pd.DataFrame):
         ax1.text(bar.get_x() + bar.get_width() / 2, val + 0.012, f"{val:.3f}",
                  ha="center", va="bottom", fontsize=8.5, fontweight="bold", color="#0F172A")
 
-    labels = [m.replace(" (", "\n(") + (" *" if "C7_EVENTS" in m else "") for m in df["model"]]
+    labels = [m.replace(" (", "\n(") + (" *" if "Two-Part" in m else "") for m in df["model"]]
     ax1.set_xticks(x)
     ax1.set_xticklabels(labels, fontsize=8.5, fontweight="bold", rotation=18, ha="right")
     ax1.set_ylim(0, 1.28)
@@ -506,7 +506,7 @@ def plot_chart_3(summary: pd.DataFrame):
 
     fig.suptitle("Phân tích hiệu năng theo nhóm nhu cầu trên tập Test (d_1914–d_1941)",
                  fontsize=13.5, fontweight="bold", y=0.98)
-    fig.text(0.01, 0.01, "* Ghi chú đối chiếu: 6 mô hình dùng phân nhóm origin 1913 (2.754 Frequent / 27.736 Intermittent); C7_EVENTS dùng bảng công bố trên phân nhóm origin 1885 (2.749 / 27.741).",
+    fig.text(0.01, 0.01, "* Ghi chú đối chiếu: 6 mô hình dùng phân nhóm origin 1913 (2.754 Frequent / 27.736 Intermittent); LightGBM Two-Part dùng bảng công bố trên phân nhóm origin 1885 (2.749 / 27.741).",
              fontsize=8.2, color="#475569", style="italic")
     fig.tight_layout(rect=[0, 0.035, 1, 0.94])
     fig.savefig(OUT_DIR / "03_hieu_qua_theo_nhom_nhu_cau.png", dpi=300)
@@ -572,7 +572,7 @@ def plot_chart_5(summary: pd.DataFrame):
 
     short_names = {
         "LightGBM Tweedie": "LightGBM Tweedie",
-        "LightGBM Two-Part (C7_EVENTS)": "C7_EVENTS",
+        "LightGBM Two-Part": "C7_EVENTS",
         "Random Forest (RF-15+FE-04)": "Random Forest",
         "ES_bu": "ES_bu",
         "Seasonal Naive": "Seasonal Naive",
@@ -581,7 +581,7 @@ def plot_chart_5(summary: pd.DataFrame):
     }
     label_xy = {
         "LightGBM Tweedie": (0.41, 0.875),
-        "LightGBM Two-Part (C7_EVENTS)": (0.44, 0.785),
+        "LightGBM Two-Part": (0.44, 0.785),
         "Random Forest (RF-15+FE-04)": (0.56, 0.905),
         "ES_bu": (0.72, 0.925),
         "Seasonal Naive": (0.78, 1.105),
@@ -657,7 +657,7 @@ def plot_chart_6(daily_df: pd.DataFrame):
 
     for col, ls in [
         ("LightGBM Tweedie", "-"),
-        ("LightGBM Two-Part (C7_EVENTS)", "-"),
+        ("LightGBM Two-Part", "-"),
         ("Random Forest (RF-15+FE-04)", "-"),
         ("ES_bu", "--"),
         ("Seasonal Naive", ":"),
@@ -687,7 +687,7 @@ def plot_chart_7(store_df: pd.DataFrame):
     stores = ["CA_1", "CA_2", "CA_3", "CA_4", "TX_1", "TX_2", "TX_3", "WI_1", "WI_2", "WI_3"]
     models = [
         "LightGBM Tweedie",
-        "LightGBM Two-Part (C7_EVENTS)",
+        "LightGBM Two-Part",
         "Random Forest (RF-15+FE-04)",
         "ES_bu",
         "Seasonal Naive",
@@ -740,7 +740,7 @@ def plot_chart_8(cat_df: pd.DataFrame):
     cats = ["FOODS", "HOBBIES", "HOUSEHOLD"]
     models = [
         "LightGBM Tweedie",
-        "LightGBM Two-Part (C7_EVENTS)",
+        "LightGBM Two-Part",
         "Random Forest (RF-15+FE-04)",
         "ES_bu",
         "Seasonal Naive",

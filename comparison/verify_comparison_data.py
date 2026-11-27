@@ -36,7 +36,7 @@ def test_summary_table_matches_published_sources():
     )
     # Exact published Test WRMSSE checks
     np.testing.assert_allclose(s.loc["LightGBM Tweedie", "wrmsse_test"], 0.6234560168189278, atol=1e-12)
-    np.testing.assert_allclose(s.loc["LightGBM Two-Part (C7_EVENTS)", "wrmsse_test"], 0.6284865669601195, atol=1e-12)
+    np.testing.assert_allclose(s.loc["LightGBM Two-Part", "wrmsse_test"], 0.6284865669601195, atol=1e-12)
     np.testing.assert_allclose(s.loc["Random Forest (RF-15+FE-04)", "wrmsse_test"], 0.7039124143420078, atol=1e-12)
     np.testing.assert_allclose(s.loc["ES_bu", "wrmsse_test"], 0.770677, atol=1e-6)
     np.testing.assert_allclose(s.loc["Seasonal Naive", "wrmsse_test"], 0.8697007023310609, atol=1e-6)
@@ -51,7 +51,7 @@ def test_daily_and_store_totals_reconcile_to_summary():
     assert daily["actual"].sum() == 1_231_764
     for m in [
         "LightGBM Tweedie",
-        "LightGBM Two-Part (C7_EVENTS)",
+        "LightGBM Two-Part",
         "Random Forest (RF-15+FE-04)",
         "ES_bu",
         "Seasonal Naive",
@@ -68,7 +68,7 @@ def test_category_metrics_match_c7_events_and_tweedie():
     cat = pd.read_csv(COMP / "category_all_models.csv")
     c7e = pd.read_csv(ROOT / "pipelines/lightgbm_twopart/reports/c7_events/test_group_scores.csv")
     c7e_cat = c7e[c7e.dimension == "cat_id"].set_index("group")
-    sub = cat[cat.model == "LightGBM Two-Part (C7_EVENTS)"].set_index("cat_id")
+    sub = cat[cat.model == "LightGBM Two-Part"].set_index("cat_id")
     for c in ["FOODS", "HOBBIES", "HOUSEHOLD"]:
         np.testing.assert_allclose(sub.loc[c, "weighted_RMSSE"], c7e_cat.loc[c, "revenue_weighted_RMSSE"], atol=1e-12)
         np.testing.assert_allclose(sub.loc[c, "bias_pct"], c7e_cat.loc[c, "bias_pct"], atol=1e-12)
