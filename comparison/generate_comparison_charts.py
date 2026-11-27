@@ -355,11 +355,7 @@ def plot_chart_1(summary: pd.DataFrame):
     sn_test = float(df.loc[df.model == "Seasonal Naive", "wrmsse_test"].iloc[0])
     ax.axvline(sn_test, color="#475569", linestyle="--", linewidth=1.2, zorder=1)
     ax.axhline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2, zorder=1)
-    ax.text(0.015, 2.42, "▲ Nhóm Benchmark thống kê", fontsize=8.5, fontweight="bold", color="#475569", va="bottom",
-            bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=0.8))
-    ax.text(0.015, 2.58, "▼ Nhóm Machine Learning", fontsize=8.5, fontweight="bold", color="#0F766E", va="top",
-            bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=0.8))
-    ax.text(sn_test + 0.015, 4.0, f"Mốc Seasonal Naive\n({sn_test:.4f})",
+    ax.text(sn_test + 0.015, 3.8, f"Mốc Seasonal Naive\n({sn_test:.4f})",
             color="#334155", fontsize=9, fontweight="bold", va="center", zorder=4,
             bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=1.0))
 
@@ -386,7 +382,7 @@ def plot_chart_1(summary: pd.DataFrame):
     ax.grid(axis="x", alpha=0.6)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.legend(loc="upper right", frameon=True, facecolor="white", framealpha=0.95)
+    ax.legend(loc="lower right", frameon=True, facecolor="white", framealpha=0.95)
     fig.text(0.01, 0.01, "* LightGBM Tweedie Validation (0.7946) được chấm bổ sung từ 10 file validation cục bộ ngày 24/11 (bias +9.96%).",
              fontsize=8.2, color="#475569", style="italic")
 
