@@ -26,14 +26,22 @@ plt.rcParams.update({
     "axes.facecolor": "white",
 })
 
+MODEL_ORDER = [
+    "Seasonal Naive",
+    "ES_bu",
+    "Croston-SBA",
+    "Random Forest",
+    "LightGBM Two-Part",
+    "LightGBM Tweedie",
+]
+
 MODEL_COLORS = {
-    "LightGBM Tweedie": "#0F766E",
-    "LightGBM Two-Part": "#1D4ED8",
-    "Random Forest": "#D97706",
-    "ES_bu": "#7C3AED",
     "Seasonal Naive": "#64748B",
-    "Croston": "#DC2626",
-    "Croston-SBA": "#F87171",
+    "ES_bu": "#7C3AED",
+    "Croston-SBA": "#DC2626",
+    "Random Forest": "#D97706",
+    "LightGBM Two-Part": "#1D4ED8",
+    "LightGBM Tweedie": "#0F766E",
 }
 
 
@@ -104,7 +112,6 @@ def load_all_metrics():
 
     tw_act, tw_pred, tw_bias = get_bm_total_bias("LightGBM_Tweedie_20261124")
     es_act, es_pred, es_bias = get_bm_total_bias("ES_bu")
-    cr_act, cr_pred, cr_bias = get_bm_total_bias("Croston")
     cs_act, cs_pred, cs_bias = get_bm_total_bias("Croston_SBA")
 
     rf_row = rf_comp[rf_comp.model == "random_forest"].iloc[0]
@@ -212,23 +219,6 @@ def load_all_metrics():
             "bias_pct": float(sn_row.forecast_bias_percent),
         },
         {
-            "model": "Croston",
-            "group": "Benchmark",
-            "wrmsse_val": get_bm("Croston", "validation"),
-            "val_note": "published",
-            "wrmsse_test": get_bm("Croston", "test"),
-            "l1_test": bm_lvl("Croston", 1),
-            "l12_test": bm_lvl("Croston", 12),
-            "frequent_l12": dg_val("Croston", "frequent", "weighted_RMSSE"),
-            "intermittent_l12": dg_val("Croston", "intermittent", "weighted_RMSSE"),
-            "frequent_bias_pct": dg_val("Croston", "frequent", "bias_pct"),
-            "intermittent_bias_pct": dg_val("Croston", "intermittent", "bias_pct"),
-            "demand_group_origin": 1913,
-            "actual_sales": cr_act,
-            "forecast_sales": cr_pred,
-            "bias_pct": cr_bias,
-        },
-        {
             "model": "Croston-SBA",
             "group": "Benchmark",
             "wrmsse_val": get_bm("Croston_SBA", "validation"),
@@ -246,16 +236,16 @@ def load_all_metrics():
             "bias_pct": cs_bias,
         },
     ]
-    summary = pd.DataFrame(rows).sort_values("wrmsse_test").reset_index(drop=True)
+    summary = pd.DataFrame(rows).set_index("model").loc[MODEL_ORDER].reset_index()
 
     # 12-level table
     lvl_series = {
-        "LightGBM Tweedie": tw_levels.set_index("level")["weighted_RMSSE"],
-        "LightGBM Two-Part": tp_levels.set_index("level")["weighted_RMSSE"],
-        "Random Forest": rf_levels[rf_levels.model == "random_forest"].set_index("level")["wrmsse_within_level"],
-        "ES_bu": bm_levels[(bm_levels.model == "ES_bu") & (bm_levels.split == "test")].set_index("level")["weighted_RMSSE"],
         "Seasonal Naive": rf_levels[rf_levels.model == "seasonal_naive"].set_index("level")["wrmsse_within_level"],
+        "ES_bu": bm_levels[(bm_levels.model == "ES_bu") & (bm_levels.split == "test")].set_index("level")["weighted_RMSSE"],
         "Croston-SBA": bm_levels[(bm_levels.model == "Croston_SBA") & (bm_levels.split == "test")].set_index("level")["weighted_RMSSE"],
+        "Random Forest": rf_levels[rf_levels.model == "random_forest"].set_index("level")["wrmsse_within_level"],
+        "LightGBM Two-Part": tp_levels.set_index("level")["weighted_RMSSE"],
+        "LightGBM Tweedie": tw_levels.set_index("level")["weighted_RMSSE"],
     }
     levels_df = pd.DataFrame(lvl_series)
 
@@ -263,7 +253,6 @@ def load_all_metrics():
     local_map = {
         "LightGBM Tweedie": "LightGBM_Tweedie_20261124",
         "ES_bu": "ES_bu",
-        "Croston": "Croston",
         "Croston-SBA": "Croston_SBA",
     }
 
@@ -350,11 +339,11 @@ def load_all_metrics():
 
 
 def plot_chart_1(summary: pd.DataFrame):
-    df = summary.sort_values("wrmsse_test", ascending=True).reset_index(drop=True)
+    df = summary.set_index("model").loc[MODEL_ORDER].reset_index()
     y = np.arange(len(df))
     h = 0.36
 
-    fig, ax = plt.subplots(figsize=(12.2, 7.0))
+    fig, ax = plt.subplots(figsize=(12.2, 6.8))
     ax.barh(y - h / 2, df["wrmsse_test"], height=h,
             color=[MODEL_COLORS[m] for m in df["model"]],
             label="Test (d_1914–d_1941)", edgecolor="white", linewidth=0.8)
@@ -365,7 +354,12 @@ def plot_chart_1(summary: pd.DataFrame):
 
     sn_test = float(df.loc[df.model == "Seasonal Naive", "wrmsse_test"].iloc[0])
     ax.axvline(sn_test, color="#475569", linestyle="--", linewidth=1.2, zorder=1)
-    ax.text(sn_test + 0.015, 1.55, f"Mốc Seasonal Naive\n({sn_test:.4f})",
+    ax.axhline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2, zorder=1)
+    ax.text(0.015, 2.42, "▲ Nhóm Benchmark thống kê", fontsize=8.5, fontweight="bold", color="#475569", va="bottom",
+            bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=0.8))
+    ax.text(0.015, 2.58, "▼ Nhóm Machine Learning", fontsize=8.5, fontweight="bold", color="#0F766E", va="top",
+            bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=0.8))
+    ax.text(sn_test + 0.015, 4.0, f"Mốc Seasonal Naive\n({sn_test:.4f})",
             color="#334155", fontsize=9, fontweight="bold", va="center", zorder=4,
             bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=1.0))
 
@@ -460,7 +454,7 @@ def plot_chart_2(levels_df: pd.DataFrame):
 
 
 def plot_chart_3(summary: pd.DataFrame):
-    df = summary.dropna(subset=["frequent_l12", "intermittent_l12"]).sort_values("wrmsse_test").reset_index(drop=True)
+    df = summary.set_index("model").loc[MODEL_ORDER].reset_index()
     x = np.arange(len(df))
     w = 0.35
 
@@ -468,25 +462,27 @@ def plot_chart_3(summary: pd.DataFrame):
 
     b1 = ax1.bar(x - w / 2, df["frequent_l12"], width=w, color="#2563EB", label="Frequent (~9,0% số chuỗi | ~36,3% sản lượng)")
     b2 = ax1.bar(x + w / 2, df["intermittent_l12"], width=w, color="#F59E0B", label="Intermittent (~91,0% số chuỗi | ~63,7% sản lượng)")
+    ax1.axvline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2)
     for bar in list(b1) + list(b2):
         val = bar.get_height()
         ax1.text(bar.get_x() + bar.get_width() / 2, val + 0.012, f"{val:.3f}",
                  ha="center", va="bottom", fontsize=8.5, fontweight="bold", color="#0F172A")
 
-    labels = [m.replace(" (", "\n(") + (" *" if "Two-Part" in m else "") for m in df["model"]]
+    labels = [m + (" *" if "Two-Part" in m else "") for m in df["model"]]
     ax1.set_xticks(x)
-    ax1.set_xticklabels(labels, fontsize=8.5, fontweight="bold", rotation=18, ha="right")
+    ax1.set_xticklabels(labels, fontsize=8.8, fontweight="bold", rotation=18, ha="right")
     ax1.set_ylim(0, 1.28)
     ax1.set_ylabel("Weighted RMSSE cấp 12 (càng thấp càng tốt)", fontsize=10, fontweight="bold")
     ax1.set_title("A. Sai số theo tần suất bán (Frequent vs Intermittent)", fontsize=11.5, fontweight="bold", pad=10)
     ax1.grid(axis="y", alpha=0.6)
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
-    ax1.legend(loc="upper left", fontsize=8.5, frameon=True)
+    ax1.legend(loc="upper right", fontsize=8.5, frameon=True)
 
     b3 = ax2.bar(x - w / 2, df["frequent_bias_pct"], width=w, color="#2563EB", alpha=0.85, label="Frequent Bias %")
     b4 = ax2.bar(x + w / 2, df["intermittent_bias_pct"], width=w, color="#F59E0B", alpha=0.85, label="Intermittent Bias %")
     ax2.axhline(0, color="#0F172A", linewidth=1.0)
+    ax2.axvline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2)
     for bar in list(b3) + list(b4):
         val = bar.get_height()
         va = "bottom" if val >= 0 else "top"
@@ -514,15 +510,16 @@ def plot_chart_3(summary: pd.DataFrame):
 
 
 def plot_chart_4(summary: pd.DataFrame):
-    df = summary.sort_values("wrmsse_test").reset_index(drop=True)
+    df = summary.set_index("model").loc[MODEL_ORDER].reset_index()
     y = np.arange(len(df))
     actual = float(df["actual_sales"].iloc[0])
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14.5, 6.2), gridspec_kw={"width_ratios": [1.15, 1.0]})
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14.5, 6.0), gridspec_kw={"width_ratios": [1.15, 1.0]})
 
-    ax1.barh(y, df["forecast_sales"] / 1e6, height=0.58,
+    ax1.barh(y, df["forecast_sales"] / 1e6, height=0.56,
              color=[MODEL_COLORS[m] for m in df["model"]], alpha=0.9)
     ax1.axvline(actual / 1e6, color="#DC2626", linestyle="--", linewidth=1.8, label=f"Thực tế: {actual:,.0f}".replace(",", "."))
+    ax1.axhline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2)
     for i, row in df.iterrows():
         val = row["forecast_sales"]
         ax1.text(val / 1e6 + 0.012, i, f"{val:,.0f}".replace(",", "."),
@@ -540,8 +537,9 @@ def plot_chart_4(summary: pd.DataFrame):
     ax1.legend(loc="lower right", frameon=True)
 
     colors_bias = ["#0F766E" if b >= 0 else "#2563EB" if abs(b) < 5 else "#D97706" for b in df["bias_pct"]]
-    ax2.barh(y, df["bias_pct"], height=0.58, color=colors_bias, alpha=0.9)
+    ax2.barh(y, df["bias_pct"], height=0.56, color=colors_bias, alpha=0.9)
     ax2.axvline(0, color="#0F172A", linewidth=1.1)
+    ax2.axhline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2)
     for i, row in df.iterrows():
         b = row["bias_pct"]
         ha = "left" if b >= 0 else "right"
@@ -566,34 +564,24 @@ def plot_chart_4(summary: pd.DataFrame):
 
 
 def plot_chart_5(summary: pd.DataFrame):
-    df = summary.dropna(subset=["frequent_l12"]).sort_values("wrmsse_test").reset_index(drop=True)
+    df = summary.set_index("model").loc[MODEL_ORDER].reset_index()
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6.4), gridspec_kw={"width_ratios": [1.0, 1.35]})
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6.2), gridspec_kw={"width_ratios": [1.0, 1.35]})
 
-    short_names = {
-        "LightGBM Tweedie": "LightGBM Tweedie",
-        "LightGBM Two-Part": "C7_EVENTS",
-        "Random Forest": "Random Forest",
-        "ES_bu": "ES_bu",
-        "Seasonal Naive": "Seasonal Naive",
-        "Croston": "Croston",
-        "Croston-SBA": "Croston-SBA",
-    }
     label_xy = {
         "LightGBM Tweedie": (0.41, 0.875),
         "LightGBM Two-Part": (0.44, 0.785),
         "Random Forest": (0.56, 0.905),
         "ES_bu": (0.72, 0.925),
         "Seasonal Naive": (0.78, 1.105),
-        "Croston": (1.10, 0.905),
-        "Croston-SBA": (1.14, 0.825),
+        "Croston-SBA": (1.06, 0.825),
     }
-    for _, row in summary.iterrows():
+    for _, row in df.iterrows():
         m = row["model"]
         ax1.scatter(row["l1_test"], row["l12_test"], s=130, color=MODEL_COLORS[m],
                     edgecolors="white", linewidth=1.5, zorder=4)
         tx, ty = label_xy[m]
-        ax1.annotate(short_names[m], xy=(row["l1_test"], row["l12_test"]), xytext=(tx, ty),
+        ax1.annotate(m, xy=(row["l1_test"], row["l12_test"]), xytext=(tx, ty),
                      fontsize=8.5, fontweight="bold", color=MODEL_COLORS[m],
                      arrowprops=dict(arrowstyle="-", color=MODEL_COLORS[m], lw=0.8, alpha=0.7))
 
@@ -685,21 +673,14 @@ def plot_chart_6(daily_df: pd.DataFrame):
 
 def plot_chart_7(store_df: pd.DataFrame):
     stores = ["CA_1", "CA_2", "CA_3", "CA_4", "TX_1", "TX_2", "TX_3", "WI_1", "WI_2", "WI_3"]
-    models = [
-        "LightGBM Tweedie",
-        "LightGBM Two-Part",
-        "Random Forest",
-        "ES_bu",
-        "Seasonal Naive",
-        "Croston-SBA",
-    ]
+    models = MODEL_ORDER
     piv = store_df.pivot(index="store_id", columns="model", values="bias_pct").loc[stores, models]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6.2), gridspec_kw={"width_ratios": [1.35, 1.0]})
 
     # Panel A: Grouped lines/markers across 10 stores
     x = np.arange(len(stores))
-    markers = ["o", "s", "^", "D", "X", "v"]
+    markers = ["X", "D", "v", "^", "s", "o"]
     ax1.axhline(0, color="#0F172A", linewidth=1.1)
     for m, mk in zip(models, markers):
         ax1.plot(x, piv[m].values, marker=mk, markersize=6.5, linewidth=2.0,
@@ -717,7 +698,7 @@ def plot_chart_7(store_df: pd.DataFrame):
     vals = piv.values
     im = ax2.imshow(vals, cmap="RdBu", aspect="auto", vmin=-14, vmax=14)
     ax2.set_xticks(np.arange(len(models)))
-    ax2.set_xticklabels(["Tweedie", "C7_EVENTS", "RF", "ES_bu", "S.Naive", "Croston-SBA"],
+    ax2.set_xticklabels(["S.Naive", "ES_bu", "Croston-SBA", "RF", "Two-Part", "Tweedie"],
                         fontsize=8.5, fontweight="bold", rotation=20, ha="right")
     ax2.set_yticks(np.arange(len(stores)))
     ax2.set_yticklabels(stores, fontsize=9.5, fontweight="bold")
@@ -738,14 +719,7 @@ def plot_chart_7(store_df: pd.DataFrame):
 
 def plot_chart_8(cat_df: pd.DataFrame):
     cats = ["FOODS", "HOBBIES", "HOUSEHOLD"]
-    models = [
-        "LightGBM Tweedie",
-        "LightGBM Two-Part",
-        "Random Forest",
-        "ES_bu",
-        "Seasonal Naive",
-        "Croston-SBA",
-    ]
+    models = MODEL_ORDER
     piv_r = cat_df.pivot(index="cat_id", columns="model", values="weighted_RMSSE").loc[cats, models]
     piv_b = cat_df.pivot(index="cat_id", columns="model", values="bias_pct").loc[cats, models]
 

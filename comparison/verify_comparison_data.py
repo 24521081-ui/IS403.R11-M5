@@ -26,7 +26,14 @@ def test_all_eight_charts_exist_and_non_empty():
 
 def test_summary_table_matches_published_sources():
     s = pd.read_csv(COMP / "summary_all_models.csv").set_index("model")
-    assert len(s) == 7
+    assert list(s.index) == [
+        "Seasonal Naive",
+        "ES_bu",
+        "Croston-SBA",
+        "Random Forest",
+        "LightGBM Two-Part",
+        "LightGBM Tweedie",
+    ]
     assert np.allclose(s["actual_sales"], 1_231_764.0)
     # Cross-check exact bias formula = 100 * (forecast/actual - 1)
     np.testing.assert_allclose(
