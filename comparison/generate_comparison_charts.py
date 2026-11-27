@@ -787,6 +787,73 @@ def plot_chart_8(cat_df: pd.DataFrame):
     plt.close(fig)
 
 
+def plot_chart_9(summary: pd.DataFrame, cat_df: pd.DataFrame):
+    """Plot Forecast Bias (%) by demand group (from Chart 3B) and category (from Chart 8B)."""
+    df_sum = summary.set_index("model").loc[MODEL_ORDER]
+    cats = ["FOODS", "HOBBIES", "HOUSEHOLD"]
+    piv_b = cat_df.pivot(index="cat_id", columns="model", values="bias_pct").loc[cats, MODEL_ORDER]
+
+    fig, (ax1, ax2) = plt.subplots(
+        1, 2, figsize=(13.2, 5.4), gridspec_kw={"width_ratios": [1.0, 1.38]}, sharey=True
+    )
+
+    def _plot_bias_bars(ax, x_labels, values_by_model, bar_w):
+        x = np.arange(len(x_labels))
+        ax.axhline(0, color="#0F172A", linewidth=1.0)
+        for idx, m in enumerate(MODEL_ORDER):
+            offset = (idx - (len(MODEL_ORDER) - 1) / 2.0) * bar_w
+            bars = ax.bar(x + offset, values_by_model[m], width=bar_w, color=MODEL_COLORS[m], label=m)
+            for bar in bars:
+                val = bar.get_height()
+                va = "bottom" if val >= 0 else "top"
+                dy = 0.35 if val >= 0 else -0.4
+                ax.text(
+                    bar.get_x() + bar.get_width() / 2, val + dy, fmt_signed_pct(val, 1),
+                    ha="center", va=va, fontsize=7.6, fontweight="bold", color="#0F172A", rotation=90
+                )
+        ax.set_xticks(x)
+        ax.set_xticklabels(x_labels, fontsize=9.2, fontweight="bold")
+        ax.set_ylim(-13.0, 9.0)
+        ax.grid(axis="y", alpha=0.6)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+
+    dg_vals = {
+        m: [float(df_sum.loc[m, "frequent_bias_pct"]), float(df_sum.loc[m, "intermittent_bias_pct"])]
+        for m in MODEL_ORDER
+    }
+    _plot_bias_bars(
+        ax1,
+        ["Frequent\n(9,0% chuỗi)", "Intermittent\n(91,0% chuỗi)"],
+        dg_vals,
+        bar_w=0.125,
+    )
+    ax1.set_ylabel("Forecast Bias (%)", fontsize=10.5, fontweight="bold")
+    ax1.set_title("A. Theo nhóm tần suất bán", fontsize=11.2, fontweight="bold", pad=10)
+
+    cat_vals = {m: piv_b[m].values for m in MODEL_ORDER}
+    _plot_bias_bars(
+        ax2,
+        ["FOODS\n(67,6% sản lượng)", "HOBBIES\n(9,4% sản lượng)", "HOUSEHOLD\n(23,0% sản lượng)"],
+        cat_vals,
+        bar_w=0.13,
+    )
+    ax2.set_title("B. Theo 3 ngành hàng", fontsize=11.2, fontweight="bold", pad=10)
+
+    handles, labels = ax1.get_legend_handles_labels()
+    fig.legend(
+        handles, labels, loc="upper center", bbox_to_anchor=(0.5, 0.93), ncol=6,
+        frameon=True, facecolor="white", fontsize=8.5
+    )
+    fig.suptitle(
+        "Độ lệch dự báo (Forecast Bias %) theo nhóm nhu cầu và ngành hàng trên tập Test",
+        fontsize=12.6, fontweight="bold", y=0.985
+    )
+    fig.tight_layout(rect=[0, 0, 1, 0.87])
+    fig.savefig(OUT_DIR / "09_do_lech_theo_nhom_nhu_cau_va_nganh_hang.png", dpi=300)
+    plt.close(fig)
+
+
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     summary, levels_df, daily_df, store_df, cat_df = load_all_metrics()
@@ -802,7 +869,8 @@ def main():
     plot_chart_6(daily_df)
     plot_chart_7(store_df)
     plot_chart_8(cat_df)
-    print("Generated 8 charts in:", OUT_DIR)
+    plot_chart_9(summary, cat_df)
+    print("Generated 9 charts in:", OUT_DIR)
     print(summary[["model", "wrmsse_val", "wrmsse_test", "l1_test", "l12_test", "bias_pct"]].to_string(index=False))
 
 
