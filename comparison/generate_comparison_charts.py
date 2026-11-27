@@ -17,6 +17,11 @@ CATEGORY_CSV = ROOT / "comparison" / "category_all_models.csv"
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans",
+    "font.size": 10,
+    "axes.titlesize": 11.5,
+    "axes.labelsize": 10.5,
+    "xtick.labelsize": 9.2,
+    "ytick.labelsize": 9.2,
     "axes.edgecolor": "#CBD5E1",
     "axes.linewidth": 0.8,
     "grid.color": "#E2E8F0",
@@ -25,6 +30,21 @@ plt.rcParams.update({
     "figure.facecolor": "white",
     "axes.facecolor": "white",
 })
+
+
+def fmt_dec(val: float, digits: int = 4) -> str:
+    """Format a float with Vietnamese decimal comma."""
+    return f"{val:.{digits}f}".replace(".", ",")
+
+
+def fmt_signed_pct(val: float, digits: int = 1) -> str:
+    """Format a signed percentage with Vietnamese decimal comma."""
+    return f"{val:+.{digits}f}%".replace(".", ",")
+
+
+def fmt_int(val: float) -> str:
+    """Format an integer with Vietnamese thousand-separator dot."""
+    return f"{val:,.0f}".replace(",", ".")
 
 MODEL_ORDER = [
     "Seasonal Naive",
@@ -343,7 +363,7 @@ def plot_chart_1(summary: pd.DataFrame):
     y = np.arange(len(df))
     h = 0.36
 
-    fig, ax = plt.subplots(figsize=(12.2, 6.8))
+    fig, ax = plt.subplots(figsize=(10.8, 5.6))
     ax.barh(y - h / 2, df["wrmsse_test"], height=h,
             color=[MODEL_COLORS[m] for m in df["model"]],
             label="Test (d_1914–d_1941)", edgecolor="white", linewidth=0.8)
@@ -355,36 +375,36 @@ def plot_chart_1(summary: pd.DataFrame):
     sn_test = float(df.loc[df.model == "Seasonal Naive", "wrmsse_test"].iloc[0])
     ax.axvline(sn_test, color="#475569", linestyle="--", linewidth=1.2, zorder=1)
     ax.axhline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2, zorder=1)
-    ax.text(sn_test + 0.015, 3.8, f"Mốc Seasonal Naive\n({sn_test:.4f})",
-            color="#334155", fontsize=9, fontweight="bold", va="center", zorder=4,
-            bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=1.0))
+    ax.text(sn_test + 0.015, 3.8, f"Mốc Seasonal Naive\n({fmt_dec(sn_test, 4)})",
+            color="#334155", fontsize=9.2, fontweight="bold", va="center", zorder=4,
+            bbox=dict(facecolor="white", edgecolor="none", alpha=0.88, pad=1.0))
 
-    label_bbox = dict(facecolor="white", edgecolor="none", alpha=0.85, pad=0.6)
+    label_bbox = dict(facecolor="white", edgecolor="none", alpha=0.88, pad=0.6)
     for i, row in df.iterrows():
         diff_pct = 100.0 * (row["wrmsse_test"] / sn_test - 1.0)
-        suffix = f" ({diff_pct:+.1f}%)" if row["model"] != "Seasonal Naive" else " (baseline)"
-        ax.text(row["wrmsse_test"] + 0.012, i - h / 2, f"{row['wrmsse_test']:.4f}{suffix}",
-                va="center", fontsize=9, fontweight="bold", color="#0F172A", zorder=4, bbox=label_bbox)
+        suffix = f" ({fmt_signed_pct(diff_pct, 1)})" if row["model"] != "Seasonal Naive" else " (baseline)"
+        ax.text(row["wrmsse_test"] + 0.012, i - h / 2, f"{fmt_dec(row['wrmsse_test'], 4)}{suffix}",
+                va="center", fontsize=9.2, fontweight="bold", color="#0F172A", zorder=4, bbox=label_bbox)
         if pd.notna(row["wrmsse_val"]):
-            val_lbl = f"{row['wrmsse_val']:.4f}"
+            val_lbl = fmt_dec(row["wrmsse_val"], 4)
             if row["val_note"] != "published":
                 val_lbl += " *"
             ax.text(row["wrmsse_val"] + 0.012, i + h / 2, val_lbl,
-                    va="center", fontsize=8.5, color="#475569", zorder=4, bbox=label_bbox)
+                    va="center", fontsize=8.8, color="#475569", zorder=4, bbox=label_bbox)
 
     ax.set_yticks(y)
     ax.set_yticklabels(df["model"], fontsize=10, fontweight="bold")
     ax.invert_yaxis()
     ax.set_xlim(0, 1.38)
-    ax.set_xlabel("WRMSSE (càng thấp càng tốt)", fontsize=10.5, fontweight="bold")
-    ax.set_title("So sánh WRMSSE tổng thể giữa các phương pháp (Validation vs Test — 12 cấp M5)",
-                 fontsize=13, fontweight="bold", pad=14)
+    ax.set_xlabel("WRMSSE", fontsize=10.5, fontweight="bold")
+    ax.set_title("So sánh WRMSSE tổng thể giữa các mô hình",
+                 fontsize=12.5, fontweight="bold", pad=12)
     ax.grid(axis="x", alpha=0.6)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.legend(loc="lower right", frameon=True, facecolor="white", framealpha=0.95)
-    fig.text(0.01, 0.01, "* LightGBM Tweedie Validation (0.7946) được chấm bổ sung từ 10 file validation cục bộ ngày 24/11 (bias +9.96%).",
-             fontsize=8.2, color="#475569", style="italic")
+    ax.legend(loc="lower right", frameon=True, facecolor="white", framealpha=0.95, fontsize=9.2)
+    fig.text(0.01, 0.01, "* LightGBM Tweedie (Validation): tính từ 10 mô hình cửa hàng.",
+             fontsize=8.5, color="#475569", style="italic")
 
     fig.tight_layout(rect=[0, 0.03, 1, 1])
     fig.savefig(OUT_DIR / "01_tong_quan_wrmsse_validation_test.png", dpi=300)
@@ -407,38 +427,38 @@ def plot_chart_2(levels_df: pd.DataFrame):
         "Croston-SBA": "v",
     }
 
-    fig, ax = plt.subplots(figsize=(13, 6.5))
+    fig, ax = plt.subplots(figsize=(11.5, 5.6))
     for col in levels_df.columns:
-        lw = 2.6 if col != "Seasonal Naive" else 2.0
+        lw = 2.5 if col != "Seasonal Naive" else 1.8
         ls = "-" if col not in ("Seasonal Naive", "Croston-SBA") else "--"
-        ax.plot(x, levels_df[col].values, marker=markers[col], markersize=6.5,
+        ax.plot(x, levels_df[col].values, marker=markers[col], markersize=6.0,
                 linewidth=lw, linestyle=ls, color=MODEL_COLORS[col], label=col)
 
     for col, dy1, dy12 in [
-        ("LightGBM Tweedie", -0.015, 0.006),
-        ("LightGBM Two-Part", 0.012, -0.018),
-        ("Random Forest", 0.0, -0.003),
+        ("LightGBM Tweedie", -0.016, -0.002),
+        ("LightGBM Two-Part", 0.014, -0.032),
+        ("Random Forest", 0.0, -0.014),
         ("ES_bu", 0.0, 0.032),
         ("Seasonal Naive", 0.0, 0.0),
-        ("Croston-SBA", 0.0, 0.020),
+        ("Croston-SBA", 0.0, 0.014),
     ]:
         v1 = levels_df[col].iloc[0]
         v12 = levels_df[col].iloc[-1]
-        ax.text(1 - 0.12, v1 + dy1, f"{v1:.3f}", ha="right", va="center",
-                fontsize=8, fontweight="bold", color=MODEL_COLORS[col])
-        lbl12 = f"{v12:.3f}" if col not in ("Random Forest", "Croston-SBA") else (
-            f"RF {v12:.3f}" if col == "Random Forest" else f"SBA {v12:.3f}"
+        ax.text(1 - 0.14, v1 + dy1, fmt_dec(v1, 3), ha="right", va="center",
+                fontsize=8.5, fontweight="bold", color=MODEL_COLORS[col])
+        lbl12 = fmt_dec(v12, 3) if col not in ("Random Forest", "Croston-SBA") else (
+            f"RF {fmt_dec(v12, 3)}" if col == "Random Forest" else f"SBA {fmt_dec(v12, 3)}"
         )
-        ax.text(12 + 0.12, v12 + dy12, lbl12, ha="left", va="center",
-                fontsize=8.2, fontweight="bold", color=MODEL_COLORS[col])
+        ax.text(12 + 0.14, v12 + dy12, lbl12, ha="left", va="center",
+                fontsize=8.5, fontweight="bold", color=MODEL_COLORS[col])
 
     ax.set_xticks(x)
-    ax.set_xticklabels(level_labels, fontsize=9)
-    ax.set_xlim(0.25, 12.95)
+    ax.set_xticklabels(level_labels, fontsize=9.0)
+    ax.set_xlim(0.20, 13.05)
     ax.set_ylim(0.35, 1.38)
-    ax.set_ylabel("Weighted RMSSE trong cấp (càng thấp càng tốt)", fontsize=10.5, fontweight="bold")
-    ax.set_title("Hiệu năng theo 12 cấp phân cấp M5 trên tập Test (d_1914–d_1941)",
-                 fontsize=13, fontweight="bold", pad=14)
+    ax.set_ylabel("Weighted RMSSE trong cấp", fontsize=10.5, fontweight="bold")
+    ax.set_title("Weighted RMSSE theo 12 cấp phân cấp M5 (tập Test)",
+                 fontsize=12.5, fontweight="bold", pad=12)
     ax.grid(True, alpha=0.55)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
@@ -454,53 +474,51 @@ def plot_chart_3(summary: pd.DataFrame):
     x = np.arange(len(df))
     w = 0.35
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14.5, 6.5), gridspec_kw={"width_ratios": [1.15, 1.0]})
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.2, 5.4), gridspec_kw={"width_ratios": [1.1, 1.0]})
 
-    b1 = ax1.bar(x - w / 2, df["frequent_l12"], width=w, color="#2563EB", label="Frequent (~9,0% số chuỗi | ~36,3% sản lượng)")
-    b2 = ax1.bar(x + w / 2, df["intermittent_l12"], width=w, color="#F59E0B", label="Intermittent (~91,0% số chuỗi | ~63,7% sản lượng)")
+    b1 = ax1.bar(x - w / 2, df["frequent_l12"], width=w, color="#2563EB", label="Frequent (9,0% chuỗi)")
+    b2 = ax1.bar(x + w / 2, df["intermittent_l12"], width=w, color="#F59E0B", label="Intermittent (91,0% chuỗi)")
     ax1.axvline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2)
     for bar in list(b1) + list(b2):
         val = bar.get_height()
-        ax1.text(bar.get_x() + bar.get_width() / 2, val + 0.012, f"{val:.3f}",
+        ax1.text(bar.get_x() + bar.get_width() / 2, val + 0.012, fmt_dec(val, 3),
                  ha="center", va="bottom", fontsize=8.5, fontweight="bold", color="#0F172A")
 
-    labels = [m + (" *" if "Two-Part" in m else "") for m in df["model"]]
+    labels = list(df["model"])
     ax1.set_xticks(x)
-    ax1.set_xticklabels(labels, fontsize=8.8, fontweight="bold", rotation=18, ha="right")
+    ax1.set_xticklabels(labels, fontsize=9.0, fontweight="bold", rotation=18, ha="right")
     ax1.set_ylim(0, 1.28)
-    ax1.set_ylabel("Weighted RMSSE cấp 12 (càng thấp càng tốt)", fontsize=10, fontweight="bold")
-    ax1.set_title("A. Sai số theo tần suất bán (Frequent vs Intermittent)", fontsize=11.5, fontweight="bold", pad=10)
+    ax1.set_ylabel("Weighted RMSSE cấp 12", fontsize=10.5, fontweight="bold")
+    ax1.set_title("A. Sai số theo tần suất bán", fontsize=11.2, fontweight="bold", pad=10)
     ax1.grid(axis="y", alpha=0.6)
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
-    ax1.legend(loc="upper right", fontsize=8.5, frameon=True)
+    ax1.legend(loc="upper right", fontsize=8.8, frameon=True)
 
-    b3 = ax2.bar(x - w / 2, df["frequent_bias_pct"], width=w, color="#2563EB", alpha=0.85, label="Frequent Bias %")
-    b4 = ax2.bar(x + w / 2, df["intermittent_bias_pct"], width=w, color="#F59E0B", alpha=0.85, label="Intermittent Bias %")
+    b3 = ax2.bar(x - w / 2, df["frequent_bias_pct"], width=w, color="#2563EB", alpha=0.85, label="Frequent")
+    b4 = ax2.bar(x + w / 2, df["intermittent_bias_pct"], width=w, color="#F59E0B", alpha=0.85, label="Intermittent")
     ax2.axhline(0, color="#0F172A", linewidth=1.0)
     ax2.axvline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2)
     for bar in list(b3) + list(b4):
         val = bar.get_height()
         va = "bottom" if val >= 0 else "top"
         dy = 0.4 if val >= 0 else -0.45
-        ax2.text(bar.get_x() + bar.get_width() / 2, val + dy, f"{val:+.1f}%",
-                 ha="center", va=va, fontsize=8, fontweight="bold", color="#0F172A")
+        ax2.text(bar.get_x() + bar.get_width() / 2, val + dy, fmt_signed_pct(val, 1),
+                 ha="center", va=va, fontsize=8.2, fontweight="bold", color="#0F172A")
 
     ax2.set_xticks(x)
-    ax2.set_xticklabels(labels, fontsize=8.5, fontweight="bold", rotation=18, ha="right")
+    ax2.set_xticklabels(labels, fontsize=9.0, fontweight="bold", rotation=18, ha="right")
     ax2.set_ylim(-13, 9)
-    ax2.set_ylabel("Forecast Bias % (dương = thừa, âm = thiếu)", fontsize=10, fontweight="bold")
-    ax2.set_title("B. Độ lệch dự báo theo nhóm tần suất bán", fontsize=11.5, fontweight="bold", pad=10)
+    ax2.set_ylabel("Forecast Bias (%)", fontsize=10.5, fontweight="bold")
+    ax2.set_title("B. Độ lệch dự báo theo nhóm tần suất bán", fontsize=11.2, fontweight="bold", pad=10)
     ax2.grid(axis="y", alpha=0.6)
     ax2.spines["top"].set_visible(False)
     ax2.spines["right"].set_visible(False)
-    ax2.legend(loc="lower left", fontsize=8.5, frameon=True)
+    ax2.legend(loc="lower left", fontsize=8.8, frameon=True)
 
-    fig.suptitle("Phân tích hiệu năng theo nhóm nhu cầu trên tập Test (d_1914–d_1941)",
-                 fontsize=13.5, fontweight="bold", y=0.98)
-    fig.text(0.01, 0.01, "* Ghi chú đối chiếu: 6 mô hình dùng phân nhóm origin 1913 (2.754 Frequent / 27.736 Intermittent); LightGBM Two-Part dùng bảng công bố trên phân nhóm origin 1885 (2.749 / 27.741).",
-             fontsize=8.2, color="#475569", style="italic")
-    fig.tight_layout(rect=[0, 0.035, 1, 0.94])
+    fig.suptitle("Hiệu năng theo nhóm nhu cầu trên tập Test",
+                 fontsize=12.8, fontweight="bold", y=0.98)
+    fig.tight_layout(rect=[0, 0, 1, 0.94])
     fig.savefig(OUT_DIR / "03_hieu_qua_theo_nhom_nhu_cau.png", dpi=300)
     plt.close(fig)
 
@@ -510,27 +528,27 @@ def plot_chart_4(summary: pd.DataFrame):
     y = np.arange(len(df))
     actual = float(df["actual_sales"].iloc[0])
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14.5, 6.0), gridspec_kw={"width_ratios": [1.15, 1.0]})
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.2, 5.2), gridspec_kw={"width_ratios": [1.15, 1.0]})
 
     ax1.barh(y, df["forecast_sales"] / 1e6, height=0.56,
              color=[MODEL_COLORS[m] for m in df["model"]], alpha=0.9)
-    ax1.axvline(actual / 1e6, color="#DC2626", linestyle="--", linewidth=1.8, label=f"Thực tế: {actual:,.0f}".replace(",", "."))
+    ax1.axvline(actual / 1e6, color="#DC2626", linestyle="--", linewidth=1.8, label=f"Thực tế: {fmt_int(actual)}")
     ax1.axhline(2.5, color="#94A3B8", linestyle=":", linewidth=1.2)
     for i, row in df.iterrows():
         val = row["forecast_sales"]
-        ax1.text(val / 1e6 + 0.012, i, f"{val:,.0f}".replace(",", "."),
-                 va="center", fontsize=8.8, fontweight="bold", color="#0F172A")
+        ax1.text(val / 1e6 + 0.012, i, fmt_int(val),
+                 va="center", fontsize=9.0, fontweight="bold", color="#0F172A")
 
     ax1.set_yticks(y)
-    ax1.set_yticklabels(df["model"], fontsize=9.5, fontweight="bold")
+    ax1.set_yticklabels(df["model"], fontsize=9.8, fontweight="bold")
     ax1.invert_yaxis()
-    ax1.set_xlim(0.95, 1.42)
-    ax1.set_xlabel("Tổng lượng bán dự báo 28 ngày Test (triệu đơn vị)", fontsize=10, fontweight="bold")
-    ax1.set_title("A. Tổng lượng bán dự báo so với thực tế", fontsize=11.5, fontweight="bold", pad=10)
+    ax1.set_xlim(0.95, 1.43)
+    ax1.set_xlabel("Tổng lượng bán 28 ngày (triệu đơn vị)", fontsize=10.2, fontweight="bold")
+    ax1.set_title("A. Tổng lượng bán dự báo so với thực tế", fontsize=11.2, fontweight="bold", pad=10)
     ax1.grid(axis="x", alpha=0.6)
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
-    ax1.legend(loc="lower right", frameon=True)
+    ax1.legend(loc="lower right", frameon=True, fontsize=9.0)
 
     colors_bias = ["#0F766E" if b >= 0 else "#2563EB" if abs(b) < 5 else "#D97706" for b in df["bias_pct"]]
     ax2.barh(y, df["bias_pct"], height=0.56, color=colors_bias, alpha=0.9)
@@ -540,20 +558,20 @@ def plot_chart_4(summary: pd.DataFrame):
         b = row["bias_pct"]
         ha = "left" if b >= 0 else "right"
         dx = 0.22 if b >= 0 else -0.22
-        ax2.text(b + dx, i, f"{b:+.2f}%", va="center", ha=ha, fontsize=9, fontweight="bold", color="#0F172A")
+        ax2.text(b + dx, i, fmt_signed_pct(b, 2), va="center", ha=ha, fontsize=9.0, fontweight="bold", color="#0F172A")
 
     ax2.set_yticks(y)
     ax2.set_yticklabels([])
     ax2.invert_yaxis()
-    ax2.set_xlim(-9.5, 5.5)
-    ax2.set_xlabel("Forecast Bias % (dương = dự báo thừa, âm = dự báo thiếu)", fontsize=10, fontweight="bold")
-    ax2.set_title("B. Độ lệch tổng lượng bán (Bias %)", fontsize=11.5, fontweight="bold", pad=10)
+    ax2.set_xlim(-9.6, 5.6)
+    ax2.set_xlabel("Forecast Bias (%)", fontsize=10.2, fontweight="bold")
+    ax2.set_title("B. Độ lệch tổng lượng bán", fontsize=11.2, fontweight="bold", pad=10)
     ax2.grid(axis="x", alpha=0.6)
     ax2.spines["top"].set_visible(False)
     ax2.spines["right"].set_visible(False)
 
-    fig.suptitle("Đối chiếu tổng lượng bán dự báo & mức độ thiên lệch trên 28 ngày Test (d_1914–d_1941)",
-                 fontsize=13.5, fontweight="bold", y=0.98)
+    fig.suptitle("Tổng lượng bán dự báo và độ lệch trên tập Test",
+                 fontsize=12.8, fontweight="bold", y=0.98)
     fig.tight_layout(rect=[0, 0, 1, 0.94])
     fig.savefig(OUT_DIR / "04_do_lech_tong_luong_du_bao_test.png", dpi=300)
     plt.close(fig)
@@ -562,34 +580,33 @@ def plot_chart_4(summary: pd.DataFrame):
 def plot_chart_5(summary: pd.DataFrame):
     df = summary.set_index("model").loc[MODEL_ORDER].reset_index()
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6.2), gridspec_kw={"width_ratios": [1.0, 1.35]})
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 5.4), gridspec_kw={"width_ratios": [1.0, 1.35]})
 
     label_xy = {
-        "LightGBM Tweedie": (0.41, 0.875),
-        "LightGBM Two-Part": (0.44, 0.785),
-        "Random Forest": (0.56, 0.905),
-        "ES_bu": (0.72, 0.925),
-        "Seasonal Naive": (0.78, 1.105),
-        "Croston-SBA": (1.06, 0.825),
+        "LightGBM Tweedie": (0.40, 0.885),
+        "LightGBM Two-Part": (0.45, 0.782),
+        "Random Forest": (0.56, 0.915),
+        "ES_bu": (0.72, 0.935),
+        "Seasonal Naive": (0.79, 1.105),
+        "Croston-SBA": (0.98, 0.818),
     }
     for _, row in df.iterrows():
         m = row["model"]
-        ax1.scatter(row["l1_test"], row["l12_test"], s=130, color=MODEL_COLORS[m],
+        ax1.scatter(row["l1_test"], row["l12_test"], s=120, color=MODEL_COLORS[m],
                     edgecolors="white", linewidth=1.5, zorder=4)
         tx, ty = label_xy[m]
         ax1.annotate(m, xy=(row["l1_test"], row["l12_test"]), xytext=(tx, ty),
-                     fontsize=8.5, fontweight="bold", color=MODEL_COLORS[m],
+                     fontsize=8.8, fontweight="bold", color=MODEL_COLORS[m],
                      arrowprops=dict(arrowstyle="-", color=MODEL_COLORS[m], lw=0.8, alpha=0.7))
 
-    ax1.set_xlabel("Level 1 (Total) Weighted RMSSE", fontsize=10, fontweight="bold")
-    ax1.set_ylabel("Level 12 (Item × Store) Weighted RMSSE", fontsize=10, fontweight="bold")
-    ax1.set_title("A. Đánh đổi cấp Tổng hợp (L1) vs Chi tiết (L12)", fontsize=11.5, fontweight="bold", pad=10)
+    ax1.set_xlabel("Level 1 (Total) Weighted RMSSE", fontsize=10.2, fontweight="bold")
+    ax1.set_ylabel("Level 12 (Item × Store) Weighted RMSSE", fontsize=10.2, fontweight="bold")
+    ax1.set_title("A. Đánh đổi cấp Tổng hợp (L1) và Chi tiết (L12)", fontsize=11.2, fontweight="bold", pad=10)
     ax1.set_xlim(0.37, 1.30)
     ax1.set_ylim(0.76, 1.15)
     ax1.grid(True, alpha=0.55)
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
-    ax1.text(0.86, 0.785, "★ Góc dưới-trái = tối ưu nhất", fontsize=8.5, fontweight="bold", color="#0F766E")
 
     metrics_cols = ["wrmsse_test", "l1_test", "l12_test", "frequent_l12", "intermittent_l12"]
     col_labels = ["WRMSSE\nTest", "Cấp 1\n(Total)", "Cấp 12\n(SKU×Store)", "Frequent\n(L12)", "Intermittent\n(L12)", "|Bias %|"]
@@ -600,24 +617,24 @@ def plot_chart_5(summary: pd.DataFrame):
 
     im = ax2.imshow(norm_vals, cmap="RdYlGn_r", aspect="auto", vmin=0, vmax=1)
     ax2.set_xticks(np.arange(len(col_labels)))
-    ax2.set_xticklabels(col_labels, fontsize=9, fontweight="bold")
+    ax2.set_xticklabels(col_labels, fontsize=9.0, fontweight="bold")
     ax2.set_yticks(np.arange(len(df)))
     ax2.set_yticklabels(df["model"], fontsize=9.5, fontweight="bold")
 
     for i in range(raw_vals.shape[0]):
         for j in range(raw_vals.shape[1]):
             val = raw_vals[i, j]
-            txt = f"{val:.2f}%" if j == 5 else f"{val:.4f}"
+            txt = f"{fmt_dec(val, 2)}%" if j == 5 else fmt_dec(val, 4)
             txt_color = "white" if norm_vals[i, j] > 0.78 else "#0F172A"
-            ax2.text(j, i, txt, ha="center", va="center", fontsize=8.5, fontweight="bold", color=txt_color)
+            ax2.text(j, i, txt, ha="center", va="center", fontsize=8.8, fontweight="bold", color=txt_color)
 
-    ax2.set_title("B. Bảng điểm đa tiêu chí (Xanh = tốt nhất, Đỏ = kém nhất)", fontsize=11.5, fontweight="bold", pad=10)
+    ax2.set_title("B. Bảng điểm đa tiêu chí", fontsize=11.2, fontweight="bold", pad=10)
     cbar = fig.colorbar(im, ax=ax2, fraction=0.035, pad=0.03)
     cbar.set_ticks([0, 0.5, 1])
     cbar.set_ticklabels(["Tốt nhất", "Trung bình", "Kém nhất"])
 
-    fig.suptitle("Tổng hợp so sánh đa tiêu chí các phương pháp dự báo M5 (tập Test)",
-                 fontsize=13.5, fontweight="bold", y=0.98)
+    fig.suptitle("Tổng hợp so sánh đa tiêu chí trên tập Test",
+                 fontsize=12.8, fontweight="bold", y=0.98)
     fig.tight_layout(rect=[0, 0, 1, 0.94])
     fig.savefig(OUT_DIR / "05_bang_tong_hop_da_tieu_chi.png", dpi=300)
     plt.close(fig)
@@ -631,32 +648,33 @@ def plot_chart_6(daily_df: pd.DataFrame):
         "Thứ Năm": "T5", "Thứ Sáu": "T6", "Thứ Bảy": "T7", "Chủ nhật": "CN", "Chủ Nhật": "CN",
     }
 
-    fig, ax = plt.subplots(figsize=(14.5, 6.4))
+    fig, ax = plt.subplots(figsize=(12.5, 5.4))
     for i, wd in enumerate(daily_df["weekday"]):
         if wd in ("Thứ Bảy", "Chủ nhật", "Chủ Nhật"):
             ax.axvspan(i - 0.45, i + 0.45, color="#F1F5F9", zorder=0)
 
-    ax.plot(x, daily_df["actual"] / 1000.0, color="#0F172A", linewidth=2.8, marker="o",
-            markersize=5, label="Thực tế (Actual)", zorder=5)
+    ax.plot(x, daily_df["actual"] / 1000.0, color="#0F172A", linewidth=2.6, marker="o",
+            markersize=4.5, label="Thực tế (Actual)", zorder=6)
 
-    for col, ls in [
-        ("LightGBM Tweedie", "-"),
-        ("LightGBM Two-Part", "-"),
-        ("Random Forest", "-"),
-        ("ES_bu", "--"),
-        ("Seasonal Naive", ":"),
-        ("Croston-SBA", "-."),
-    ]:
-        ax.plot(x, daily_df[col] / 1000.0, color=MODEL_COLORS[col], linewidth=1.9,
-                linestyle=ls, alpha=0.9, label=col)
+    style_map = {
+        "LightGBM Tweedie": ("-", 2.1, 0.95, 4),
+        "LightGBM Two-Part": ("-", 2.0, 0.95, 4),
+        "Random Forest": ("-", 1.6, 0.80, 3),
+        "ES_bu": ("--", 1.35, 0.62, 2),
+        "Seasonal Naive": (":", 1.4, 0.62, 2),
+        "Croston-SBA": ("-.", 1.35, 0.60, 2),
+    }
+    for col, (ls, lw, alpha, zo) in style_map.items():
+        ax.plot(x, daily_df[col] / 1000.0, color=MODEL_COLORS[col], linewidth=lw,
+                linestyle=ls, alpha=alpha, zorder=zo, label=col)
 
     ax.set_xticks(x)
     ax.set_xticklabels([f"{d}\n({wd_map.get(w, w)})" for d, w in zip(short_dates, daily_df["weekday"])],
                        fontsize=8.2)
     ax.set_ylim(33, 66.5)
-    ax.set_ylabel("Tổng lượng bán toàn hệ thống (nghìn đơn vị/ngày)", fontsize=10.5, fontweight="bold")
-    ax.set_title("Diễn biến dự báo theo ngày trên 28 ngày Test (25/04–22/05/2016) — Bắt sóng cuối tuần",
-                 fontsize=13, fontweight="bold", pad=14)
+    ax.set_ylabel("Tổng lượng bán (nghìn đơn vị/ngày)", fontsize=10.5, fontweight="bold")
+    ax.set_title("Diễn biến tổng lượng bán dự báo theo ngày trên tập Test (25/04–22/05/2016)",
+                 fontsize=12.5, fontweight="bold", pad=12)
     ax.grid(True, alpha=0.5)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
@@ -672,42 +690,40 @@ def plot_chart_7(store_df: pd.DataFrame):
     models = MODEL_ORDER
     piv = store_df.pivot(index="store_id", columns="model", values="bias_pct").loc[stores, models]
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6.2), gridspec_kw={"width_ratios": [1.35, 1.0]})
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 5.4), gridspec_kw={"width_ratios": [1.3, 1.0]})
 
-    # Panel A: Grouped lines/markers across 10 stores
     x = np.arange(len(stores))
     markers = ["X", "D", "v", "^", "s", "o"]
     ax1.axhline(0, color="#0F172A", linewidth=1.1)
     for m, mk in zip(models, markers):
-        ax1.plot(x, piv[m].values, marker=mk, markersize=6.5, linewidth=2.0,
+        ax1.plot(x, piv[m].values, marker=mk, markersize=6.0, linewidth=1.9,
                  color=MODEL_COLORS[m], label=m)
     ax1.set_xticks(x)
-    ax1.set_xticklabels(stores, fontsize=9.5, fontweight="bold")
-    ax1.set_ylabel("Forecast Bias % (dương = thừa, âm = thiếu)", fontsize=10, fontweight="bold")
-    ax1.set_title("A. Biến động Forecast Bias % qua 10 cửa hàng", fontsize=11.5, fontweight="bold", pad=10)
+    ax1.set_xticklabels(stores, fontsize=9.2, fontweight="bold")
+    ax1.set_ylabel("Forecast Bias (%)", fontsize=10.5, fontweight="bold")
+    ax1.set_title("A. Biến động Forecast Bias (%) qua 10 cửa hàng", fontsize=11.2, fontweight="bold", pad=10)
     ax1.grid(True, alpha=0.55)
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
-    ax1.legend(loc="lower left", ncol=2, fontsize=8.2, frameon=True)
+    ax1.legend(loc="lower left", ncol=2, fontsize=8.4, frameon=True)
 
-    # Panel B: Heatmap store x model Bias %
     vals = piv.values
     im = ax2.imshow(vals, cmap="RdBu", aspect="auto", vmin=-14, vmax=14)
     ax2.set_xticks(np.arange(len(models)))
     ax2.set_xticklabels(["S.Naive", "ES_bu", "Croston-SBA", "RF", "Two-Part", "Tweedie"],
-                        fontsize=8.5, fontweight="bold", rotation=20, ha="right")
+                        fontsize=8.8, fontweight="bold", rotation=20, ha="right")
     ax2.set_yticks(np.arange(len(stores)))
-    ax2.set_yticklabels(stores, fontsize=9.5, fontweight="bold")
+    ax2.set_yticklabels(stores, fontsize=9.2, fontweight="bold")
     for i in range(vals.shape[0]):
         for j in range(vals.shape[1]):
             v = vals[i, j]
             c = "white" if abs(v) > 8.5 else "#0F172A"
-            ax2.text(j, i, f"{v:+.1f}%", ha="center", va="center", fontsize=8, fontweight="bold", color=c)
-    ax2.set_title("B. Bản đồ nhiệt Bias % (Đỏ = thiếu, Xanh = thừa)", fontsize=11.5, fontweight="bold", pad=10)
+            ax2.text(j, i, fmt_signed_pct(v, 1), ha="center", va="center", fontsize=8.2, fontweight="bold", color=c)
+    ax2.set_title("B. Bản đồ nhiệt Forecast Bias (%)", fontsize=11.2, fontweight="bold", pad=10)
     fig.colorbar(im, ax=ax2, fraction=0.04, pad=0.03, label="Bias %")
 
-    fig.suptitle("So sánh độ lệch dự báo theo 10 cửa hàng trên tập Test (d_1914–d_1941)",
-                 fontsize=13.5, fontweight="bold", y=0.98)
+    fig.suptitle("Độ lệch dự báo theo 10 cửa hàng trên tập Test",
+                 fontsize=12.8, fontweight="bold", y=0.98)
     fig.tight_layout(rect=[0, 0, 1, 0.94])
     fig.savefig(OUT_DIR / "07_do_lech_theo_10_cua_hang.png", dpi=300)
     plt.close(fig)
@@ -721,22 +737,22 @@ def plot_chart_8(cat_df: pd.DataFrame):
 
     x = np.arange(len(cats))
     w = 0.13
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6.0))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 5.2))
 
     for idx, m in enumerate(models):
         offset = (idx - (len(models) - 1) / 2.0) * w
         bars = ax1.bar(x + offset, piv_r[m].values, width=w, color=MODEL_COLORS[m], label=m)
         for bar in bars:
             val = bar.get_height()
-            ax1.text(bar.get_x() + bar.get_width() / 2, val + 0.01, f"{val:.2f}",
-                     ha="center", va="bottom", fontsize=7.5, fontweight="bold", color="#0F172A", rotation=90)
+            ax1.text(bar.get_x() + bar.get_width() / 2, val + 0.015, fmt_dec(val, 2),
+                     ha="center", va="bottom", fontsize=7.8, fontweight="bold", color="#0F172A", rotation=90)
 
     ax1.set_xticks(x)
     ax1.set_xticklabels(["FOODS\n(67,6% sản lượng)", "HOBBIES\n(9,4% sản lượng)", "HOUSEHOLD\n(23,0% sản lượng)"],
-                        fontsize=9.5, fontweight="bold")
-    ax1.set_ylim(0, 1.28)
-    ax1.set_ylabel("Weighted RMSSE cấp 12 (càng thấp càng tốt)", fontsize=10, fontweight="bold")
-    ax1.set_title("A. Weighted RMSSE cấp 12 theo ngành hàng", fontsize=11.5, fontweight="bold", pad=10)
+                        fontsize=9.2, fontweight="bold")
+    ax1.set_ylim(0, 1.32)
+    ax1.set_ylabel("Weighted RMSSE cấp 12", fontsize=10.5, fontweight="bold")
+    ax1.set_title("A. Weighted RMSSE cấp 12 theo ngành hàng", fontsize=11.2, fontweight="bold", pad=10)
     ax1.grid(axis="y", alpha=0.6)
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
@@ -748,25 +764,25 @@ def plot_chart_8(cat_df: pd.DataFrame):
         for bar in bars:
             val = bar.get_height()
             va = "bottom" if val >= 0 else "top"
-            dy = 0.3 if val >= 0 else -0.35
-            ax2.text(bar.get_x() + bar.get_width() / 2, val + dy, f"{val:+.1f}%",
-                     ha="center", va=va, fontsize=7.2, fontweight="bold", color="#0F172A", rotation=90)
+            dy = 0.35 if val >= 0 else -0.4
+            ax2.text(bar.get_x() + bar.get_width() / 2, val + dy, fmt_signed_pct(val, 1),
+                     ha="center", va=va, fontsize=7.6, fontweight="bold", color="#0F172A", rotation=90)
 
     ax2.set_xticks(x)
     ax2.set_xticklabels(["FOODS", "HOBBIES", "HOUSEHOLD"], fontsize=9.5, fontweight="bold")
-    ax2.set_ylim(-12.5, 9.0)
-    ax2.set_ylabel("Forecast Bias % (dương = thừa, âm = thiếu)", fontsize=10, fontweight="bold")
-    ax2.set_title("B. Forecast Bias % theo ngành hàng", fontsize=11.5, fontweight="bold", pad=10)
+    ax2.set_ylim(-13.0, 9.0)
+    ax2.set_ylabel("Forecast Bias (%)", fontsize=10.5, fontweight="bold")
+    ax2.set_title("B. Forecast Bias (%) theo ngành hàng", fontsize=11.2, fontweight="bold", pad=10)
     ax2.grid(axis="y", alpha=0.6)
     ax2.spines["top"].set_visible(False)
     ax2.spines["right"].set_visible(False)
 
     handles, labels = ax1.get_legend_handles_labels()
-    fig.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 0.935), ncol=6,
+    fig.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 0.93), ncol=6,
                frameon=True, facecolor="white", fontsize=8.4)
-    fig.suptitle("So sánh hiệu năng theo 3 ngành hàng trên tập Test (d_1914–d_1941)",
-                 fontsize=13.5, fontweight="bold", y=0.985)
-    fig.tight_layout(rect=[0, 0, 1, 0.88])
+    fig.suptitle("Hiệu năng theo 3 ngành hàng trên tập Test",
+                 fontsize=12.8, fontweight="bold", y=0.985)
+    fig.tight_layout(rect=[0, 0, 1, 0.87])
     fig.savefig(OUT_DIR / "08_hieu_qua_theo_3_nganh_hang.png", dpi=300)
     plt.close(fig)
 
