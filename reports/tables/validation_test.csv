@@ -1,0 +1,3 @@
+window,random_forest,seasonal_naive,target_days,scale_days,weight_days
+Validation,0.623930853975747,0.9227813345358948,d_1886–d_1913,d_1–d_1885,d_1858–d_1885
+Test,0.7039124143420078,0.8697007023310609,d_1914–d_1941,d_1–d_1913,d_1886–d_1913

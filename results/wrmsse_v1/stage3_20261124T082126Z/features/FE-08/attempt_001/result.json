@@ -1,0 +1,35 @@
+{
+  "name": "FE-08",
+  "purpose": "tuning",
+  "status": "success",
+  "split": "validation",
+  "origin": 1885,
+  "metric": "wrmsse",
+  "wrmsse": 0.6690925484696555,
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "experiment_id": "m5_rf_wrmsse_v1",
+  "params": {
+    "n_estimators": 150,
+    "max_depth": 20,
+    "max_features": 0.5,
+    "max_samples": 0.5,
+    "min_samples_leaf": 5,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 8
+  },
+  "version": "rf_v1",
+  "groups": [
+    "behavior",
+    "prices"
+  ],
+  "train_rows": 600000,
+  "validation_rows": 853720,
+  "n_features": 3091,
+  "fit_seconds": 313.641497800003,
+  "predict_seconds": 2.8048134999989998,
+  "evaluation_seconds": 0.08126149999588961,
+  "prediction_sha256": "a048e082a1d947265e790c21ddebde1423bb2a9576278cb0b939c53c9617f32b",
+  "peak_rss_mib": 845.265625,
+  "selection_eligible": true
+}

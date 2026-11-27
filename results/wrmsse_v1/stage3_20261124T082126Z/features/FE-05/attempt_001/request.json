@@ -1,0 +1,29 @@
+{
+  "name": "FE-05",
+  "group": "features",
+  "params": {
+    "n_estimators": 150,
+    "max_depth": 20,
+    "max_features": 0.5,
+    "max_samples": 0.5,
+    "min_samples_leaf": 5,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 8
+  },
+  "version": "rf_v1",
+  "requested_groups": [
+    "events"
+  ],
+  "groups": [
+    "events"
+  ],
+  "logical": 18,
+  "dataset": "data/processed/wrmsse_v1/stage2_20261123T202104Z",
+  "features": "data/features/wrmsse_v1/stage2_20261123T202104Z",
+  "dataset_hash": "9a4735380b0c9e0159e6f3b7bbe6a1f370d88fcb77d340256625b692fa7180c8",
+  "feature_hash": "6b3dcb91f02f332a8614c2d8824cb065a4f8c52cac83697e1760b39b2b0316d9",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "evidence": "preparation/unit_tests_summary_20261124T091421126059Z.json",
+  "output": "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-05/attempt_001"
+}

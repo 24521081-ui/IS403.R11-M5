@@ -1,0 +1,155 @@
+{
+  "status": "passed",
+  "at": "2026-11-24T11:14:23.082872+00:00",
+  "candidate": "RF-15 + FE-04",
+  "official_test_days": [
+    1914,
+    1941
+  ],
+  "manifest_inputs_verified": 7,
+  "unit_tests_passed": 71,
+  "workbook_sheets": {
+    "Summary": 26,
+    "Model_Comparison": 2,
+    "Daily_Sales": 28,
+    "State_Analysis": 3,
+    "Store_Analysis": 10,
+    "Category_Analysis": 3,
+    "Department_Analysis": 7,
+    "Weekly_Analysis": 4,
+    "Weekday_Analysis": 7,
+    "SNAP_Analysis": 2,
+    "SNAP_By_State": 6,
+    "Store_Department": 70,
+    "WRMSSE_12_Levels": 12,
+    "Top_Underforecast": 20,
+    "Top_Overforecast": 20,
+    "Top_WRMSSE_Series": 20,
+    "Top_Items_Sales": 20,
+    "Top_Series_Sales": 20,
+    "Representative_Series": 4,
+    "Feature_Importance": 15,
+    "Experiment_Results": 36,
+    "Forecast_Detail": 853720,
+    "Data_Dictionary": 35
+  },
+  "workbook_full_detail_checked": true,
+  "workbook_values_match_analytical_csv_and_stage4_parquet": true,
+  "tables_recomputed": {
+    "system": 1,
+    "model_comparison": 2,
+    "daily_sales": 28,
+    "state_analysis": 3,
+    "store_analysis": 10,
+    "category_analysis": 3,
+    "department_analysis": 7,
+    "weekly_analysis": 4,
+    "weekday_analysis": 7,
+    "store_department": 70,
+    "snap_analysis": 2,
+    "snap_by_state": 6,
+    "daily_alignment": 2,
+    "wrmsse_12_levels": 12,
+    "top_underforecast": 20,
+    "top_overforecast": 20,
+    "top_wrmsse_contribution": 20,
+    "top_items_sales": 20,
+    "top_series_sales": 20,
+    "representative_series": 4,
+    "representative_daily": 112,
+    "feature_importance": 15,
+    "experiment_results": 36,
+    "validation_test": 2
+  },
+  "figure_files": [
+    "01_train_validation_test.png",
+    "02_quy_trinh_rf.png",
+    "03_rf_01_05.png",
+    "04_rf_v1_v4.png",
+    "05_rf_06_22.png",
+    "06_fe_01_10.png",
+    "07_fe04_va_all_features.png",
+    "08_wrmsse_va_chi_phi_fit.png",
+    "09_wrmsse_test.png",
+    "10_validation_va_test.png",
+    "11_wrmsse_12_cap.png",
+    "12_chi_so_sai_so_test.png",
+    "13_feature_importance.png",
+    "14_doanh_so_hang_ngay.png",
+    "15_doanh_so_theo_bang.png",
+    "16_doanh_so_theo_cua_hang.png",
+    "17_bias_cua_hang.png",
+    "18_heatmap_wape.png",
+    "19_nganh_hang.png",
+    "20_tuan_va_thu.png",
+    "21_top_du_bao_under.png",
+    "22_top_du_bao_over.png",
+    "23_chuoi_dai_dien.png",
+    "24_snap.png"
+  ],
+  "notebooks_executed_read_only": {
+    "notebooks/00_project_overview.ipynb": {
+      "code_cells": 3,
+      "image_outputs": 2,
+      "links": 1
+    },
+    "notebooks/01_data_preprocessing.ipynb": {
+      "code_cells": 3,
+      "image_outputs": 1,
+      "links": 2
+    },
+    "notebooks/02_wrmsse_evaluation_method.ipynb": {
+      "code_cells": 3,
+      "image_outputs": 1,
+      "links": 1
+    },
+    "notebooks/03_feature_engineering.ipynb": {
+      "code_cells": 3,
+      "image_outputs": 1,
+      "links": 2
+    },
+    "notebooks/04_initial_hyperparameter_tuning.ipynb": {
+      "code_cells": 2,
+      "image_outputs": 1,
+      "links": 1
+    },
+    "notebooks/05_feature_ablation.ipynb": {
+      "code_cells": 2,
+      "image_outputs": 1,
+      "links": 0
+    },
+    "notebooks/06_advanced_hyperparameter_tuning.ipynb": {
+      "code_cells": 2,
+      "image_outputs": 2,
+      "links": 0
+    },
+    "notebooks/07_feature_optimization.ipynb": {
+      "code_cells": 3,
+      "image_outputs": 2,
+      "links": 1
+    },
+    "notebooks/08_final_training_and_test.ipynb": {
+      "code_cells": 2,
+      "image_outputs": 4,
+      "links": 2
+    },
+    "notebooks/09_business_insights_and_visualization.ipynb": {
+      "code_cells": 4,
+      "image_outputs": 8,
+      "links": 2
+    }
+  },
+  "utf8_markdown_links_verified": 246,
+  "historical_unchanged": true,
+  "protected_inventory_counts": {
+    "raw": 8,
+    "legacy": 1178,
+    "source": 29454,
+    "stage2": 70,
+    "stage3": 422,
+    "stage3_all_features": 37
+  },
+  "fit": false,
+  "tuning": false,
+  "raw_test_loaded": false
+}

@@ -1,0 +1,48 @@
+{
+  "name": "FE-07",
+  "purpose": "tuning",
+  "status": "success",
+  "split": "validation",
+  "origin": 1885,
+  "metric": "wrmsse",
+  "wrmsse": 0.6382146522781199,
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "experiment_id": "m5_rf_wrmsse_v1",
+  "params": {
+    "n_estimators": 150,
+    "max_depth": 20,
+    "max_features": 0.5,
+    "max_samples": 0.5,
+    "min_samples_leaf": 5,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 8
+  },
+  "version": "rf_v1",
+  "groups": [
+    "behavior",
+    "snap"
+  ],
+  "train_rows": 600000,
+  "validation_rows": 853720,
+  "n_features": 3085,
+  "fit_seconds": 268.45611830000416,
+  "predict_seconds": 2.9311260000031325,
+  "evaluation_seconds": 0.08617010000307346,
+  "prediction_sha256": "54d3f330c5210e08a9a60cda6c57d811f7f7778d18f176d74a7e9cd63535160c",
+  "peak_rss_mib": 790.203125,
+  "selection_eligible": false,
+  "group": "features",
+  "requested_groups": [
+    "behavior",
+    "snap"
+  ],
+  "reuse": false,
+  "reuse_key": "0f7a65751f57594e2836ae2b2507c484c5b6045cdf01a8435a54ad5e54a922a2",
+  "artifact_dir": "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-07/attempt_001",
+  "monitor_peak_rss_mib": 754.7578125,
+  "min_available_mib": 5046.13671875,
+  "n_raw_features": 18,
+  "dataset_hash": "9a4735380b0c9e0159e6f3b7bbe6a1f370d88fcb77d340256625b692fa7180c8",
+  "feature_hash": "6b3dcb91f02f332a8614c2d8824cb065a4f8c52cac83697e1760b39b2b0316d9"
+}

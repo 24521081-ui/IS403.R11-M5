@@ -1,0 +1,23 @@
+{
+  "fit_seconds": 224.92189979999966,
+  "predict_seconds": 2.3441765000025043,
+  "seasonal_naive_predict_seconds": 0.0017752999992808327,
+  "train_rows": 609185,
+  "logical_features": 15,
+  "encoded_features": 3082,
+  "n_jobs": 8,
+  "seasonal_naive_last_history_days": [
+    1907,
+    1913
+  ],
+  "versions": {
+    "python": "3.12.10",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.5",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1",
+    "joblib": "1.6.0",
+    "pyarrow": "26.0.1",
+    "psutil": "7.2.2"
+  }
+}

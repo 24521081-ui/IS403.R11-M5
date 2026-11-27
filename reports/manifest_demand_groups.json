@@ -1,0 +1,309 @@
+{
+  "version": "business_v2_demand_groups",
+  "at": "2026-11-26T07:49:26.242971+00:00",
+  "previous_git_commit": "ec07cac407131c0396725781c432c968b6317b4c",
+  "prior_files": {
+    "README.md": "b1c3ec547939e76a409833c56374144201bc69be04e8008e5c68e16aabc28480",
+    "docs/STAGE5_BUSINESS_REPORT.md": "b5c8e891c04a93db3225d42f63f34e6f691583bbcce970f787761eaa541b0183",
+    "notebooks/09_business_insights_and_visualization.ipynb": "5881ee65ec06820a6a028dcc98d02dd6448d757177fc43a69188f8c44132f00b",
+    "reports/RandomForest_Forecast_Actual.xlsx": "d58c02d4059b0d578bad6e5ea58dc1c87af22919150f2e0c94eab93a3d1b7831",
+    "reports/FIGURE_CATALOG.md": "18186ba797ebfef7e2f2bf54c6e1c11f59d6c99f6ee8e074e6361ce54b9a9dc6",
+    "reports/figure_catalog.csv": "e5707b030ec7dc000bcc505c0fa990549438854c273c6090f6b8f019f3bb72c4",
+    "reports/STAGE5_HANDOFF.md": "e32feaab0caeb0ff76d44cc8312bcde9cd346de9374f62cdee6e7cac5e2a1257",
+    "scripts/verify_isolation.py": "1bb2b49518127ec76958aa30c563b7330041c1cab9832e750a4d0e2bb5f83cd5",
+    "reports/figures/business_v2_dashboard.png": "c14758ea513dd665f6b83a0f745f8fee54bf0b03a7ee2b70f4d0c1907d5424fe",
+    "reports/figures/business_v2_exceptions.png": "de6312651fc3ef746043733366fd3b7634eb9ee6c322784a784cbe0a20c79b99",
+    "reports/figures/business_v2_representatives.png": "1851772da6b3c6af7c89cc017fd112a68223081264551f3baa486e6aeecdce49"
+  },
+  "inputs": {
+    "reports/demand_groups/demand_groups_origin_1885.csv": "a1cb8d6dacb4e993419b05a35a4cc71f9bc63a3215640d6915658753cef53101",
+    "reports/demand_groups/demand_groups_origin_1913.csv": "1cd3e2ea43b95dcf93c93f754fd19680a7d2dbd91410f9ca98201bfedb77b89f",
+    "reports/demand_groups/demand_groups_summary.csv": "cece04593a66a300bf2bf722606581707e4ca2f09e52181ba2ec6de2c80ae167",
+    "reports/manifest_business_v2.json": "7af39a0116a4dcda3311fa6311ba1130ed62a8e57759a455f25b59c13bdcf699",
+    "reports/manifest_stage5.json": "211b444ec0241b1b3d39a37d898a5fb8659509705fd1ba5a4bb25ead7ba70bdd",
+    "reports/stage5_inputs.json": "6e49a480fe303585497e766ff4497f1ea5921ae47cd6fd8d8de51839599e71b8",
+    "reports/stage5_verification.json": "dd151a8ac97d59bf985121cd08b65e84f34d8d4505f0dd9da41619ca0ce3b573",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/manifest_completed.json": "f2a3b8d164cf3a998a51bdc2dddc4dd1a972664c9e23539c412f8f008584aa18",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/forecast_lock_manifest.json": "f5d49b0d2b83732fc9f84126e403a50ac39b97338bfae4f0e1127a9e8be2d6b5",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/test_actual_and_forecast.parquet": "b85916749fba6e1c5c1fe3381cafdd9cf9d41989232a983f7942d9b42ddfc020",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/test_wrmsse_by_series.parquet": "f3acac7969256835ef0b3553f09b89d3895310274c4956d8fc6d84d492b51914",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/test_wrmsse_by_level.csv": "678a80f0a20fde85f2a3efb3a2ebe651eb5c50717baebda60acf22a9a40ba961",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/test_metrics.json": "2f7c6dfa21b12c0b0f5abdf4191fce901e5daefbee4d31505093ae1e30ef0f77",
+    "data/processed/wrmsse_v1/stage2_20261123T202104Z/manifest.json": "9a4735380b0c9e0159e6f3b7bbe6a1f370d88fcb77d340256625b692fa7180c8",
+    "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-04/attempt_001/manifest.json": "3fd314106701a5f577cc90209f005d3f835b860621c8216d0d02ca292821b6e4",
+    "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-04/attempt_001/validation_predictions.npy": "5a8c9ae1220e161a51e5612d23dab24c24ab78702fd5bc3cf735904f4a34472c",
+    "results/wrmsse_v1/stage2_20261123T202104Z/seasonal_naive/validation_predictions.parquet": "0f459719b986c1437493fe07dc0c402de9a4cc3b38c3c81f633adb8d7aa20a72",
+    "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-04/attempt_001/wrmsse_by_series.parquet": "3451475ad11bd61fa16e7a76365e547cfec5903ed8c316a2ab961817797944b7",
+    "results/wrmsse_v1/stage2_20261123T202104Z/seasonal_naive/wrmsse_by_series.parquet": "c4b59d281eb4b21dcbaf8a59a64cfffe47eadbe0226fbf7850ed4e963749a2e4",
+    "results/wrmsse_v1/stage3_20261124T082126Z/selection_v2/selected_model.json": "f8a186696cacb518993c1e9899b16b982b76557c77dd6708d092bb129f0882b6",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/final_model.joblib": "0d37b3ff4fb9b4c017904ad2368b68e787e09643fb62cadab6f51edb9b2821f0",
+    "data/raw/sell_prices.csv": "5c7cf045b1abbdc8d5007809c40b3682c5216075937f93e2cef01caddc4a30d9",
+    "configs/experiment.json": "5d087c77c6f4b2aedbaca0832762648c62385cebe17b5ab4aed31a16204a27bd",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/final_model_config.json": "a86f9d90dbf5833c7c3a3877f74a91ea3c49c6d9f9a07752bef1118b45f63cfc",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/final_feature_metadata.json": "b8475e528083ca613d3b745138299078fc7ea2113277fc85bd47085f921a90a8"
+  },
+  "label_audit": {
+    "1885": {
+      "rows": 30490,
+      "dtypes": {
+        "item_id": "str",
+        "store_id": "str",
+        "state_id": "str",
+        "cat_id": "str",
+        "dept_id": "str",
+        "ADI": "float64",
+        "demand_group": "str"
+      },
+      "nulls": {
+        "item_id": 0,
+        "store_id": 0,
+        "state_id": 0,
+        "cat_id": 0,
+        "dept_id": 0,
+        "ADI": 0,
+        "demand_group": 0
+      },
+      "duplicate_keys": 0,
+      "infinite_ADI": 0,
+      "at_threshold": 0,
+      "max_ADI_reconstruction_error": 0.0
+    },
+    "1913": {
+      "rows": 30490,
+      "dtypes": {
+        "item_id": "str",
+        "store_id": "str",
+        "state_id": "str",
+        "cat_id": "str",
+        "dept_id": "str",
+        "ADI": "float64",
+        "demand_group": "str"
+      },
+      "nulls": {
+        "item_id": 0,
+        "store_id": 0,
+        "state_id": 0,
+        "cat_id": 0,
+        "dept_id": 0,
+        "ADI": 0,
+        "demand_group": 0
+      },
+      "duplicate_keys": 0,
+      "infinite_ADI": 0,
+      "at_threshold": 0,
+      "max_ADI_reconstruction_error": 0.0
+    },
+    "transitions": {
+      "frequent": {
+        "frequent": 2722,
+        "intermittent": 27
+      },
+      "intermittent": {
+        "frequent": 32,
+        "intermittent": 27709
+      }
+    },
+    "summary": {
+      "rows": 4,
+      "dtypes": {
+        "origin": "int64",
+        "demand_group": "str",
+        "n_series": "int64",
+        "series_share_pct": "float64",
+        "revenue_28d": "float64",
+        "revenue_share_pct": "float64",
+        "median_ADI": "float64"
+      },
+      "nulls": {
+        "origin": 0,
+        "demand_group": 0,
+        "n_series": 0,
+        "series_share_pct": 0,
+        "revenue_28d": 0,
+        "revenue_share_pct": 0,
+        "median_ADI": 0
+      }
+    }
+  },
+  "protected_files": 357,
+  "protected_before_sha256": "1c02160fc9fa4c7423fb00c6a2dfa29933de5d72e6a5f64b3a6a301a63f12733",
+  "protected_after_sha256": "1c02160fc9fa4c7423fb00c6a2dfa29933de5d72e6a5f64b3a6a301a63f12733",
+  "protected_roots": [
+    "configs",
+    "data",
+    "preparation",
+    "results"
+  ],
+  "validation_origin": 1885,
+  "test_origin": 1913,
+  "joined_test_rows": 853720,
+  "matched_test_rows": 853720,
+  "unique_series": 30490,
+  "test_actual_units": 1231764,
+  "unit_tests_passed": 79,
+  "notebook_code_cells": 25,
+  "notebook_embedded_png": 29,
+  "visual_reviewed": 14,
+  "excel": {
+    "original_sheets": 23,
+    "added_sheets": 9,
+    "detail_rows_compared_as_xml": 853720,
+    "original_detail_columns": 15,
+    "new_detail_columns": [
+      "ADI",
+      "demand_group"
+    ]
+  },
+  "experiment": {
+    "candidate": "RF-15 + FE-04",
+    "new_model_fits": 0,
+    "new_model_predictions": 0,
+    "tuning": false,
+    "gates_opened": false
+  },
+  "figures_new": [
+    "demand_group_composition.png",
+    "demand_group_metrics.png",
+    "demand_group_region.png",
+    "demand_group_examples.png",
+    "demand_group_adi.png",
+    "demand_group_sales.png",
+    "demand_group_error.png",
+    "demand_group_daily_quality.png",
+    "demand_group_weekly.png",
+    "demand_group_weekday.png",
+    "demand_group_cumulative.png"
+  ],
+  "figures_revised": [
+    "business_v2_dashboard.png",
+    "business_v2_exceptions.png",
+    "business_v2_representatives.png"
+  ],
+  "created": [
+    "reports/figures/demand_group_adi.png",
+    "reports/figures/demand_group_composition.png",
+    "reports/figures/demand_group_cumulative.png",
+    "reports/figures/demand_group_daily_quality.png",
+    "reports/figures/demand_group_error.png",
+    "reports/figures/demand_group_examples.png",
+    "reports/figures/demand_group_metrics.png",
+    "reports/figures/demand_group_region.png",
+    "reports/figures/demand_group_sales.png",
+    "reports/figures/demand_group_weekday.png",
+    "reports/figures/demand_group_weekly.png",
+    "reports/manifest_demand_groups.json",
+    "reports/tables/demand_group_adi.csv",
+    "reports/tables/demand_group_category.csv",
+    "reports/tables/demand_group_daily.csv",
+    "reports/tables/demand_group_metrics.csv",
+    "reports/tables/demand_group_representatives.csv",
+    "reports/tables/demand_group_store.csv",
+    "reports/tables/demand_group_summary.csv",
+    "reports/tables/demand_group_test.parquet",
+    "reports/tables/demand_group_weekday.csv",
+    "reports/tables/demand_group_weekly.csv",
+    "src/wrmsse_demand_explorer.py",
+    "src/wrmsse_demand_figures.py",
+    "src/wrmsse_demand_groups.py",
+    "src/wrmsse_demand_verify.py",
+    "src/wrmsse_demand_workbook.py",
+    "tests/test_wrmsse_demand_groups.py"
+  ],
+  "revised": [
+    "README.md",
+    "docs/STAGE5_BUSINESS_REPORT.md",
+    "notebooks/09_business_insights_and_visualization.ipynb",
+    "reports/FIGURE_CATALOG.md",
+    "reports/RandomForest_Forecast_Actual.xlsx",
+    "reports/STAGE5_HANDOFF.md",
+    "reports/figure_catalog.csv",
+    "reports/figures/business_v2_dashboard.png",
+    "reports/figures/business_v2_exceptions.png",
+    "reports/figures/business_v2_representatives.png",
+    "scripts/verify_isolation.py"
+  ],
+  "files": {
+    "README.md": "558e0745eea47c088980c3b68cfb710a1397ec8c6b053bc984c8610a428eec99",
+    "docs/STAGE5_BUSINESS_REPORT.md": "d8588b5098808ff770ab879e583621b7df001e5766c15aa00e08cb9532538a5d",
+    "notebooks/09_business_insights_and_visualization.ipynb": "49039d00fffe37a95c95f3e62ce5a8278b722ba12440330091aa816ee1d65ec9",
+    "reports/FIGURE_CATALOG.md": "b590849a89c790f3c4cd40f4436b65ebfde290b4e233c32a26e3fa2f1f5beda3",
+    "reports/RandomForest_Forecast_Actual.xlsx": "eae6905201f47c1bc120ccaa95e34ca01e3c75260d090157ab69697e2fe3c088",
+    "reports/STAGE5_HANDOFF.md": "75e1105ee66e0d26d0797872d5494fb9a1dc3898bd9f3511d692861fce62b22b",
+    "reports/figure_catalog.csv": "e90a80f7ba6c4c24bc48ae8b86f6343c74b39b6aac25438c039279dad4d3ae30",
+    "reports/figures/business_v2_dashboard.png": "88e44eeb2d26e68024802db23584089fecd8acd4aa6d49dcc00d3d53a9198216",
+    "reports/figures/business_v2_exceptions.png": "59cb2fea0d12281bc6b2e609dbbaf96e49bdeb9b60ac3cd44a09cb649b302b88",
+    "reports/figures/business_v2_representatives.png": "5aea0125e5ca5ab650a7b38ae19edd82c937919f3a05ba3a25fcbf8e284c374d",
+    "reports/figures/demand_group_adi.png": "4d616e8bb389c4453b37989eba7e403f07f0681e81afa8dee7938c16d2ad0f3f",
+    "reports/figures/demand_group_composition.png": "aeb1ecd673bb8d601754a72f599babe4c6a0f8c45932793b99c01e4ff106d560",
+    "reports/figures/demand_group_cumulative.png": "e1af38df2436f6d302f25210f3802c28bac69428709be66fa9c2ede5ff0b734e",
+    "reports/figures/demand_group_daily_quality.png": "52adad3826410dd71a24ae363edb6c15db14e82682c5ff42895db951b71241b3",
+    "reports/figures/demand_group_error.png": "a72ac8d16a23fae07c20c95150d5816f4c4f0db69cbd1321e5199e6e5aad2fa4",
+    "reports/figures/demand_group_examples.png": "3355d7c557b3084ea9334a72b80a7f90ebf86ebab1814800da2156285a75501e",
+    "reports/figures/demand_group_metrics.png": "6293430644ee6f47876e54e8eb20628e875f2c1c6cef86966bdb3b8faf97300b",
+    "reports/figures/demand_group_region.png": "966cd7e24169420e1ffeb859d48bb3b7295cc59833521cff14312187154e3036",
+    "reports/figures/demand_group_sales.png": "2b96ae54c9084fcf7997e2eb110e1e0e34f729a1f0844e2b981ff28c82f4a40c",
+    "reports/figures/demand_group_weekday.png": "5b76abe7e1e28f4a4cb228af408e219f17bb1a28d9821d640f690e4ac1b1eb77",
+    "reports/figures/demand_group_weekly.png": "2c05fac8bf460fab104539924081f1429b617d4be85dba3e9e1216be8932b22d",
+    "reports/tables/demand_group_adi.csv": "802c90bdcef5f62cb549dade397e17bdce63ad1fd544cc11732196052e486300",
+    "reports/tables/demand_group_category.csv": "369176406bc94aacf52f5e74992424968b28fab66ae7ad3ba86f035795d4d059",
+    "reports/tables/demand_group_daily.csv": "1eed0841232ea2f6c51c62042ed016918374195d3240b76ff48b4285086357e8",
+    "reports/tables/demand_group_metrics.csv": "f169bf614b16f60665f3a97982e3d853362637b4a424c7aca965b30c0c0e8829",
+    "reports/tables/demand_group_representatives.csv": "f7282900c8921b0178ff586b33c3095f4a53cb66b70dce642b9851020b9d92b7",
+    "reports/tables/demand_group_store.csv": "f0e54ff7ee146be59882f621bf67770b7d1ba2ba5295a5595c08c56900835388",
+    "reports/tables/demand_group_summary.csv": "3b2d36cf27af4608fb8254dd9194d54934b0a6b4234c5500e95b68cef02c2a6d",
+    "reports/tables/demand_group_test.parquet": "39224c3f01c6bc72b05b29ddf6b4fbc4f4fe27ea8a0ed3fcb7b176e259cea047",
+    "reports/tables/demand_group_weekday.csv": "39a6cb1a650ee975239a4eb2bd3c165878343e9c025a6722967bf9a72fac9b14",
+    "reports/tables/demand_group_weekly.csv": "ccd9a66c39a83322a4ecb899e1bdb7c9eb07dfb33149af394c49561565fbc590",
+    "scripts/verify_isolation.py": "b36220a3ed446c711d47b053c28eb22501b4c9a7f4cb8da162d87baee3984a94",
+    "src/wrmsse_demand_explorer.py": "c87686073fb6a1d6dde1499badbe5c3950ccdfda66f5fea3b99c4392dd06f930",
+    "src/wrmsse_demand_figures.py": "3f6e59aeb9be2854d51f8700ac7865114aec065651db103b29aa76f8298357bf",
+    "src/wrmsse_demand_groups.py": "063744e250f47971ef1e9981e2db0d0c5ed4d3364a66e43737ca416b251e6418",
+    "src/wrmsse_demand_verify.py": "c3ce263da3593d35c2a34ec89fd79d0ee54562b3d632c434c9b369fb569d2488",
+    "src/wrmsse_demand_workbook.py": "1ee884d53f1f1c2d86f941ad1f71c15d64213d8eda48a2cc8ef9cf1b7501ee3b",
+    "tests/test_wrmsse_demand_groups.py": "c99301b7f5b361239167702d2ddc4033e21ca99f62a19a361c3141aeb181cbd4"
+  },
+  "historical_isolation": {
+    "current_checkout_before": "CRLF checksum difference in preparation/publish_stage4_report.py; data/features absent in this checkout",
+    "unmodified_full_reference_run": {
+      "status": "passed",
+      "raw_csv": 8,
+      "stage4_files": 38,
+      "forecast_lock_files": 11,
+      "input_manifests": 7
+    },
+    "current_verifier": "scripts/verify_isolation.py --demand-groups"
+  },
+  "verification": {
+    "status": "passed",
+    "unit_tests_passed": 79,
+    "isolated_business_verification": {
+      "protected_files": 357,
+      "raw_csv": 8,
+      "stage4_files": 38,
+      "forecast_lock_files": 11,
+      "group_tables": 9,
+      "test_rows_compared": 853720,
+      "excel_rows_compared": 853720,
+      "existing_sheets": 23,
+      "new_sheets": 9,
+      "notebook_code_cells": 25,
+      "embedded_figures": 29
+    },
+    "l12_contributions_reconciled": true,
+    "historical_revenue_recomputed": true,
+    "test_forecast_original_columns_exact_in_order": true,
+    "xlsx_original_detail_cells_xml_identical": true,
+    "independent_time_windows": 78,
+    "zero_sales_prompt_exports_checked": 2
+  },
+  "time_analysis": {
+    "period": "2016-04-25/2016-05-22",
+    "label_origin": 1913,
+    "daily_rows": 56,
+    "weekly_rows": 8,
+    "weekday_rows": 14,
+    "catalog_images_in_notebook": 28,
+    "selected_series_images_in_notebook": 1,
+    "workbook_figures": 8
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "status": "success",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "run": "stage2_20261123T202104Z",
+  "processed": "data/processed/wrmsse_v1/stage2_20261123T202104Z",
+  "features": "data/features/wrmsse_v1/stage2_20261123T202104Z",
+  "tests_passed": 58,
+  "train_rows": 600000,
+  "validation_rows": 853720,
+  "baseline": {
+    "name": "Seasonal Naive",
+    "status": "success",
+    "purpose": "baseline",
+    "metric": "wrmsse",
+    "split": "validation",
+    "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+    "wrmsse": 0.9227813345358948,
+    "predict_seconds": 0.0005075999997643521,
+    "evaluation_seconds": 0.10065129999975397,
+    "prediction_sha256": "88d944ede7b24e2459dccfb76558ca864a2ee48811d69ce9d766dd850b7729c2"
+  },
+  "rf03_smoke": {
+    "name": "RF-03",
+    "purpose": "smoke",
+    "status": "success",
+    "split": "validation",
+    "origin": 1885,
+    "metric": "wrmsse",
+    "wrmsse": 0.7459536083918473,
+    "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+    "experiment_id": "m5_rf_wrmsse_v1",
+    "params": {
+      "n_estimators": 100,
+      "max_depth": 12,
+      "max_features": 0.3,
+      "max_samples": 0.5,
+      "min_samples_leaf": 20,
+      "bootstrap": true,
+      "random_state": 42,
+      "n_jobs": 4
+    },
+    "version": "rf_v1",
+    "groups": [],
+    "train_rows": 600000,
+    "validation_rows": 853720,
+    "n_features": 3081,
+    "fit_seconds": 68.62575209999977,
+    "predict_seconds": 2.2932369999998627,
+    "evaluation_seconds": 0.08554499999991094,
+    "prediction_sha256": "096fa2467a3e0084df45b2b7c03ec1b7883f0a650ca9cd8f5bda27cbc4b7db71",
+    "peak_rss_mib": 1557.41796875,
+    "selection_eligible": false
+  },
+  "feature_sets": [
+    {
+      "set": "rf_v1",
+      "logical": 14,
+      "encoded": 3081
+    },
+    {
+      "set": "rf_v2",
+      "logical": 16,
+      "encoded": 3083
+    },
+    {
+      "set": "rf_v3",
+      "logical": 17,
+      "encoded": 3084
+    },
+    {
+      "set": "rf_v4",
+      "logical": 18,
+      "encoded": 3085
+    },
+    {
+      "set": "FE-01",
+      "logical": 17,
+      "encoded": 3084
+    },
+    {
+      "set": "FE-02",
+      "logical": 18,
+      "encoded": 3085
+    },
+    {
+      "set": "FE-03",
+      "logical": 24,
+      "encoded": 3091
+    },
+    {
+      "set": "FE-04",
+      "logical": 18,
+      "encoded": 3085
+    },
+    {
+      "set": "FE-05",
+      "logical": 21,
+      "encoded": 3106
+    },
+    {
+      "set": "FE-06",
+      "logical": 20,
+      "encoded": 3087
+    }
+  ],
+  "source_unchanged": true,
+  "legacy_unchanged": true,
+  "test_actual_opened": false,
+  "test_scored": false,
+  "batch_tuning_executed": false,
+  "final_model_trained": false,
+  "smoke_selection_eligible": false
+}

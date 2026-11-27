@@ -1,0 +1,12 @@
+{
+  "name": "Seasonal Naive",
+  "status": "success",
+  "purpose": "baseline",
+  "metric": "wrmsse",
+  "split": "validation",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "wrmsse": 0.9227813345358948,
+  "predict_seconds": 0.0005075999997643521,
+  "evaluation_seconds": 0.10065129999975397,
+  "prediction_sha256": "88d944ede7b24e2459dccfb76558ca864a2ee48811d69ce9d766dd850b7729c2"
+}

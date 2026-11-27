@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "tests": 58,
+  "code_sha256": {
+    "src/project_paths.py": "fb86969e39c297e920ccf3838f629bbb44d4e4a91d2a4fcc9e0f3c8651755a52",
+    "src/wrmsse.py": "d5945807d78715eb6f41d1eb3378af398dbcf3dc668b5c352e25dcad35040b8d",
+    "src/wrmsse_config.py": "4dd77d08abf21dd8fd728709e56f9a2cc196d4726181f44a0ac00141839c0fce",
+    "src/wrmsse_data.py": "1e3c23cb20503777760d6c42089a4c6130d03526a6b502d55af7edb2b9cea737",
+    "src/wrmsse_extensions.py": "88044bc58fc83e0e726ce3fa6237043fbab53d20936ae2cea1449e6e48b16e99",
+    "src/wrmsse_features.py": "beb2bbcb8df04ef57fb610538b349f5c0ac1861cd27f43155ddcbac7f6fcb89b",
+    "src/wrmsse_pipeline.py": "c1c9278195b91a4ce1bb58eabcdc3d479c9ac0de87db3f6def75e0b9ebd4208d",
+    "src/wrmsse_stage2_data.py": "b107099304e77a8e5ae7becece2b3c989672ff4b0ec738340df709ad96948105",
+    "src/wrmsse_workflows.py": "b6b176734b733635d5491a218fbf979785263193286bb8b3d7db55b151066e7f",
+    "src/__init__.py": "cd57632357abb307d0cb7e99e2672e07f32095830a0d07d6dea6752acbc08fba",
+    "tests/reference_wrmsse.py": "47038b21fc551c9744acaddb60cb26a4555d1284468e2669ce12f37c750c9614",
+    "tests/test_wrmsse.py": "d66984a1d4968dacadace57dc7083e649e5e8ae0c5341bc3eb9963b8b971c822",
+    "tests/test_wrmsse_pipeline.py": "ae71d9bc88067d6f3ba7c2e60345ae08236fa7437bb31c96a17354253fe411bd",
+    "tests/test_wrmsse_stage2.py": "b58fe17ed6d61076453eb862c693544ba3ead566b5c63842ad372a8a89b34593",
+    "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/audit_wrmsse_contexts.py": "1925b55fb3c0521bc8a7bdc95ca559abd2674808d848266d24dd19f4a8773560",
+    "scripts/run_preparation_checks.py": "d2675dff3b2cb23321bbb71f097ef3dec89753bdc93d4d3155109efa4bd707c9",
+    "scripts/run_stage2.py": "c4730dd64e3d0784437504dc2259b3037bbeee20da1a0fc7dc86e1ae758823ad",
+    "scripts/verify_isolation.py": "19a64f08a88856a6cf4c09b2d3c4db9f1015863649654bbf34f25606237e3898"
+  }
+}

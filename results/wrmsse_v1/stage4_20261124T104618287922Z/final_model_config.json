@@ -1,0 +1,36 @@
+{
+  "model": "RandomForestRegressor",
+  "candidate": "RF-15 + FE-04",
+  "selected_model": "results/wrmsse_v1/stage3_20261124T082126Z/selection_v2/selected_model.json",
+  "selected_model_sha256": "f8a186696cacb518993c1e9899b16b982b76557c77dd6708d092bb129f0882b6",
+  "params": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "criterion": "squared_error",
+    "max_depth": 20,
+    "max_features": 0.5,
+    "max_leaf_nodes": null,
+    "max_samples": 0.5,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 5,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 150,
+    "n_jobs": 8,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "train_scope": [
+    1,
+    1913
+  ],
+  "train_rows": 609185,
+  "logical_features": 15,
+  "encoded_features": 3082,
+  "forecast_origin": 1913,
+  "horizon": 28,
+  "fit_count": 1
+}

@@ -1,0 +1,41 @@
+file,nội_dung,nguồn_dữ_liệu,cấp_phân_tích,vị_trí_đề_xuất,dpi
+01_train_validation_test.png,Phân chia Train–Validation–Test,reports/tables/split_timeline.csv,Ngày M5,Thiết kế nghiên cứu,230
+02_quy_trinh_rf.png,Trình tự và kết quả các vòng thực nghiệm,reports/tables/experiment_workflow.csv,Vòng thực nghiệm,Thiết kế nghiên cứu,230
+03_rf_01_05.png,Tuning ban đầu · RF-01–RF-05,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+04_rf_v1_v4.png,Ablation · RF-v1–RF-v4,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+05_rf_06_22.png,Tuning nâng cao · RF-06–RF-22,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+06_fe_01_10.png,So sánh FE-01–FE-10,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+07_fe04_va_all_features.png,FE-04 và các cấu hình All Features,reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+08_wrmsse_va_chi_phi_fit.png,"WRMSSE và thời gian fit ghi nhận, có lượt dùng lại",reports/tables/experiment_results.csv,Ứng viên Validation,Quá trình thực nghiệm,230
+09_wrmsse_test.png,WRMSSE Test,reports/tables/model_comparison.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/test_wrmsse.png,Hệ phân cấp M5,Đánh giá mô hình,230
+10_validation_va_test.png,WRMSSE Validation và Test,reports/tables/validation_test.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/validation_vs_test_wrmsse.png,Cửa sổ đánh giá,Đánh giá mô hình,230
+11_wrmsse_12_cap.png,WRMSSE theo 12 cấp,reports/tables/wrmsse_12_levels.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/test_wrmsse_by_level.png,Cấp M5,Đánh giá mô hình,230
+12_chi_so_sai_so_test.png,"MAE, RMSE, WAPE và Bias",reports/tables/model_comparison.csv | results/wrmsse_v1/stage4_20261124T104618287922Z/test_business_metrics.png,item–store–day,Đánh giá mô hình,230
+business_v2_dashboard.png,KPI và tổng quan,reports/tables/model_comparison.csv | reports/tables/wrmsse_12_levels.csv | reports/tables/business_v2_daily.csv | reports/tables/demand_group_summary.csv,Thẻ KPI và đường,Phân tích kinh doanh V2,300
+business_v2_model_metrics.png,Chất lượng hai mô hình,reports/tables/model_comparison.csv,Cột nhỏ theo chỉ số,Phân tích kinh doanh V2,300
+business_v2_hierarchy.png,WRMSSE đủ 12 cấp,reports/tables/wrmsse_12_levels.csv,Dumbbell ngang,Phân tích kinh doanh V2,300
+business_v2_daily.png,Dự báo ngày và lũy kế,reports/tables/business_v2_daily.csv,Đường và cột lệch ngày,Phân tích kinh doanh V2,300
+business_v2_weekly.png,Kế hoạch theo tuần,reports/tables/weekly_analysis.csv,Ba ô cột,Phân tích kinh doanh V2,300
+business_v2_weekday.png,Nhịp bán theo thứ,reports/tables/weekday_analysis.csv,Đường và cột ghép,Phân tích kinh doanh V2,300
+business_v2_regional.png,Quy mô bang và WAPE cửa hàng,reports/tables/state_analysis.csv | reports/tables/store_analysis.csv,Cột ngang và dumbbell,Phân tích kinh doanh V2,300
+business_v2_store_priority.png,Ưu tiên theo dõi cửa hàng,reports/tables/business_v2_store_priority.csv,Cột có dấu và scatter bốn vùng,Phân tích kinh doanh V2,300
+business_v2_category.png,Quy mô và chất lượng theo ngành,reports/tables/category_analysis.csv | reports/tables/department_analysis.csv,Ba ô cột ngang,Phân tích kinh doanh V2,300
+business_v2_heatmaps.png,WAPE và Bias cửa hàng × bộ phận,reports/tables/store_department.csv,Hai heatmap có nhãn,Phân tích kinh doanh V2,300
+business_v2_concentration.png,Tập trung sai số và contribution,reports/tables/business_v2_pareto.csv | reports/tables/business_v2_pareto_thresholds.csv | reports/tables/business_v2_top_contribution.csv,Pareto tích lũy và cột ngang,Phân tích kinh doanh V2,300
+business_v2_segments.png,Quy mô bán và ABC trước Test,reports/tables/business_v2_volume_segments.csv | reports/tables/business_v2_abc.csv | reports/tables/business_v2_velocity_cutoffs.csv,Hai ô cột ghép,Phân tích kinh doanh V2,300
+business_v2_exceptions.png,Thiếu và thừa nhiều nhất,reports/tables/business_v2_exceptions.csv | reports/demand_groups/demand_groups_origin_1913.csv,Hai ô cột ngang có dấu,Phân tích kinh doanh V2,300
+business_v2_representatives.png,Sáu chuỗi sản phẩm đại diện,reports/tables/business_v2_representatives.csv | reports/tables/business_v2_representatives_daily.csv | reports/demand_groups/demand_groups_origin_1913.csv,Đường 2 × 3,Phân tích kinh doanh V2,300
+business_v2_stability.png,Phân bố sai số và WAPE chuỗi,reports/tables/business_v2_error_ecdf.csv | reports/tables/business_v2_error_quantiles.csv | reports/tables/business_v2_series.csv | reports/tables/business_v2_series_wins.csv | reports/tables/business_v2_zero_actual.csv,Hai ECDF,Phân tích kinh doanh V2,300
+business_v2_snap.png,SNAP theo bang và ngày,reports/tables/business_v2_snap.csv,Ba ô cột ngang,Phân tích kinh doanh V2,300
+business_v2_importance.png,Vai trò đặc trưng,reports/tables/business_v2_importance.csv | reports/tables/business_v2_snap_validation.csv,Hai cột ngang,Phân tích kinh doanh V2,300
+demand_group_composition.png,"Cơ cấu chuỗi, lượng bán và doanh thu",reports/tables/demand_group_summary.csv,Chuỗi sản phẩm × cửa hàng,Phần 14 · đặc điểm nhu cầu,300
+demand_group_metrics.png,Sáu chỉ số Random Forest theo nhóm nhu cầu,reports/tables/demand_group_metrics.csv,Nhóm nhu cầu · 2 × 3,Phần 15 · sáu chỉ số,300
+demand_group_region.png,WAPE theo cửa hàng và ngành hàng,reports/tables/demand_group_store.csv | reports/tables/demand_group_category.csv,Chuỗi sản phẩm × cửa hàng,Phần 14 · đặc điểm nhu cầu,300
+demand_group_examples.png,Bốn chuỗi theo phân vị sai số,reports/tables/demand_group_representatives.csv | reports/tables/demand_group_test.parquet,Chuỗi sản phẩm × cửa hàng,Phần 14 · đặc điểm nhu cầu,300
+demand_group_adi.png,Sai số dự báo theo khoảng ADI,reports/tables/demand_group_adi.csv,Chuỗi sản phẩm × cửa hàng,Phần 14 · đặc điểm nhu cầu,300
+demand_group_sales.png,Lượng bán và dự báo từng ngày,reports/tables/demand_group_daily.csv | reports/tables/demand_group_metrics.csv,Nhóm × ngày,Phần 15 · nhịp bán,300
+demand_group_error.png,Sai lệch ròng từng ngày,reports/tables/demand_group_daily.csv,Nhóm × ngày,Phần 15 · sai lệch ngày,300
+demand_group_daily_quality.png,WAPE và Bias từng ngày,reports/tables/demand_group_daily.csv,Nhóm × ngày,Phần 15 · chất lượng theo ngày,300
+demand_group_weekly.png,Chất lượng dự báo trong bốn tuần Test,reports/tables/demand_group_weekly.csv,Nhóm × tuần,Phần 15 · chất lượng theo tuần,300
+demand_group_weekday.png,Chất lượng dự báo theo thứ trong tuần,reports/tables/demand_group_weekday.csv,Nhóm × thứ,Phần 15 · thứ trong tuần,300
+demand_group_cumulative.png,Lượng bán và dự báo tích lũy,reports/tables/demand_group_daily.csv | reports/tables/demand_group_metrics.csv,Nhóm × ngày,Phần 15 · kế hoạch tích lũy,300

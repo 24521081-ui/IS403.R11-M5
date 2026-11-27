@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "run": "stage2_20261123T202104Z",
+  "manifest_completed_sha256": "0b5f58dbcc97b719dd58010d1345d09924e5aa794adb683180be894fecea765e",
+  "completed_manifest_files_verified": 69,
+  "source_metadata_verified_files": 29454,
+  "legacy_metadata_verified_files": 1178,
+  "original_project_unchanged": true,
+  "legacy_unchanged": true,
+  "gates_closed": [
+    "training",
+    "tuning",
+    "test_evaluation"
+  ],
+  "smoke_models": 1,
+  "tests_final": 63,
+  "test_evidence": "preparation/unit_tests_summary_20261123T202921037634Z.json",
+  "report_utf8_valid": true,
+  "report_sha256": "3f5805128679ab572b8432b7be71ff0b2483b7b1b458a56610a553ed942cd91a",
+  "test_actual_opened": false,
+  "test_scored": false
+}

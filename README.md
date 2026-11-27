@@ -1,194 +1,99 @@
-# Chấm WRMSSE cho nhóm M5
+# Dự báo lượng bán M5 bằng Random Forest
 
-Ae ơi, repo này có bộ chấm chung để mình so sánh 6 mô hình trên cùng dữ liệu và cùng cách tính điểm.
+Dự án dự báo lượng bán theo sản phẩm × cửa hàng trong 28 ngày, so sánh Random Forest Regression với Seasonal Naive chu kỳ 7 và đánh giá bằng **WRMSSE đủ 12 cấp M5**. Random Forest lấy trung bình dự báo của các cây hồi quy được fit với mẫu bootstrap và tập con đặc trưng khi chia nút. Mục tiêu là đánh giá chất lượng ở nhiều cấp tổng hợp và tìm nơi cần theo dõi trong kế hoạch bán hàng.
 
-Trước giờ mình dùng RMSSE trung bình không trọng số để so các cấu hình ở cấp sản phẩm × cửa hàng, với mỗi cặp được tính ngang nhau. Giờ mình dùng **WRMSSE trên 12 cấp** làm điểm chính để bám sát cách chấm của bài báo M5. Kết quả RMSSE cũ vẫn dùng để đối chiếu quá trình thử cấu hình nha.
+Bộ dữ liệu M5 có lượng bán hằng ngày, lịch và giá tuần của Walmart. Lưới dưới cùng gồm **30.490** chuỗi tại 10 cửa hàng thuộc CA, TX và WI.
 
-**Ae bắt đầu ở đây:**
+| Tập | Ngày M5 | Cách dùng |
+|---|---|---|
+| Train | d_1–d_1885 | Lấy mẫu cho các vòng thử nghiệm |
+| Validation | d_1886–d_1913 | Chọn siêu tham số và đặc trưng |
+| Train + Validation | d_1–d_1913 | Lấy mẫu fit mô hình cuối |
+| Test | d_1914–d_1941 | Đánh giá 25/04/2016–22/05/2016 từ gốc d_1913 |
 
-1. Giữ lại file dự báo validation của các cấu hình đã thử để chấm lại và chốt cấu hình cho mô hình của mình.
-2. Chuẩn bị file dự báo test của cấu hình đã chốt và ba file dữ liệu M5.
-3. Mở [hướng dẫn bàn giao WRMSSE](docs/WRMSSE_BAN_GIAO.md) để xem định dạng file, lệnh chấm test và các file cần gửi tui.
+Train dùng **600.000** quan sát phân tầng cửa hàng × bộ phận × quý, không hoàn lại, seed 42. Fit cuối giữ mẫu Train và thêm **9.185** quan sát Validation ở mật độ tương đương, tổng **609.185** dòng.
 
-Có đủ dự báo đã lưu thì mình chỉ tính lại điểm, không cần train lại. Ai thiếu dự báo của cấu hình nào thì báo tui tên cấu hình và kỳ đang thiếu nha.
-## Báo cáo LightGBM Two-Part
+## Đặc trưng và đánh giá
 
-- [Xếp hạng WRMSSE validation C0–C7](reports/xep_hang_wrmsse_validation.csv) · [Kết quả validation/test](reports/ket_qua_wrmsse_validation_test.csv).
-- [Mô tả bộ biểu đồ C0–C7 lịch sử](reports/mo_ta_bieu_do.md) · [12 cấp Test C7 gốc](reports/wrmsse_12_cap/test_C7.csv).
+FE-04 gồm 15 đặc trưng logic và 3.082 cột CSR float32. Thứ tự logic là item_id, dept_id, cat_id, store_id, state_id, wday, month, year, lag_28, lag_35, lag_42, lag_56, rolling_mean_7, rolling_mean_28, snap_state. Feature doanh số sử dụng lịch sử đến t−28 và forecast origin. SNAP xác định từ bang và ngày trong tháng. Vocabulary one-hot của năm trường ID giữ nhất quán. [Hậu kiểm SNAP](docs/STAGE3_SNAP_REVIEW.md) · [Notebook đặc trưng](notebooks/03_feature_engineering.ipynb).
 
-Trong bộ C0–C7 lịch sử, bản đại diện là C7 với λ = 0,75. Lệnh chung `scripts/score_model_wrmsse.py` hiện chấm test; validation C0–C7 dùng script riêng `scripts/score_wrmsse_configurations.py` với dự báo Two-Part đã lưu tại máy. Chưa có lệnh chung chấm validation từ CSV tùy ý của thành viên.
+WRMSSE cộng contribution qua 42.840 chuỗi. Contribution là RMSSE nhân trọng số doanh thu lịch sử. Mỗi cấp có tổng trọng số 1/12. RMSSE dùng scale sai phân lịch sử từ lần bán khác 0 đầu tiên. Điểm trong cấp bằng 12 lần tổng contribution cấp. [Đặc tả evaluator](docs/WRMSSE_PREPARATION.md) · [Notebook WRMSSE](notebooks/02_wrmsse_evaluation_method.ipynb).
 
-### C7_EVENTS — bản chốt sau khi thêm sự kiện (26/11/2026)
+## Thực nghiệm và mô hình khóa
 
-Chọn **C7_EVENTS**, λ = 0,75, vì WRMSSE Validation d_1886–d_1913 giảm từ **0,5825613324** (C7 gốc) xuống **0,5785505731**. Test d_1914–d_1941 đạt WRMSSE **0,6284865670**, dự báo thiếu **4,30%** tổng lượng. Validation không có ngày được gắn nhãn sự kiện, nên chưa đánh giá trực tiếp ngày lễ.
+Các vòng lần lượt chọn **RF-04 → RF-v1 → RF-15 → FE-04**. Có 36 lượt gồm 32 fit và 4 reuse. FE-09 và FE-10 kiểm tra All Features trên cùng Validation. [Báo cáo tối ưu](docs/STAGE3_REPORT.md) · [Bảng thực nghiệm](reports/tables/experiment_results.csv).
 
-- [Hướng dẫn C7_EVENTS, bộ 7 hình và cách tái lập](docs/C7_EVENTS.md).
-- [Bảng tổng hợp Validation/Test](reports/c7_events/scores.csv), [quyết định chọn](reports/c7_events/selection.json), [điểm Test theo nhóm](reports/c7_events/test_group_scores.csv).
-- [Cấu hình đóng băng](configs/c7_events.json): 14 đặc trưng gốc + 30 chỉ báo tên sự kiện + 4 chỉ báo loại; Classifier 300 cây/48 lá, Regressor 200 cây/31 lá. Giữ nguyên cấu hình Tweedie và mã của các mô hình khác.
+**RF-15 + FE-04** dùng n_estimators=150, max_depth=20, max_features=0.5, max_samples=0.5, min_samples_leaf=5, bootstrap=True, random_state=42, n_jobs=8.
 
-Xem hình ngay từ clone, hoặc dựng lại chỉ từ các bảng nhỏ đã commit, không cần dữ liệu M5/model/dự báo chi tiết:
+| Cửa sổ | Random Forest | Seasonal Naive |
+|---|---|---|
+| Validation d_1886–d_1913 | 0,6239308540 | 0,9227813345 |
+| Test d_1914–d_1941 | 0,7039124143 | 0,8697007023 |
 
-```powershell
-python scripts/plot_c7_events.py --published-report
-```
+Trên Test, Random Forest giảm WRMSSE **19,06%** và đạt WAPE **75,20%** ở cấp item–store–day. [Báo cáo Test](docs/STAGE4_REPORT.md) · [Báo cáo kinh doanh](docs/STAGE5_BUSINESS_REPORT.md).
 
-File dự báo **853.720 dòng** không nằm trong Git. Người giữ artifact là chủ repo `24521081-ui`; bản đã kiểm chứng hiện ở máy thực nghiệm tại `D:\Phân tích dữ liệu kinh doanh\Code\IS403.R11-M5\results\analysis\c7_events_20261126\forecast_test_selected.csv`. Nhóm cần nhận file này riêng và kiểm tra SHA-256 trong [test_verified.json](reports/c7_events/test_verified.json) trước khi chấm chung. Cách chấm, khôi phục checkpoint và tái lập được ghi trong hướng dẫn C7_EVENTS.
+### Hiệu quả theo tần suất bán
 
----
+Trên 28 ngày Test, 2.754 chuỗi Frequent đóng góp 36,28% lượng bán và 27.736 chuỗi Intermittent đóng góp 63,72%. WAPE RF / Seasonal Naive lần lượt là 50,99% / 59,67% và 88,98% / 101,33%. Riêng 3.598 chuỗi có ADI ≥ 8, Seasonal Naive đạt WAPE 150,83% so với 182,46% của RF. Phần 14 của báo cáo và notebook 09 giải thích tiêu chí phân nhóm, sai số theo cửa hàng và các ngày bán đột biến. [Báo cáo kinh doanh](docs/STAGE5_BUSINESS_REPORT.md) · [Notebook 09](notebooks/09_business_insights_and_visualization.ipynb) · [Bảng kết quả](reports/tables/demand_group_metrics.csv)
 
-# Đánh giá thực nghiệm các mô hình dự báo lượng bán sản phẩm trong bán lẻ (Walmart M5)
+Nhãn được ghép sau dự báo theo gốc d_1885 cho Validation và d_1913 cho Test. Workbook gồm 32 sheet, trong đó Forecast_Detail có 853.720 dòng kèm ADI và demand_group. Có 17 hình Business V2 và 11 hình phân tích nhu cầu. Phần 15 của notebook 09 có bộ chọn chuỗi và xuất PNG. [Excel](reports/RandomForest_Forecast_Actual.xlsx) · [Danh mục hình](reports/FIGURE_CATALOG.md) · [Manifest phân tích nhu cầu](reports/manifest_demand_groups.json)
 
-Đề tài: **Đánh giá thực nghiệm các mô hình dự báo lượng bán sản phẩm trong bán lẻ: Hỗ trợ lập kế hoạch nhu cầu và bổ sung hàng hóa.**  
-Bộ dữ liệu chuẩn: **Walmart M5 Forecasting Accuracy Dataset** (30.490 chuỗi thời gian phân cấp, 10 siêu thị, 3 bang).  
-Phạm vi nghiên cứu: Đối sánh toàn diện giữa **Hệ thống Học máy tăng cường độ dốc (LightGBM với hàm mục tiêu Tweedie)** và **Hệ thống Mô hình thống kê chuẩn mực & Nhu cầu gián đoạn (Statistical Benchmarks & Intermittent Demand)**.
+## Xem kết quả đã công bố
 
----
+1. Mở [Excel dự báo và thực tế](reports/RandomForest_Forecast_Actual.xlsx). Bắt đầu từ Summary, các sheet theo nhóm và Data_Dictionary.
+2. Dùng [danh mục biểu đồ](reports/FIGURE_CATALOG.md) để chọn hình và tìm CSV nguồn.
+3. Mở [notebook tổng quan](notebooks/00_project_overview.ipynb) đến [notebook phân tích kinh doanh](notebooks/09_business_insights_and_visualization.ipynb). Chọn kernel của .venv. Run All đọc artifact đã công bố. Notebook mới có output thực thi đã lưu.
+4. Xem [biên bản bàn giao](reports/STAGE5_HANDOFF.md) và [manifest](reports/manifest_stage5.json) để tra số dòng, đường dẫn và checksum.
 
-## 1. Kiến trúc hệ thống và Cấu trúc thư mục dự án
+## Thư mục
 
-```
-IS403.R11-M5/
-├── configs/                             # Cấu hình tham số mô hình
-│   ├── config.yaml                      # Cấu hình pipeline LightGBM–Tweedie
-│   └── benchmarks.yaml                  # Cấu hình các mô hình thống kê đối chứng
-│
-├── data/                                # Thư mục dữ liệu (được .gitignore bảo vệ)
-│   └── raw/                             # Đặt các file dữ liệu M5 gốc (.csv) tại đây
-│
-├── docs/                                # Báo cáo nghiên cứu khoa học & tài liệu kỹ thuật
-│   ├── reports/                         # Báo cáo thực nghiệm (Word .docx)
-│   │   ├── research-report.docx         # Báo cáo nghiên cứu thực nghiệm hoàn chỉnh
-│   │   ├── model-guide.docx             # Tài liệu giải thích bản chất toán học & mã nguồn
-│   │   ├── mae-guide.docx               # Chuyên đề đối sánh & ý nghĩa kinh doanh của MAE
-│   │   └── rmse-guide.docx              # Chuyên đề đối sánh & thiết lập Safety Stock với RMSE
-│   └── technical/                       # Tài liệu kỹ thuật & quy trình
-│       ├── research-report.md           # Báo cáo nghiên cứu dạng Markdown
-│       ├── model-guide.md               # Tài liệu kỹ thuật mô hình dạng Markdown
-│       ├── HUONG_DAN_DEMO_DU_BAO.md     # Quy trình demo suy luận mô hình ML
-│       └── reference_comparison.md      # Đối chiếu mã nguồn học thuật
-│
-├── results/                             # Kết quả thực nghiệm và trực quan hóa
-│   ├── benchmarks/
-│   │   ├── metrics/                     # Bảng chỉ số sai số MAE, RMSE, RMSSE
-│   │   │   ├── all_stores/              # Kết quả chính thức toàn bộ 10 siêu thị (30.490 chuỗi)
-│   │   │   └── ca_1/                    # Kết quả chạy thử nghiệm mẫu riêng siêu thị CA_1
-│   │   └── predictions/                 # Kết quả dự báo 28 ngày
-│   │       ├── all_stores/              # Tập dự báo toàn bộ 10 siêu thị (validation & test)
-│   │       └── ca_1/                    # Tập dự báo riêng siêu thị CA_1 (validation & test)
-│   ├── figures/                         # Biểu đồ phân tích độ chính xác & sai số
-│   └── models/                          # Trọng số mô hình Machine Learning đã huấn luyện
-│
-├── scripts/                             # Các điểm thực thi chi tiết
-│   ├── benchmarks/                      # Scripts cho các mô hình thống kê đối chứng
-│   │   ├── run_benchmarks.py            # Chạy thực nghiệm (Validation & Test)
-│   │   ├── test_benchmark_models.py     # Kiểm thử đơn vị thuật toán
-│   │   └── plot_time_series_comparison.py # Vẽ biểu đồ chuỗi thời gian đối chứng
-│   └── ml/                              # Scripts cho mô hình Machine Learning (LightGBM)
-│       ├── demo_saved_forecast.py       # Demo phát lại suy luận dự báo LightGBM
-│       ├── plot_saved_rmsse_report.py   # Xuất biểu đồ so sánh RMSSE
-│       └── summarize_validation.py      # Tổng hợp chỉ số validation ML
-│
-├── src/                                 # Toàn bộ mã nguồn lõi
-│   ├── benchmarks/                      # Hợp phần mô hình thống kê đối chứng
-│   │   ├── config.py                    # Cấu hình tự động nhận diện dữ liệu và siêu tham số
-│   │   ├── data_loader.py               # Nạp ma trận dữ liệu tối ưu bộ nhớ
-│   │   ├── models/                      # Thuật toán: Seasonal Naïve, ES_bu, Croston, Croston-SBA
-│   │   └── evaluation/                  # Thước đo chuẩn M5: MAE, RMSE, RMSSE & điều phối đánh giá
-│   │
-│   └── ml/                              # Hợp phần mô hình học máy (LightGBM - Tweedie)
-│       ├── data_loader.py               # Nạp dữ liệu bảng sales, calendar, prices
-│       ├── feature_engineering.py       # Kỹ nghệ đặc trưng: Lags, Rolling windows, Calendar
-│       ├── preprocessing.py             # Tiền xử lý ma trận bán hàng và nhãn phân loại
-│       ├── training.py                  # Huấn luyện LightGBM tối ưu hàm mất mát Tweedie
-│       ├── forecasting.py               # Dự báo đệ quy đa bước (Recursive Multi-step)
-│       └── reporting.py                 # Đánh giá chỉ số RMSSE và xuất báo cáo mô hình ML
-│
-├── run.py                               # Điểm khởi chạy pipeline Machine Learning (LightGBM)
-├── run_benchmarks.py                    # Điểm khởi chạy pipeline Statistical Benchmarks
-├── requirements.txt                     # Danh mục thư viện phụ thuộc của toàn bộ dự án
-├── .gitignore                           # Quy tắc loại trừ tệp nhị phân và dữ liệu lớn
-└── README.md                            # Tài liệu tổng quan dự án
-```
+| Thư mục | Nội dung |
+|---|---|
+| data/raw/ | CSV gốc được bảo toàn |
+| data/processed/ | Doanh số lịch sử, khóa và mẫu |
+| data/features/ | Ma trận đặc trưng và vocabulary |
+| src/ và scripts/ | Evaluator, đặc trưng, điều phối, báo cáo và kiểm tra |
+| configs/ | Split, metric và stage gate |
+| notebooks/ | Mười notebook trình bày ở chế độ chỉ đọc |
+| results/wrmsse_v1/ | Manifest và artifact Giai đoạn 2–4 |
+| reports/figures/ và reports/tables/ | Hình PNG và bảng CSV nguồn |
+| reports/ | Excel, danh mục hình và biên bản bàn giao |
+| docs/ | Đặc tả và báo cáo |
+| tests/ | Unit test evaluator, pipeline, data leakage |
+| preparation/ | Biên bản chuẩn bị và audit |
+| .venv/ | Môi trường cục bộ, ẩn trong VS Code và loại khỏi bản nộp |
 
----
+## Môi trường
 
-## 2. Các phương pháp dự báo được triển khai
-
-### A. Nhóm mô hình Học máy (Machine Learning)
-- **LightGBM với hàm mục tiêu Tweedie:** Mô hình hóa phân phối Poisson hỗn hợp Gamma phù hợp với dữ liệu có tỷ lệ số 0 cao.
-- **Kỹ nghệ đặc trưng:** Độ trễ (lags 28, 29,...), giá trị trung bình cuộn (rolling mean 7, 28,...), độ biến động giá, sự kiện lịch (ngày lễ, SNAP food stamps).
-- **Chiến lược suy luận:** Dự báo đệ quy (Recursive Forecasting) từng bước qua 28 ngày.
-
-### B. Nhóm mô hình Thống kê Đối chứng (Statistical Benchmarks)
-- **Seasonal Naïve (SN):** Chu kỳ tuần 7 ngày bán lẻ ($m = 7$), đóng vai trò là thước đo cơ sở chuẩn mực tính thang đo RMSSE của cuộc thi M5.
-- **Exponential Smoothing kết hợp Bottom-Up ($ES_{bu}$):** San bằng mũ Holt-Winters mức và mùa vụ ($\alpha = 0.2, \gamma = 0.15$), dự báo tại cấp SKU và tổng hợp lên toàn bộ các cấp phân cấp.
-- **Croston cổ điển (Croston, 1972):** Tách biệt quy mô nhu cầu và khoảng cách giữa các lần bán hàng, tối ưu cho nhu cầu gián đoạn.
-- **Croston-SBA (Syntetos & Boylan, 2005):** Hiệu chỉnh độ chệch dương bằng hệ số $(1 - \alpha/2)$, tăng tốc tính toán hàng chục ngàn chuỗi thời gian bằng **Numba JIT (`@njit(fastmath=True)`)**.
-
----
-
-## 3. Cài đặt môi trường
-
-Sử dụng **Python 3.11 (64-bit)**. Khuyến nghị thiết lập môi trường ảo:
+Môi trường thực nghiệm là Python 3.12.10. Mở workbook bằng Excel hỗ trợ XLSX. Dùng VS Code với Python và Jupyter extensions để mở notebook. Để cài từ thư mục dự án:
 
 ```powershell
-# Tạo và kích hoạt môi trường ảo
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-
-# Nâng cấp pip và cài đặt thư viện phụ thuộc
-pip install --upgrade pip
-pip install -r requirements.txt
+py -3.12 -m venv .venv
+.venv/Scripts/python.exe -m pip install -r requirements.txt
+.venv/Scripts/python.exe -m pip check
 ```
 
----
+requirements.txt dùng requirements-lock.txt, gồm đúng các phiên bản thực nghiệm, Excel và notebook đã kiểm tra. Mười notebook dùng các kết quả được giữ tại chỗ. [Biên bản và chỉ mục tinh gọn](docs/PROJECT_CLEANUP_REPORT.md).
 
-## 4. Hướng dẫn vận hành
+## Kiểm tra và tái hiện
 
-### 4.1. Hợp phần Mô hình Thống kê Đối chứng (Statistical Benchmarks)
-
-Điểm khởi chạy chính: `run_benchmarks.py` (hoặc qua `scripts/benchmarks/run_benchmarks.py`):
+Dùng Python của môi trường dự án với lệnh dưới đây để xác minh đầu ra và chạy unit test.
 
 ```powershell
-# 1. Kiểm thử đơn vị tính đúng đắn của thuật toán (trên chuỗi nhân tạo và mẫu M5)
-python run_benchmarks.py --test
-
-# 2. Chạy thực nghiệm trên 1 cửa hàng thử nghiệm (ví dụ CA_1)
-python run_benchmarks.py --store CA_1
-
-# 3. Chạy thực nghiệm toàn diện trên toàn bộ 10 siêu thị M5
-python run_benchmarks.py --all_stores
+.venv/Scripts/python.exe -B scripts/verify_isolation.py --demand-groups
+.venv/Scripts/python.exe -B -m unittest discover -s tests -t . -p "test_wrmsse*.py"
 ```
 
-### 4.2. Hợp phần Mô hình Học máy (LightGBM–Tweedie)
+Các entry point dưới đây dành cho việc tái hiện giai đoạn tương ứng theo stage gate đã thiết lập, với namespace đầu ra mới.
 
-Điểm khởi chạy chính: `run.py`:
+| Giai đoạn | Entry point và điều kiện |
+|---|---|
+| 1 | [Kiểm thử](scripts/run_preparation_checks.py) và [audit context lịch sử](scripts/audit_wrmsse_contexts.py). Thực hiện theo báo cáo chuẩn bị. |
+| 2 | [Điều phối Stage 2](scripts/run_stage2.py) tạo processed/features, baseline và smoke fit qua gate kiểm thử. |
+| 3 | [Điều phối Stage 3](scripts/run_stage3.py) và [All Features](scripts/run_stage3_all_features.py) dùng gate tuning, evidence và namespace đã thiết lập. Selection v2 đã khóa. |
+| 4 | [Điều phối Stage 4](scripts/run_stage4.py) kiểm tra selection v2, tạo run mới, fit một lần và khóa forecast trước Test. |
+| 5 | [Điều phối Stage 5](scripts/run_stage5.py) đọc run Stage 4 đã khóa rồi tạo lớp báo cáo. Dùng tham số --verify để kiểm tra bản hoàn thành. |
 
-```powershell
-# Chạy demo kiểm chứng trên dữ liệu giả lập
-python run.py --demo
+## Giới hạn
 
-# Chạy quy trình huấn luyện và dự báo đầy đủ theo cấu hình configs/config.yaml
-python run.py
-```
-
-### 4.3. Demo và đối chiếu kết quả
-
-```powershell
-# Phát lại suy luận dự báo từ checkpoint mô hình đã lưu
-python scripts/ml/demo_saved_forecast.py
-
-# Xuất biểu đồ so sánh trực quan chỉ số RMSSE
-python scripts/ml/plot_saved_rmsse_report.py
-```
-
----
-
-## 5. Kết quả thực nghiệm và Báo cáo
-
-Toàn bộ các tài liệu nghiên cứu học thuật và báo cáo đối sánh được xuất tự động tại thư mục [`docs/`](docs/):
-- **Báo cáo nghiên cứu hoàn chỉnh:** [`docs/reports/research-report.docx`](docs/reports/research-report.docx) / [`docs/technical/research-report.md`](docs/technical/research-report.md).
-- **Tài liệu kỹ thuật mô hình:** [`docs/reports/model-guide.docx`](docs/reports/model-guide.docx) / [`docs/technical/model-guide.md`](docs/technical/model-guide.md).
-- **Chuyên đề phân tích chỉ số:** [`docs/reports/mae-guide.docx`](docs/reports/mae-guide.docx) và [`docs/reports/rmse-guide.docx`](docs/reports/rmse-guide.docx).
-
-Các bảng tổng hợp sai số định lượng (Overall, Store, Category, Demand Profile) được lưu trữ tại [`results/benchmarks/metrics/`](results/benchmarks/metrics/).
+Mô hình học từ mẫu và được tối ưu trên một cửa sổ Validation. Nghiên cứu này chuyển từ Mean RMSSE sang WRMSSE M5 đủ 12 cấp. Test mới từng là Validation của nghiên cứu cũ. Validation và Test dùng các context scale và trọng số khác nhau. Quyết định tồn kho và nhập hàng cần thêm dữ liệu vận hành.

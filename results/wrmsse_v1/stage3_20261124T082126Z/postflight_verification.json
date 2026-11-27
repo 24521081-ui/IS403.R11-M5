@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "run": "results/wrmsse_v1/stage3_20261124T082126Z",
+  "tested_code_suite": 69,
+  "records": 34,
+  "verified_fits": 30,
+  "eligible_records": 31,
+  "selected_name": "FE-03",
+  "selected_wrmsse": 0.6547769629664902,
+  "test_locked": true,
+  "source_files_verified": 29454,
+  "legacy_files_verified": 1178
+}

@@ -1,0 +1,35 @@
+name,group,version,feature_groups,wrmsse,eligible_v1,eligible_v2,selected_v2,reason,record
+ABL_rf_v1,ablation,rf_v1,,0.6757291528790351,True,True,False,Eligible in Stage 3 v1,ablation/ABL_rf_v1/record.json
+ABL_rf_v2,ablation,rf_v2,,0.6808157698123365,True,True,False,Eligible in Stage 3 v1,ablation/ABL_rf_v2/record.json
+ABL_rf_v3,ablation,rf_v3,,0.6842162963709435,True,True,False,Eligible in Stage 3 v1,ablation/ABL_rf_v3/record.json
+ABL_rf_v4,ablation,rf_v4,,0.6850522342498686,True,True,False,Eligible in Stage 3 v1,ablation/ABL_rf_v4/record.json
+RF-06,advanced,rf_v1,,0.7434440957131935,True,True,False,Eligible in Stage 3 v1,advanced/RF-06/record.json
+RF-07,advanced,rf_v1,,0.7064047617025623,True,True,False,Eligible in Stage 3 v1,advanced/RF-07/record.json
+RF-08,advanced,rf_v1,,0.6983107310813818,True,True,False,Eligible in Stage 3 v1,advanced/RF-08/record.json
+RF-09,advanced,rf_v1,,0.7501840289599513,True,True,False,Eligible in Stage 3 v1,advanced/RF-09/record.json
+RF-10,advanced,rf_v1,,0.7581593011112109,True,True,False,Eligible in Stage 3 v1,advanced/RF-10/record.json
+RF-11,advanced,rf_v1,,0.848988150191802,True,True,False,Eligible in Stage 3 v1,advanced/RF-11/record.json
+RF-12,advanced,rf_v1,,0.7870042724472295,True,True,False,Eligible in Stage 3 v1,advanced/RF-12/record.json
+RF-13,advanced,rf_v1,,0.6989790845650882,True,True,False,Eligible in Stage 3 v1,advanced/RF-13/record.json
+RF-14,advanced,rf_v1,,0.6833584241438276,True,True,False,Eligible in Stage 3 v1,advanced/RF-14/record.json
+RF-15,advanced,rf_v1,,0.6647710829927304,True,True,False,Eligible in Stage 3 v1,advanced/RF-15/record.json
+RF-16,advanced,rf_v1,,0.7106580593435242,True,True,False,Eligible in Stage 3 v1,advanced/RF-16/record.json
+RF-17,advanced,rf_v1,,0.6725960730379752,True,True,False,Eligible in Stage 3 v1,advanced/RF-17/record.json
+RF-18,advanced,rf_v1,,0.6855335723632896,True,True,False,Eligible in Stage 3 v1,advanced/RF-18/record.json
+RF-19,advanced,rf_v1,,0.7106580593435242,True,True,False,Eligible in Stage 3 v1,advanced/RF-19/record.json
+RF-20,advanced,rf_v1,,0.6792207831607804,True,True,False,Eligible in Stage 3 v1,advanced/RF-20/record.json
+RF-21,advanced,rf_v1,,0.6647710829927304,True,True,False,Eligible in Stage 3 v1,advanced/RF-21/record.json
+RF-22,advanced,rf_v1,,0.6891035813614032,True,True,False,Eligible in Stage 3 v1,advanced/RF-22/record.json
+FE-01,features,rf_v1,,0.6647710829927304,True,True,False,Eligible in Stage 3 v1,features/FE-01/record.json
+FE-02,features,rf_v1,recency,0.6694251791739566,True,True,False,Eligible in Stage 3 v1,features/FE-02/record.json
+FE-03,features,rf_v1,prices,0.6547769629664902,True,True,False,Eligible in Stage 3 v1,features/FE-03/record.json
+FE-04,features,rf_v1,snap,0.623930853975747,False,True,True,Verified SNAP rule derived entirely from pre-origin calendar,features/FE-04/record.json
+FE-05,features,rf_v1,events,0.6647631394478237,False,False,False,Event availability not reviewed,features/FE-05/record.json
+FE-06,features,rf_v1,behavior,0.6825632790260734,True,True,False,Eligible in Stage 3 v1,features/FE-06/record.json
+FE-07,features,rf_v1,"behavior,snap",0.6382146522781199,False,True,False,Verified SNAP rule derived entirely from pre-origin calendar,features/FE-07/record.json
+FE-08,features,rf_v1,"behavior,prices",0.6690925484696555,True,True,False,Eligible in Stage 3 v1,features/FE-08/record.json
+RF-01,initial,rf_v1,,0.7987041817576654,True,True,False,Eligible in Stage 3 v1,initial/RF-01/record.json
+RF-02,initial,rf_v1,,0.7473897874588358,True,True,False,Eligible in Stage 3 v1,initial/RF-02/record.json
+RF-03,initial,rf_v1,,0.7459536083918474,True,True,False,Eligible in Stage 3 v1,initial/RF-03/record.json
+RF-04,initial,rf_v1,,0.6757291528790351,True,True,False,Eligible in Stage 3 v1,initial/RF-04/record.json
+RF-05,initial,rf_v1,,0.6761154951992387,True,True,False,Eligible in Stage 3 v1,initial/RF-05/record.json

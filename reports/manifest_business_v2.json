@@ -1,0 +1,245 @@
+{
+  "version": "business_v2",
+  "status": "completed",
+  "at": "2026-11-24T12:12:08.729047+00:00",
+  "test_observations": 853720,
+  "notebook": {
+    "code_cells": 11,
+    "image_outputs": 17,
+    "sections": 13
+  },
+  "unit_tests_passed": 76,
+  "figures": [
+    "business_v2_dashboard.png",
+    "business_v2_model_metrics.png",
+    "business_v2_hierarchy.png",
+    "business_v2_daily.png",
+    "business_v2_weekly.png",
+    "business_v2_weekday.png",
+    "business_v2_regional.png",
+    "business_v2_store_priority.png",
+    "business_v2_category.png",
+    "business_v2_heatmaps.png",
+    "business_v2_concentration.png",
+    "business_v2_segments.png",
+    "business_v2_exceptions.png",
+    "business_v2_representatives.png",
+    "business_v2_stability.png",
+    "business_v2_snap.png",
+    "business_v2_importance.png"
+  ],
+  "table_rows": {
+    "business_v2_daily.csv": 28,
+    "business_v2_store_priority.csv": 10,
+    "business_v2_series.csv": 30490,
+    "business_v2_pareto.csv": 30490,
+    "business_v2_pareto_thresholds.csv": 3,
+    "business_v2_top_contribution.csv": 15,
+    "business_v2_volume_segments.csv": 4,
+    "business_v2_abc.csv": 3,
+    "business_v2_exceptions.csv": 30,
+    "business_v2_representatives.csv": 6,
+    "business_v2_representatives_daily.csv": 168,
+    "business_v2_error_ecdf.csv": 964,
+    "business_v2_error_quantiles.csv": 2,
+    "business_v2_series_wins.csv": 30,
+    "business_v2_zero_actual.csv": 2,
+    "business_v2_snap.csv": 12,
+    "business_v2_importance.csv": 15,
+    "business_v2_snap_validation.csv": 2,
+    "business_v2_velocity_cutoffs.csv": 2
+  },
+  "source_sha256": {
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/manifest_completed.json": "f2a3b8d164cf3a998a51bdc2dddc4dd1a972664c9e23539c412f8f008584aa18",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/forecast_lock_manifest.json": "f5d49b0d2b83732fc9f84126e403a50ac39b97338bfae4f0e1127a9e8be2d6b5",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/test_actual_and_forecast.parquet": "b85916749fba6e1c5c1fe3381cafdd9cf9d41989232a983f7942d9b42ddfc020",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/test_metrics.json": "2f7c6dfa21b12c0b0f5abdf4191fce901e5daefbee4d31505093ae1e30ef0f77",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/test_model_comparison.csv": "5fb7f50a6e9aa9395ac3d3c946063d75ea841fd8ae45f9e8294300d8d6f3b181",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/test_wrmsse_by_level.csv": "678a80f0a20fde85f2a3efb3a2ebe651eb5c50717baebda60acf22a9a40ba961",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/test_wrmsse_by_series.parquet": "f3acac7969256835ef0b3553f09b89d3895310274c4956d8fc6d84d492b51914",
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/feature_importance.csv": "6ad74b00f624be2e9d6e8b785602f4c452404593ead538778e61b4dc3287fb03",
+    "data/processed/wrmsse_v1/stage2_20261123T202104Z/manifest.json": "9a4735380b0c9e0159e6f3b7bbe6a1f370d88fcb77d340256625b692fa7180c8",
+    "data/processed/wrmsse_v1/stage2_20261123T202104Z/series.parquet": "9babe959b1a63cc6d169175d64f3aa88acaeef5242ac2a2677ad25c4f63a6075",
+    "data/processed/wrmsse_v1/stage2_20261123T202104Z/validation_sales.npy": "094b3895737423f3fcf78f46de4acdc1a22307f54efc1547a332d35f498224f6",
+    "reports/manifest_stage5.json": "211b444ec0241b1b3d39a37d898a5fb8659509705fd1ba5a4bb25ead7ba70bdd",
+    "reports/stage5_inputs.json": "6e49a480fe303585497e766ff4497f1ea5921ae47cd6fd8d8de51839599e71b8",
+    "reports/figure_catalog.csv": "e5707b030ec7dc000bcc505c0fa990549438854c273c6090f6b8f019f3bb72c4",
+    "reports/RandomForest_Forecast_Actual.xlsx": "d58c02d4059b0d578bad6e5ea58dc1c87af22919150f2e0c94eab93a3d1b7831"
+  },
+  "archived": {
+    "reports/figures/13_feature_importance.png": {
+      "sha256": "04a6237dc9ae4a59abaa17f1d768b88dbc70251a7a2d80c3bf7468ae68635815",
+      "bytes": 128467,
+      "operation": "remove",
+      "archive_member": "objects/04a6237dc9ae4a59abaa17f1d768b88dbc70251a7a2d80c3bf7468ae68635815"
+    },
+    "reports/figures/14_doanh_so_hang_ngay.png": {
+      "sha256": "ea833171687579e8541b4e31aa69e172596f32d947cfb72fc755ba7064c699ca",
+      "bytes": 244450,
+      "operation": "remove",
+      "archive_member": "objects/ea833171687579e8541b4e31aa69e172596f32d947cfb72fc755ba7064c699ca"
+    },
+    "reports/figures/15_doanh_so_theo_bang.png": {
+      "sha256": "3df2bef2edf3cc88d5761b4c70ba04f0a12df0dbb33be01962ea4aefdeff4c62",
+      "bytes": 48038,
+      "operation": "remove",
+      "archive_member": "objects/3df2bef2edf3cc88d5761b4c70ba04f0a12df0dbb33be01962ea4aefdeff4c62"
+    },
+    "reports/figures/16_doanh_so_theo_cua_hang.png": {
+      "sha256": "f89835102345a237f90a3bfa95bcf0b08e7f2dc0436bb991d075d153e70697f5",
+      "bytes": 73663,
+      "operation": "remove",
+      "archive_member": "objects/f89835102345a237f90a3bfa95bcf0b08e7f2dc0436bb991d075d153e70697f5"
+    },
+    "reports/figures/17_bias_cua_hang.png": {
+      "sha256": "dd22d9e7cd05fed4cc8079404ede0dd2d19a3fdb1ae16a259a6a912ee5aeaa88",
+      "bytes": 70577,
+      "operation": "remove",
+      "archive_member": "objects/dd22d9e7cd05fed4cc8079404ede0dd2d19a3fdb1ae16a259a6a912ee5aeaa88"
+    },
+    "reports/figures/18_heatmap_wape.png": {
+      "sha256": "d05766cac7f5b7ff3cc24ae22d64b8229ad518be6addb4e3eaace70e4ad306ee",
+      "bytes": 214201,
+      "operation": "remove",
+      "archive_member": "objects/d05766cac7f5b7ff3cc24ae22d64b8229ad518be6addb4e3eaace70e4ad306ee"
+    },
+    "reports/figures/19_nganh_hang.png": {
+      "sha256": "50940862e3a86194a879530b67f3b4d032b075c81ae3a83bbe6d95afe8f49f04",
+      "bytes": 111133,
+      "operation": "remove",
+      "archive_member": "objects/50940862e3a86194a879530b67f3b4d032b075c81ae3a83bbe6d95afe8f49f04"
+    },
+    "reports/figures/20_tuan_va_thu.png": {
+      "sha256": "953d146dfb23e713ef2271e8109d65e6c727a357ae29d525aae8c6496c3dd1c9",
+      "bytes": 105674,
+      "operation": "remove",
+      "archive_member": "objects/953d146dfb23e713ef2271e8109d65e6c727a357ae29d525aae8c6496c3dd1c9"
+    },
+    "reports/figures/21_top_du_bao_under.png": {
+      "sha256": "a18050e9a20ee339d8719fd423b30cc46e3f1af203c20128a9c5f63e2d07ecc0",
+      "bytes": 161196,
+      "operation": "remove",
+      "archive_member": "objects/a18050e9a20ee339d8719fd423b30cc46e3f1af203c20128a9c5f63e2d07ecc0"
+    },
+    "reports/figures/22_top_du_bao_over.png": {
+      "sha256": "706d054d1672754dc9cdad0513c1ec7f9a97ecf43de39322e0556dc28b350070",
+      "bytes": 162813,
+      "operation": "remove",
+      "archive_member": "objects/706d054d1672754dc9cdad0513c1ec7f9a97ecf43de39322e0556dc28b350070"
+    },
+    "reports/figures/23_chuoi_dai_dien.png": {
+      "sha256": "3996e3165ef1f2cdfb8fe66cd676656313bfdc0ccf70a3e1645e67cc78241b64",
+      "bytes": 539090,
+      "operation": "remove",
+      "archive_member": "objects/3996e3165ef1f2cdfb8fe66cd676656313bfdc0ccf70a3e1645e67cc78241b64"
+    },
+    "reports/figures/24_snap.png": {
+      "sha256": "edc617f4c894063dc8310a8f5ab7da600e362902ce56e761c51bec8df9e8e58a",
+      "bytes": 108843,
+      "operation": "remove",
+      "archive_member": "objects/edc617f4c894063dc8310a8f5ab7da600e362902ce56e761c51bec8df9e8e58a"
+    },
+    "notebooks/09_business_insights_and_visualization.ipynb": {
+      "sha256": "37a4d678f1ca6faacaddd6e0f09d7f700182dec022618672b37fca5e40fc6c99",
+      "bytes": 2068867,
+      "operation": "revise",
+      "archive_member": "objects/37a4d678f1ca6faacaddd6e0f09d7f700182dec022618672b37fca5e40fc6c99"
+    },
+    "docs/STAGE5_BUSINESS_REPORT.md": {
+      "sha256": "eae701544ea4b272887f41ce7e1eba3ad55dfba7981becc0415582487a47bfd8",
+      "bytes": 16628,
+      "operation": "revise",
+      "archive_member": "objects/eae701544ea4b272887f41ce7e1eba3ad55dfba7981becc0415582487a47bfd8"
+    },
+    "reports/FIGURE_CATALOG.md": {
+      "sha256": "7f1b97e73c145fc2f6195b9bb506e7d6ddd907de2762dd1cfe191be857ce7f49",
+      "bytes": 6620,
+      "operation": "revise",
+      "archive_member": "objects/7f1b97e73c145fc2f6195b9bb506e7d6ddd907de2762dd1cfe191be857ce7f49"
+    },
+    "reports/STAGE5_HANDOFF.md": {
+      "sha256": "2d4402f2d4fdbe78225e5090248a4c010006fc4c1e72b092f111eeae23800c28",
+      "bytes": 10695,
+      "operation": "revise",
+      "archive_member": "objects/2d4402f2d4fdbe78225e5090248a4c010006fc4c1e72b092f111eeae23800c28"
+    },
+    "scripts/run_stage5.py": {
+      "sha256": "2fcd3c8b1355d87f4740d3033706623fa1b87294174ddd8d1819bd20993b033c",
+      "bytes": 10498,
+      "operation": "revise",
+      "archive_member": "objects/2fcd3c8b1355d87f4740d3033706623fa1b87294174ddd8d1819bd20993b033c"
+    },
+    "src/wrmsse_integrity.py": {
+      "sha256": "2351d6e944363eb17b9afdc8c4e7f9acd312cb831809b7aa29762d2b01f6e2f3",
+      "bytes": 4449,
+      "operation": "revise",
+      "archive_member": "objects/2351d6e944363eb17b9afdc8c4e7f9acd312cb831809b7aa29762d2b01f6e2f3"
+    }
+  },
+  "archive": {
+    "filename": "PTDLKD_RandomForest_WRMSSE_business_v1.zip",
+    "sha256": "6ac57849681a4eeea7a2d0a1b0ad8fe1c52d75a107928af215143240c5e2fe44",
+    "bytes": 3192977
+  },
+  "files": {
+    "docs/STAGE5_BUSINESS_REPORT.md": "b5c8e891c04a93db3225d42f63f34e6f691583bbcce970f787761eaa541b0183",
+    "reports/FIGURE_CATALOG.md": "18186ba797ebfef7e2f2bf54c6e1c11f59d6c99f6ee8e074e6361ce54b9a9dc6",
+    "reports/STAGE5_HANDOFF.md": "e32feaab0caeb0ff76d44cc8312bcde9cd346de9374f62cdee6e7cac5e2a1257",
+    "notebooks/09_business_insights_and_visualization.ipynb": "5881ee65ec06820a6a028dcc98d02dd6448d757177fc43a69188f8c44132f00b",
+    "reports/figures/business_v2_dashboard.png": "c14758ea513dd665f6b83a0f745f8fee54bf0b03a7ee2b70f4d0c1907d5424fe",
+    "reports/figures/business_v2_model_metrics.png": "2c98035dda14d8772545d6bdfcee28ac447eb2b8956e7ff02e42bcf67a7b7537",
+    "reports/figures/business_v2_hierarchy.png": "c7c777dd1f2743449124f08f02dbefc8b3e5f52e2d28dbcd8da7fc9bc8b7928d",
+    "reports/figures/business_v2_daily.png": "7d067fbd5178259636449fbd78696ed1230b8c086cd54dd97ccaf0b16781a603",
+    "reports/figures/business_v2_weekly.png": "55ee07eb4be775ea22ffc75d99d53f93cbbb02f94028effa6029ec6a3f0081cf",
+    "reports/figures/business_v2_weekday.png": "125b3057717c7a7a58d1d5b159939b2f8584e56881e356eaa370df1142a5fb9c",
+    "reports/figures/business_v2_regional.png": "063da907a4b68c37db3326d23f94007e10ef1b75a4ae46899a415efdac9e924a",
+    "reports/figures/business_v2_store_priority.png": "c666832339dd2a9af136eaa708127e637146ebc593b174712591188cce4421d6",
+    "reports/figures/business_v2_category.png": "39c9ff82a1a70a97ef899d423bf01893cb7a6fad34c9ba31d24bd072adcaf0c7",
+    "reports/figures/business_v2_heatmaps.png": "4c797fbd598d3ef76bb25da7fc8e879cfdb7e91a85305e6dcf3d923586085e90",
+    "reports/figures/business_v2_concentration.png": "1f31fcb2cbff0c9b402f0f633193e975991bd335e0360b2d4adeddc65798010a",
+    "reports/figures/business_v2_segments.png": "fb9dec55ed0a635254126f4df097b90b78b33ac28e7e312a97ad1c15b6814609",
+    "reports/figures/business_v2_exceptions.png": "de6312651fc3ef746043733366fd3b7634eb9ee6c322784a784cbe0a20c79b99",
+    "reports/figures/business_v2_representatives.png": "1851772da6b3c6af7c89cc017fd112a68223081264551f3baa486e6aeecdce49",
+    "reports/figures/business_v2_stability.png": "38c0a7cb8e7576b9ae7de8c9ae942e1587c0f3f8b3354e1be5a63c6f29eebaed",
+    "reports/figures/business_v2_snap.png": "f99a4501cd5b6a81d12591a1b162a182331a6638b42c03dfa688d09d4f503602",
+    "reports/figures/business_v2_importance.png": "f81a3468897ce799f66eaa828d0fb9a5116a013920d3706bb2573f7940d0eb5d",
+    "reports/tables/business_v2_daily.csv": "67b5fb372b7adb30b4f309be06d03c4f0981fc3a6fa541c803a185bd3bd1afd2",
+    "reports/tables/business_v2_store_priority.csv": "b7c1b30f621648d99f4c79e22f06dbf58e94e04e3f25e196752971d3613454c8",
+    "reports/tables/business_v2_series.csv": "603ab1e44d92697681ba07df71df7831bfa618f65bdba4cc251e6f339202e3c4",
+    "reports/tables/business_v2_pareto.csv": "3ed583bd34f785d9bcda45919f9d1edea0ba6572eded9db6824fad90a05cfd42",
+    "reports/tables/business_v2_pareto_thresholds.csv": "64d44d6dd768afd3b388a946831a2d46d229fe821d1b83ba8905c316896452c4",
+    "reports/tables/business_v2_top_contribution.csv": "f6619e11911bb00cb5f4d42a0dd1d845257a23a3584b2cb86aa8df4cd2cce873",
+    "reports/tables/business_v2_volume_segments.csv": "9946bff3bdfe17849f34ea898194a18becc3cc467bd05bb9d0eb1b9596ed850b",
+    "reports/tables/business_v2_abc.csv": "350dafae02f1db076ef2d33549faa454a179bcb8742ec0ecc20e2aa25031d49b",
+    "reports/tables/business_v2_exceptions.csv": "020149db307e1d5f3ed0eef47c905d651bebfa3ed8ebd80586e91c9a29fbccea",
+    "reports/tables/business_v2_representatives.csv": "01dd1b6005b4cb1f40ece4f4aa808aca8158823d07dc8f3d6f715a2c8cea3a78",
+    "reports/tables/business_v2_representatives_daily.csv": "1d6da2f94026f40581059cc675a420b74de12ac1403b0a5e5540348730489cd6",
+    "reports/tables/business_v2_error_ecdf.csv": "f01150a91051b8b85a2f10f5368dcde537186e80cec93b8421ea87ce87732da1",
+    "reports/tables/business_v2_error_quantiles.csv": "349a2ea7431173fcc3670c626f29e8b997941640adfe722e687389cd7cc1e7d9",
+    "reports/tables/business_v2_series_wins.csv": "0609c3a8e55c480b559110e2c02fbc102ba68f1e7a5fef58e52fdebcb07cbc95",
+    "reports/tables/business_v2_zero_actual.csv": "fb25f967f3ee34822dc8729333455f544f60d82d9c547a226ba721e930738f88",
+    "reports/tables/business_v2_snap.csv": "a2ca6c5de09e7445921edda78e672435a1eb0671dff9bf8c330edebd6a199359",
+    "reports/tables/business_v2_importance.csv": "c39fee9b31811c80a3d05d382e7ef2f65c59ca60890cd5503816d8c620155c98",
+    "reports/tables/business_v2_snap_validation.csv": "a5bafa2fc22dc6792a12c8f402f063e5bc6147f3e35c406556bc1b367955f3aa",
+    "reports/tables/business_v2_velocity_cutoffs.csv": "36d40e285d77445e91c64fa8a52ac12d74c6eb7960d493b4ef539a5988082d4d",
+    "scripts/run_business_v2.py": "0f10e185991fd04f72902c87b7b5826d62f5fe3a9459f31e45f5463371ea607c",
+    "src/wrmsse_business_v2.py": "d993b6e16dc12fd78c4d5ce69d1d1e8f9c11e948fc8fe06db4a823f1ae2c4baf",
+    "src/wrmsse_business_v2_figures.py": "fe6969295f748fe2aeb639e72cc2e16c6caf4b983134e76406d26c35c61582c2",
+    "src/wrmsse_business_v2_report.py": "b28e3ae089fbb29c9023f95c38ca11bd3376a7cba7c5d337c79d5f42dd76568b",
+    "tests/test_wrmsse_business_v2.py": "474c32bcf0be3fae049ee3d4e1422a3b2d4adfaa8c01ad9261ef3f9218edaac3",
+    "scripts/run_stage5.py": "8eaa7b14350d4ca3397153d4e514ddd25a9a9757594efbc631772506354e22c2",
+    "src/wrmsse_integrity.py": "a15b7c98b92675d597bbe8b52de2b9cddcf0d01f2b30b4f4fd8b45782baaf781"
+  },
+  "training": false,
+  "tuning": false,
+  "test_evaluation": false,
+  "visual_reviewed_png": 17,
+  "postflight_verifier_fix": {
+    "reason": "A v1 object archived by this revision can supersede a KEEP entry from the cleanup inventory.",
+    "prior_sha256": {
+      "src/wrmsse_integrity.py": "bb8369c8387a25d93f47ddbefb6d3b9de29b4ad53f189e2f18e35bf24e6204e6",
+      "tests/test_wrmsse_business_v2.py": "d8aa3b2b7e63e092dc6777571e06e1c4191ad0afcaf77ed07df88c9ff567a67e"
+    },
+    "regression_test": "test_new_archive_replaces_prior_keep_disposition_for_historical_bytes"
+  }
+}

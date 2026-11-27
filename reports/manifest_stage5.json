@@ -1,0 +1,119 @@
+{
+  "status": "completed",
+  "at": "2026-11-24T11:14:23.083872+00:00",
+  "stage": 5,
+  "stage4_run": "stage4_20261124T104618287922Z",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "input_manifests": {
+    "results/wrmsse_v1/stage2_20261123T202104Z/manifest_completed.json": {
+      "sha256": "0b5f58dbcc97b719dd58010d1345d09924e5aa794adb683180be894fecea765e",
+      "files_verified": 69
+    },
+    "results/wrmsse_v1/stage3_20261124T082126Z/manifest_completed.json": {
+      "sha256": "58cec8d4679d82c0a3b4df6508dbf2dd99041fece29269c642455faaaeaab4ce",
+      "files_verified": 413
+    },
+    "results/wrmsse_v1/stage3_20261124T082126Z/selection_v2/manifest.json": {
+      "sha256": "0f44e085cc3b48a43ef6b452b402d6d7983ded5ab98d1ee404c2dc6a0dd5d578",
+      "files_verified": 6
+    },
+    "results/wrmsse_v1/stage3_all_features/manifest.json": {
+      "sha256": "c4f44b0282863a392a33de10ed0c99a495672a6c7d99f6ab0ac71aa9e06dd4fb",
+      "files_verified": 35
+    },
+    "data/processed/wrmsse_v1/stage2_20261123T202104Z/manifest.json": {
+      "sha256": "9a4735380b0c9e0159e6f3b7bbe6a1f370d88fcb77d340256625b692fa7180c8",
+      "files_verified": 7
+    },
+    "data/features/wrmsse_v1/stage2_20261123T202104Z/manifest.json": {
+      "sha256": "6b3dcb91f02f332a8614c2d8824cb065a4f8c52cac83697e1760b39b2b0316d9",
+      "files_verified": 23
+    },
+    "results/wrmsse_v1/stage4_20261124T104618287922Z/manifest_completed.json": {
+      "sha256": "f2a3b8d164cf3a998a51bdc2dddc4dd1a972664c9e23539c412f8f008584aa18",
+      "files_verified": 38
+    }
+  },
+  "workbook": "reports/RandomForest_Forecast_Actual.xlsx",
+  "files": {
+    "docs/STAGE5_BUSINESS_REPORT.md": "eae701544ea4b272887f41ce7e1eba3ad55dfba7981becc0415582487a47bfd8",
+    "notebooks/00_project_overview.ipynb": "7179a3c67f215a185522f22bb086aa142405366d83f524ffc83fd436b7ae8335",
+    "notebooks/01_data_preprocessing.ipynb": "6f7b4bcc53f4af98bfcb0f594810daa72409c3e1889275e200d88c1e4471c3ca",
+    "notebooks/02_wrmsse_evaluation_method.ipynb": "539441bd4781b37c172f27dce10c4d74938460bbca651b981c851eba394fb196",
+    "notebooks/03_feature_engineering.ipynb": "f2bd952677dfc9af6c7fa20f4011fc110bd9403d167c4856bc402128c7925e3c",
+    "notebooks/04_initial_hyperparameter_tuning.ipynb": "dfc17d05cde7ccb082747a259135d72d36e28ce596f2591b4459ea960f53a6e8",
+    "notebooks/05_feature_ablation.ipynb": "87189c85773b35e4221d342d0d53229a35017a6061ad8a0de4669c7df43965b7",
+    "notebooks/06_advanced_hyperparameter_tuning.ipynb": "a30b8fce78890fd4789e1d960390d04aa9896bc96862c5dd466411e3638994a9",
+    "notebooks/07_feature_optimization.ipynb": "ae0f77cc7ee9c8742f386bf9844bcdb9eb5621678511460821570d8de3b5503b",
+    "notebooks/08_final_training_and_test.ipynb": "63593bcbe2ae1888c90e8975191eef391ae31bfb158551820d86e0ca57aadc7b",
+    "notebooks/09_business_insights_and_visualization.ipynb": "37a4d678f1ca6faacaddd6e0f09d7f700182dec022618672b37fca5e40fc6c99",
+    "README.md": "e716844d1c4d6e0c078efc9d751abd390984df38d163ab00c7d811085d32d938",
+    "reports/figure_catalog.csv": "e5707b030ec7dc000bcc505c0fa990549438854c273c6090f6b8f019f3bb72c4",
+    "reports/FIGURE_CATALOG.md": "d8befdbc6da11160cdac23a418ed1230974e30143f9ddc1daa73b58732f814dd",
+    "reports/figures/01_train_validation_test.png": "f8adcc7640a2cbaf02d5593bd05eebbaf181ed294e062427e165767bd265002b",
+    "reports/figures/02_quy_trinh_rf.png": "ea27654c8a113a42ca306fcadc74bc67eb16fc63c68b4a648cf9e9cba3af3e8a",
+    "reports/figures/03_rf_01_05.png": "40b19f3ae6664936a1f1e041e72866de4c52e285078f5f9827dc0ab87ad50eec",
+    "reports/figures/04_rf_v1_v4.png": "33dcae8b1a1d1482f6911a0bd115b8ad7312be3fafc4f75ea6829ffc820f8c9c",
+    "reports/figures/05_rf_06_22.png": "961deea5fa38b6f45a6380dc1ef93f69ad04403da3174f9ca6c6e51f8d893369",
+    "reports/figures/06_fe_01_10.png": "041271bafdbd27f01cbea8661054b847bed7bec8140bd24f9e86eced47f6fd18",
+    "reports/figures/07_fe04_va_all_features.png": "1effc3543c7623f8069fe0cdfe5083a7460c452e0e1d7b535cf0788d91ac9918",
+    "reports/figures/08_wrmsse_va_chi_phi_fit.png": "49a81a05a6bead0ee52bd1d7bf1e356ed40062726014ba02c9b156daee11585b",
+    "reports/figures/09_wrmsse_test.png": "1bd5b15bb2d3a025fdf8a1fc6007e748e01d07843633884d447c97c0c62c0943",
+    "reports/figures/10_validation_va_test.png": "d67d35ed83635ca8f70b51c1140bc7daeb93a111bb8990b175171155421b5758",
+    "reports/figures/11_wrmsse_12_cap.png": "36ffffe3659c99b3674ddc550b001002072535c7ec0d9bc229cfde5f18793f68",
+    "reports/figures/12_chi_so_sai_so_test.png": "11927dd7f7473631dcfe26d13b457d0b7cede856613862734209c6adcb9087eb",
+    "reports/figures/13_feature_importance.png": "04a6237dc9ae4a59abaa17f1d768b88dbc70251a7a2d80c3bf7468ae68635815",
+    "reports/figures/14_doanh_so_hang_ngay.png": "ea833171687579e8541b4e31aa69e172596f32d947cfb72fc755ba7064c699ca",
+    "reports/figures/15_doanh_so_theo_bang.png": "3df2bef2edf3cc88d5761b4c70ba04f0a12df0dbb33be01962ea4aefdeff4c62",
+    "reports/figures/16_doanh_so_theo_cua_hang.png": "f89835102345a237f90a3bfa95bcf0b08e7f2dc0436bb991d075d153e70697f5",
+    "reports/figures/17_bias_cua_hang.png": "dd22d9e7cd05fed4cc8079404ede0dd2d19a3fdb1ae16a259a6a912ee5aeaa88",
+    "reports/figures/18_heatmap_wape.png": "d05766cac7f5b7ff3cc24ae22d64b8229ad518be6addb4e3eaace70e4ad306ee",
+    "reports/figures/19_nganh_hang.png": "50940862e3a86194a879530b67f3b4d032b075c81ae3a83bbe6d95afe8f49f04",
+    "reports/figures/20_tuan_va_thu.png": "953d146dfb23e713ef2271e8109d65e6c727a357ae29d525aae8c6496c3dd1c9",
+    "reports/figures/21_top_du_bao_under.png": "a18050e9a20ee339d8719fd423b30cc46e3f1af203c20128a9c5f63e2d07ecc0",
+    "reports/figures/22_top_du_bao_over.png": "706d054d1672754dc9cdad0513c1ec7f9a97ecf43de39322e0556dc28b350070",
+    "reports/figures/23_chuoi_dai_dien.png": "3996e3165ef1f2cdfb8fe66cd676656313bfdc0ccf70a3e1645e67cc78241b64",
+    "reports/figures/24_snap.png": "edc617f4c894063dc8310a8f5ab7da600e362902ce56e761c51bec8df9e8e58a",
+    "reports/RandomForest_Forecast_Actual.xlsx": "d58c02d4059b0d578bad6e5ea58dc1c87af22919150f2e0c94eab93a3d1b7831",
+    "reports/STAGE5_HANDOFF.md": "5c8eded010e3b0958cf2c497244b6343632e35b5e67f8e3cebb55b03b9a9934e",
+    "reports/stage5_inputs.json": "6e49a480fe303585497e766ff4497f1ea5921ae47cd6fd8d8de51839599e71b8",
+    "reports/stage5_unit_tests.log": "c2b48d64a11a8776cd607eddb230293e2505606a21cc7991a3c1ad93107e755b",
+    "reports/stage5_verification.json": "dd151a8ac97d59bf985121cd08b65e84f34d8d4505f0dd9da41619ca0ce3b573",
+    "reports/tables/category_analysis.csv": "be55be77f05e51ccd3758ad28be911754bd181c339e25dc25602a4af806dea6b",
+    "reports/tables/daily_alignment.csv": "4c37a3a77f2f2f746da643d126687ac745e146e7b50554533c3d14d2cae69656",
+    "reports/tables/daily_sales.csv": "be0bbb38d98b20c6b5c301929be4d8527d43ded0b55eabb231c618e7249277b1",
+    "reports/tables/department_analysis.csv": "3f4f4503286fe513a8374ebe23cf5463cb027c00c96e9e986259a25c16aac1df",
+    "reports/tables/experiment_results.csv": "e14d14c507370bab815ccdbcc86e5851cee26d446e1cf8776d48a6751b3b23de",
+    "reports/tables/experiment_workflow.csv": "16aaa61b64f447e995903476560fd9e3f2eb4dd2b70d665ceb5bae3cd528b55c",
+    "reports/tables/feature_importance.csv": "c9f26677cf646f8392a1db00d87558329862a8513cb8e34d6570e945d3f87de1",
+    "reports/tables/model_comparison.csv": "ec1e1bfe9bda24b2fd918aed188aa556bc1298a2fedd3ac8ca8586d18b59fb73",
+    "reports/tables/representative_daily.csv": "13cad54550dea56f2f905d29b6e5f4c914d7b1c90ba5b62a10615ed55a6d19b6",
+    "reports/tables/representative_series.csv": "582eed9c2f0c48c571acb8105dac2b447fc551e3e953fbc05a523b818693d584",
+    "reports/tables/snap_analysis.csv": "c2ec396590cd96959e206fd68640a57665d33cbd21c6dd4c649f894f3098f52d",
+    "reports/tables/snap_by_state.csv": "1a2e5ea56f95f9bb5569fcde68ca8ba48db1a021bdfe2ff38a02ed32d5381e6f",
+    "reports/tables/split_timeline.csv": "066cc408625a31624de459081b393e7172c9f593538b693573bd38f9f1e1916d",
+    "reports/tables/state_analysis.csv": "bbc3cea65f92da2a14a62af810e8c3c4f6c48e8c06bae7dee4730e3dee239d7c",
+    "reports/tables/store_analysis.csv": "0ab63b32544e9abb704d3a7c0beab7d57ec7caf63f6092ab7fd428e78d25e4f1",
+    "reports/tables/store_department.csv": "2b8130666d6b16e324fa677356907be0d345ae5ef24831f96a8dad10e4db7685",
+    "reports/tables/system.csv": "bd96349c4ae96e1547a325520bb238952d86199649a9de86799aeb84d6a4ce9f",
+    "reports/tables/top_items_sales.csv": "7e564f3238ee9f094f52953ef8f8f0806100a2c914c812e989741a57cd9c2470",
+    "reports/tables/top_overforecast.csv": "44ddbca44e05482fd1d09b396dd11434fce7192e4d829767144720a7d69d3aa0",
+    "reports/tables/top_series_sales.csv": "f88abe990f9029e5b90fffb6ac451b48eec65d45542b801fba96505aabfaf8a4",
+    "reports/tables/top_underforecast.csv": "a61728c80ae3dda5ac75f5be172f01ec9237cd42da2baab45fe1e308955395c2",
+    "reports/tables/top_wrmsse_contribution.csv": "7d5ecdbd128c3ff1a576010fc3b07a16d3fd881742942ffd9e0442b32f179930",
+    "reports/tables/validation_test.csv": "c231537b0f3322d8d1b48f413526679a04eebb5fb211a8e5aeaca027b4ed2967",
+    "reports/tables/weekday_analysis.csv": "e41f48e92e32eb5bc8097fc2b40f4ccb29de360d57f11d7ff27afa02e19509e6",
+    "reports/tables/weekly_analysis.csv": "6cf4ca2a83bdbc536e7f62f2ba989cf2474b327ac1d1e45b00eaa2b57450e33d",
+    "reports/tables/wrmsse_12_levels.csv": "15d4db47ca6bac1d7d9b3f36a8861b1a0f2d2073f6195027afd5af915e493d66",
+    "requirements-stage5-lock.txt": "e69217d3d91963f2a52fda567428a812e54ae7d83a048686da53daedcea482cd",
+    "scripts/run_stage5.py": "f4c2557b8b0052257556842200a4582fe13582d10dd26474f2e7680d0065f061",
+    "src/wrmsse_stage5.py": "ff694ca0b0568fc9b0d019ab20f1604aebff076e3688aad975c573436b5f1c9a",
+    "src/wrmsse_stage5_docs.py": "3699024eeba6ac1ba3402d891527ff593217cfc814b22d707679f52205a3188c",
+    "src/wrmsse_stage5_excel.py": "63ee2830c9c1c675cea0bdd325c06ebf49aae05230c62f0fedb3cc1c8698d523",
+    "src/wrmsse_stage5_figures.py": "122c267bd168138ab0e79cb59a5a2b4aaa2ea4c82fee9866d19a4fe071149504",
+    "src/wrmsse_stage5_notebooks.py": "b01d193143aa606dfe7119395081c6aac83d2ac79d097195477afb7b7320fbb9"
+  },
+  "updated": [
+    "README.md"
+  ]
+}

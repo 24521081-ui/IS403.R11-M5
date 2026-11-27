@@ -1,0 +1,32 @@
+{
+  "name": "RF-12",
+  "purpose": "tuning",
+  "status": "success",
+  "split": "validation",
+  "origin": 1885,
+  "metric": "wrmsse",
+  "wrmsse": 0.7870042724472295,
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "experiment_id": "m5_rf_wrmsse_v1",
+  "params": {
+    "n_estimators": 150,
+    "max_depth": 12,
+    "max_features": 0.2,
+    "max_samples": 0.5,
+    "min_samples_leaf": 20,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 4
+  },
+  "version": "rf_v1",
+  "groups": [],
+  "train_rows": 600000,
+  "validation_rows": 853720,
+  "n_features": 3081,
+  "fit_seconds": 64.63416880000295,
+  "predict_seconds": 3.1781879999980447,
+  "evaluation_seconds": 0.13216429999738466,
+  "prediction_sha256": "2d8b51bd600778f6edf66db8749726d3768821d50e2d523b878ed278583f6b81",
+  "peak_rss_mib": 525.234375,
+  "selection_eligible": true
+}

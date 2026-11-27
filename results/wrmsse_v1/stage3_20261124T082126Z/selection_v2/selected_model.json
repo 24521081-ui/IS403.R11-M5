@@ -1,0 +1,114 @@
+{
+  "name": "FE-04",
+  "purpose": "tuning",
+  "status": "success",
+  "split": "validation",
+  "origin": 1885,
+  "metric": "wrmsse",
+  "wrmsse": 0.623930853975747,
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "experiment_id": "m5_rf_wrmsse_v1",
+  "params": {
+    "n_estimators": 150,
+    "max_depth": 20,
+    "max_features": 0.5,
+    "max_samples": 0.5,
+    "min_samples_leaf": 5,
+    "bootstrap": true,
+    "random_state": 42,
+    "n_jobs": 8
+  },
+  "version": "rf_v1",
+  "groups": [
+    "snap"
+  ],
+  "train_rows": 600000,
+  "validation_rows": 853720,
+  "n_features": 3082,
+  "fit_seconds": 225.05368790000648,
+  "predict_seconds": 2.766694500001904,
+  "evaluation_seconds": 0.10251940000307513,
+  "prediction_sha256": "5a8c9ae1220e161a51e5612d23dab24c24ab78702fd5bc3cf735904f4a34472c",
+  "peak_rss_mib": 736.484375,
+  "selection_eligible": true,
+  "group": "features",
+  "requested_groups": [
+    "snap"
+  ],
+  "reuse": false,
+  "reuse_key": "ab46c10bb67c32aa4b463a051813fb89292efdaea8640729218cca89f4e19142",
+  "artifact_dir": "results/wrmsse_v1/stage3_20261124T082126Z/features/FE-04/attempt_001",
+  "monitor_peak_rss_mib": 740.203125,
+  "min_available_mib": 5121.34375,
+  "n_raw_features": 15,
+  "dataset_hash": "9a4735380b0c9e0159e6f3b7bbe6a1f370d88fcb77d340256625b692fa7180c8",
+  "feature_hash": "6b3dcb91f02f332a8614c2d8824cb065a4f8c52cac83697e1760b39b2b0316d9",
+  "selection_version": 2,
+  "selection_basis": "Minimum Validation WRMSSE of 33 eligible Stage 3 records after SNAP review",
+  "candidate_count": 34,
+  "eligible_count": 33,
+  "excluded_candidates": [
+    "FE-05"
+  ],
+  "hyperparameter_run": "RF-15",
+  "prior_selection": "results/wrmsse_v1/stage3_20261124T082126Z/selected_model.json",
+  "prior_selection_sha256": "4ddf81d9c86f6b21b6333a58dc2ca04b9e3e1e7d5e27283b8a9ff3630c23b289",
+  "validation_days": [
+    1886,
+    1913
+  ],
+  "snap_rule": {
+    "type": "state_by_day_of_month",
+    "calendar_history_end": 1885,
+    "days_of_month_on": {
+      "CA": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "TX": [
+        1,
+        3,
+        5,
+        6,
+        7,
+        9,
+        11,
+        12,
+        13,
+        15
+      ],
+      "WI": [
+        2,
+        3,
+        5,
+        6,
+        8,
+        9,
+        11,
+        12,
+        14,
+        15
+      ]
+    },
+    "validation_state_days_confirmed": 84,
+    "series_day_rows_confirmed": {
+      "train": 600000,
+      "validation": 853720
+    }
+  },
+  "seasonal_naive_wrmsse": 0.9227813345358948,
+  "improvement_vs_naive_percent": 32.38583935060328,
+  "wrmsse_reduction_vs_naive": 0.29885048056014785,
+  "audit_path": "preparation/stage3_snap_audit.json",
+  "audit_sha256": "2ee1d24ecfd0929110a5c2c8f01e337a5ca50c4626cf82847afe71ef3bcc3850",
+  "test_accessed": false,
+  "final_retrain_performed": false
+}

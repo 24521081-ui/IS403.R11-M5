@@ -1,0 +1,22 @@
+{
+  "seed": 42,
+  "train_rows": 600000,
+  "validation_rows": 9185,
+  "rows": 609185,
+  "eligible_train_days": 1829,
+  "validation_days": [
+    1886,
+    1913
+  ],
+  "target_extra_before_rounding": 9185.347184253691,
+  "rounding": "Python round to nearest integer",
+  "order": "Original Train then Validation",
+  "sampling": "store x dept x calendar quarter; one per stratum then proportional remaining capacity; largest remainder; SeedSequence per stratum",
+  "with_replacement": false,
+  "original_keys_sha256": "ed55bb992fdcfd62ce3f104f2d4978b4176a9ae37faac3f7d6d31c5d3922ff01",
+  "reproduced_exactly": true,
+  "files": {
+    "final_training_sample.parquet": "649b0accee5e496e83b78a18181da6365e98ac5a1b2259b645a1c28d5e1f38a5",
+    "final_training_strata.parquet": "920d75397f2f908f95666447d53477beb726b81265d85338347e1175c6ce3dd4"
+  }
+}

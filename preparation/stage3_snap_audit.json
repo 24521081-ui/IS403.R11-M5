@@ -1,0 +1,101 @@
+{
+  "status": "passed",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "calendar": {
+    "last_train_date": "2016-03-27",
+    "first_validation_date": "2016-03-28",
+    "last_validation_date": "2016-04-24",
+    "train_days": 1885,
+    "validation_state_days": 84,
+    "train_rule_state_days": 93,
+    "mismatches": 0,
+    "snap_days_of_month": {
+      "CA": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "TX": [
+        1,
+        3,
+        5,
+        6,
+        7,
+        9,
+        11,
+        12,
+        13,
+        15
+      ],
+      "WI": [
+        2,
+        3,
+        5,
+        6,
+        8,
+        9,
+        11,
+        12,
+        14,
+        15
+      ]
+    },
+    "calendar_sha256": "568d0fe5f41790142379698732908e4e57432c1c6396f3f59fb880a9c2b54231"
+  },
+  "matrices": {
+    "train": {
+      "rows": 600000,
+      "snap_calendar_mismatches": 0,
+      "snap_train_rule_mismatches": 0,
+      "behavior_values_compared": 1800000,
+      "latest_sales_day": 1857,
+      "snap_on_rows_by_state": {
+        "CA": 78604,
+        "TX": 58802,
+        "WI": 58798
+      }
+    },
+    "validation": {
+      "rows": 853720,
+      "snap_calendar_mismatches": 0,
+      "snap_train_rule_mismatches": 0,
+      "behavior_values_compared": 2561160,
+      "latest_sales_day": 1885,
+      "snap_on_rows_by_state": {
+        "CA": 121960,
+        "TX": 91470,
+        "WI": 91470
+      }
+    }
+  },
+  "seasonal_naive_wrmsse": 0.9227813345358948,
+  "candidates": {
+    "FE-04": {
+      "wrmsse": 0.623930853975747,
+      "levels": 12,
+      "aggregated_series": 42840,
+      "model_prediction_max_absolute_delta": 2.842170943040401e-14,
+      "model_sha256": "a1061c8cf5cadfb90622f89e32ddc1299554d84c5a5c9c795056211d0c497c1b",
+      "predictions_sha256": "5a8c9ae1220e161a51e5612d23dab24c24ab78702fd5bc3cf735904f4a34472c",
+      "manifest_sha256": "3fd314106701a5f577cc90209f005d3f835b860621c8216d0d02ca292821b6e4"
+    },
+    "FE-07": {
+      "wrmsse": 0.6382146522781199,
+      "levels": 12,
+      "aggregated_series": 42840,
+      "model_prediction_max_absolute_delta": 2.842170943040401e-14,
+      "model_sha256": "7ffc51f70997eba83e4f623c380ca9b3e59bae2d33092bee31b2ceab33f3856a",
+      "predictions_sha256": "54d3f330c5210e08a9a60cda6c57d811f7f7778d18f176d74a7e9cd63535160c",
+      "manifest_sha256": "e016daaaa39830a09e7df2f2758721f0f33ad185fa5cf3ff704f8d424c57fe70"
+    }
+  },
+  "fit_executed": false,
+  "test_accessed": false
+}

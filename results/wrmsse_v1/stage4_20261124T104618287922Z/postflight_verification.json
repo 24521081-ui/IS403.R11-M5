@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "at": "2026-11-24T10:51:58.188762+00:00",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "test_actual_opened_after_forecast_lock": true,
+  "forecast_lock_verified": true,
+  "sales_feature_history_end": 1913,
+  "lag_and_rolling_match_origin_history_for_all_test_rows": true,
+  "snap_rule_matches_all_test_rows": true,
+  "training_sample_reproduced": true,
+  "observations": 853720,
+  "hierarchical_series": 42840,
+  "levels": 12,
+  "weights_and_contributions_verified": true,
+  "keys_and_predictions_verified": true,
+  "business_metrics_reproduced_from_export": true,
+  "feature_importance_verified": true,
+  "plots_verified": [
+    "test_wrmsse.png",
+    "test_wrmsse_by_level.png",
+    "test_daily_sales.png",
+    "validation_vs_test_wrmsse.png",
+    "test_business_metrics.png",
+    "final_feature_importance.png"
+  ],
+  "resource_summary_verified": true,
+  "fit_count": 1,
+  "metrics_match_csv_parquet_json_report_plots": true,
+  "historical_outputs_and_sources_unchanged": true,
+  "closed_gates": [
+    "training",
+    "tuning",
+    "test_evaluation"
+  ],
+  "post_test_tuning": false
+}

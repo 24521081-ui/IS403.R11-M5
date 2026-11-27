@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-24",
+  "timezone": "Asia/Bangkok",
+  "status": "passed",
+  "files_repaired": [
+    {
+      "path": "README.md",
+      "sha256_before": "0e68d69739fbdc9acb5582d357cbc67237a92e94e72c0e80c3866528ffd8ef3b",
+      "sha256_after": "9a5a437db59c1a24bbbd65906cb35424982f384852ec948275e5958b0b261ab6",
+      "encoding": "utf-8",
+      "non_ascii_characters": 189
+    },
+    {
+      "path": "legacy/ARCHIVE_NOTICE.md",
+      "sha256_before": "614bd4f74b3cbfa777bbf0ee57d0bbff07c5496742a14e6ebc10fe342a0ff74b",
+      "sha256_after": "260aae11f85ea021bf8b3783f86c00554b024e36a7e44cfb6973fe003a4ce27a",
+      "encoding": "utf-8",
+      "non_ascii_characters": 166
+    },
+    {
+      "path": "docs/WRMSSE_PREPARATION.md",
+      "sha256_before": "27ef7d906ff2006d2689a53d03eefae043282d3bf73ad06e8c9735c228968642",
+      "sha256_after": "c34808e31721302efa867c4064c9fe70e1fa5f3ab93567860c6b4852d55b1964",
+      "encoding": "utf-8",
+      "non_ascii_characters": 1627
+    },
+    {
+      "path": "notebooks/00_wrmsse_preparation.ipynb",
+      "sha256_before": "5049f6476dc98fc80dc65674af02756d80a87b7f4148088b4e71b1bb918db110",
+      "sha256_after": "e0e0db18cf644347986c324257ed78c5f69700a50b5f181c12dd9fa738b9a744",
+      "encoding": "utf-8",
+      "non_ascii_characters": 45
+    },
+    {
+      "path": "legacy/results/rf_experiments/rf_final_test/analysis_summary.json",
+      "sha256_before": "7b631db6efb628ebfca7b466fcb12e301458f1b4226f04a90abd6b91ddaf8ebb",
+      "sha256_after": "6dc68c18bfe4aa66c8b9b8b28170b6eb9f027d83e0c2a09f992bb3e8589b42b9",
+      "encoding": "utf-8",
+      "non_ascii_characters": 156
+    }
+  ],
+  "historical_numeric_fields_unchanged": true,
+  "historical_numbers_in_text_unchanged": true,
+  "historical_source_file_unchanged": true,
+  "historical_source_sha256": "7b631db6efb628ebfca7b466fcb12e301458f1b4226f04a90abd6b91ddaf8ebb",
+  "training_tuning_test_executed": false
+}

@@ -1,0 +1,72 @@
+{
+  "status": "verified_for_this_window",
+  "calendar_history_end": 1885,
+  "validation_days": [
+    1886,
+    1913
+  ],
+  "events_on_days_in_validation": 0,
+  "rule": "Fixed and nth-weekday civil holiday rules and Memorial Day; categories learned before origin",
+  "event_types": {
+    "ValentinesDay": "Cultural",
+    "PresidentsDay": "National",
+    "StPatricksDay": "Cultural",
+    "Cinco De Mayo": "Cultural",
+    "Mother's day": "Cultural",
+    "MemorialDay": "National",
+    "Father's day": "Cultural",
+    "IndependenceDay": "National",
+    "LaborDay": "National",
+    "ColumbusDay": "National",
+    "Halloween": "Cultural",
+    "VeteransDay": "National",
+    "Thanksgiving": "National",
+    "Christmas": "National",
+    "NewYear": "National",
+    "OrthodoxChristmas": "Religious",
+    "MartinLutherKingDay": "National"
+  },
+  "vocabulary": {
+    "name": [
+      "Christmas",
+      "Cinco De Mayo",
+      "ColumbusDay",
+      "Father's day",
+      "Halloween",
+      "IndependenceDay",
+      "LaborDay",
+      "MartinLutherKingDay",
+      "MemorialDay",
+      "Mother's day",
+      "NewYear",
+      "OrthodoxChristmas",
+      "PresidentsDay",
+      "StPatricksDay",
+      "Thanksgiving",
+      "ValentinesDay",
+      "VeteransDay"
+    ],
+    "type": [
+      "Cultural",
+      "National",
+      "Religious"
+    ]
+  },
+  "checks": {
+    "train": {
+      "rows": 600000,
+      "encoded_columns": 22,
+      "mismatched_values": 0,
+      "stored_nonzero": 55986
+    },
+    "validation": {
+      "rows": 853720,
+      "encoded_columns": 22,
+      "mismatched_values": 0,
+      "stored_nonzero": 0
+    }
+  },
+  "eligible_by_origin_availability": true,
+  "test_accessed": false,
+  "feature_manifest_sha256": "6b3dcb91f02f332a8614c2d8824cb065a4f8c52cac83697e1760b39b2b0316d9"
+}

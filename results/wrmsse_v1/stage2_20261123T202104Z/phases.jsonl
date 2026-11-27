@@ -1,0 +1,7 @@
+{"phase": "tests", "utc": "2026-11-23T20:21:12.314739+00:00"}
+{"phase": "processed", "utc": "2026-11-23T20:21:13.037783+00:00"}
+{"phase": "features", "utc": "2026-11-23T20:21:18.345056+00:00"}
+{"phase": "evaluator", "utc": "2026-11-23T20:21:53.117603+00:00"}
+{"phase": "Seasonal Naive", "utc": "2026-11-23T20:22:24.118249+00:00"}
+{"phase": "enable scoped smoke training", "utc": "2026-11-23T20:22:24.222329+00:00"}
+{"phase": "integrity and reports", "utc": "2026-11-23T20:23:35.615258+00:00"}

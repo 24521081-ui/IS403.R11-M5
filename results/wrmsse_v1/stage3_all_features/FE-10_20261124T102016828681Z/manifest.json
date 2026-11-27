@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "run_id": "FE-10_20261124T102016828681Z",
+  "n_jobs": 8,
+  "files": {
+    "feature_metadata.json": "2d35fd594bb8cf52516e62364a3d777cc68ad97857e740a6498fad5929dac8e1",
+    "model.joblib": "26a013201f3494dd051d9b68337e04470093e0ab4fca2b801b8fe10d4a08575b",
+    "request.json": "8cd81246cf5a066e7e069031561e9a2ce55bdc162169d8732a401c150108d46f",
+    "resources.jsonl": "cbd252a2d6e69871f8489f2eaebfb3cea442f2fdfb6f25570c36430fd7b7930a",
+    "resources_summary.json": "fb2808e3e1bdca67f15905f183ed00c88853aaf257080eaf91a9283d8f84cff3",
+    "result.json": "4e69a0ae5751cbb24e2bafb8729b53f35689a1de0ed365e7104d21b1d97362d2",
+    "validation_predictions.npy": "91f12ef58e04c22ebe7b71523c2a2f463f9207f444e5e34ca8cc5c7ce954bb3f",
+    "worker.log": "b1a518f2deb27bb60c2698503270071ef0c5d8e6a31656e9f40e4adb961fdd9b",
+    "wrmsse_by_level.csv": "b046fc0658ddea846a1d64d12da30696cd356edf4e3e702811ad0bf2de0b280f",
+    "wrmsse_by_series.parquet": "b105a7b0a8a9f4b04824d31c8d1747255f08a32e74742bc8b43b21edd7518112"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "tests": 63,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "log": "preparation/unit_tests_20261123T202921037634Z.log",
+  "contract_id": "bf1707b09096a75fac76586d02e50039bf045e6ac1c066d819f6f041d79b557b",
+  "code_sha256": {
+    "src/project_paths.py": "fb86969e39c297e920ccf3838f629bbb44d4e4a91d2a4fcc9e0f3c8651755a52",
+    "src/wrmsse.py": "d5945807d78715eb6f41d1eb3378af398dbcf3dc668b5c352e25dcad35040b8d",
+    "src/wrmsse_config.py": "77868dfbe9ba598ae9cbe01088993f19f392b099f81467524416b8c6f6316985",
+    "src/wrmsse_data.py": "1e3c23cb20503777760d6c42089a4c6130d03526a6b502d55af7edb2b9cea737",
+    "src/wrmsse_extensions.py": "88044bc58fc83e0e726ce3fa6237043fbab53d20936ae2cea1449e6e48b16e99",
+    "src/wrmsse_features.py": "beb2bbcb8df04ef57fb610538b349f5c0ac1861cd27f43155ddcbac7f6fcb89b",
+    "src/wrmsse_pipeline.py": "f29be4e6aff9b2cfec8687db5eb05cf0cfbc6ca0cbbdd2e8e9687794be6f25b5",
+    "src/wrmsse_stage2_data.py": "79fd0e7b5b00f5d9a25314773d38b39c2e4ce0183ad40227ada44f733e284f94",
+    "src/wrmsse_workflows.py": "b95bcfc31db1fa461852c024ffda1515f6283f1c9dffa5ea6f6c52997212a844",
+    "src/__init__.py": "cd57632357abb307d0cb7e99e2672e07f32095830a0d07d6dea6752acbc08fba",
+    "scripts/audit_wrmsse_contexts.py": "1925b55fb3c0521bc8a7bdc95ca559abd2674808d848266d24dd19f4a8773560",
+    "scripts/run_preparation_checks.py": "8b90881ed99f18c1d2d721ef132827dc639afc817fc4d8cb125172d96925f1b2",
+    "scripts/run_stage2.py": "373ac27576414e52dd1ab54f2a722e9609e2c935e46826ab2e0aa2062282e831",
+    "scripts/verify_isolation.py": "19a64f08a88856a6cf4c09b2d3c4db9f1015863649654bbf34f25606237e3898",
+    "tests/reference_wrmsse.py": "47038b21fc551c9744acaddb60cb26a4555d1284468e2669ce12f37c750c9614",
+    "tests/test_wrmsse.py": "d66984a1d4968dacadace57dc7083e649e5e8ae0c5341bc3eb9963b8b971c822",
+    "tests/test_wrmsse_pipeline.py": "ae71d9bc88067d6f3ba7c2e60345ae08236fa7437bb31c96a17354253fe411bd",
+    "tests/test_wrmsse_stage2.py": "c9663a20945f6916d196c3cdeb7e5ba6ba09411eb4958a7a614218de679efe38",
+    "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
