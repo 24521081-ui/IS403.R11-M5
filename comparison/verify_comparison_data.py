@@ -8,16 +8,12 @@ ROOT = Path(__file__).resolve().parents[1]
 COMP = ROOT / "comparison"
 
 
-def test_all_eight_charts_exist_and_non_empty():
+def test_selected_four_charts_exist_and_non_empty():
     expected = [
         "01_tong_quan_wrmsse_validation_test.png",
         "02_wrmsse_theo_12_cap_m5.png",
-        "03_hieu_qua_theo_nhom_nhu_cau.png",
-        "04_do_lech_tong_luong_du_bao_test.png",
-        "05_bang_tong_hop_da_tieu_chi.png",
-        "06_dien_bien_du_bao_28_ngay_test.png",
-        "07_do_lech_theo_10_cua_hang.png",
-        "08_hieu_qua_theo_3_nganh_hang.png",
+        "03_bang_tong_hop_da_tieu_chi.png",
+        "04_do_lech_theo_nhom_nhu_cau_va_nganh_hang.png",
     ]
     for name in expected:
         p = COMP / "charts" / name
